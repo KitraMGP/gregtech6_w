@@ -78,9 +78,10 @@ public class MT_GT6U extends MT {
 	FIBERCABLES_04 = {OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor)},
 	FIBERCABLES_01 = {OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor)};
 	
-	/** GT6U's definitions of GT6 materials, asked by MT while it defines them (GT6U_Definitions.material). Its own class: MT is
-	 *  still being initialised then, and loading MT_GT6U would read MT's materials before they exist. */
-	public static final class InMT {
+	/** GT6U's definitions of GT6 materials, asked by MT while it defines them (GT6U_Definitions.material). Its own subclass of MT:
+	 *  MT is still being initialised then, and reaching MT's helpers through MT_GT6U would initialise MT_GT6U, which reads MT's
+	 *  materials before they exist. */
+	public static final class InMT extends MT {
 		private InMT() {}
 		
 		/** GT6U MT.java:904 makes Sand with create, not dust (no dust prefixes, no mortar); GT6 6.17's later aspects and stats stay. */

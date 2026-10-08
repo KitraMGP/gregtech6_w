@@ -80,20 +80,20 @@ public class MultiItemRandomTools_Recipes {
 	static void run_addItems() {
 		for (OreDictMaterial tWood : ANY.Wood.mToThis) {
 			RM.Welder.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.P , 1), IL.Tool_Matches.get(1));
-			RM.Welder.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.Phosphorus , 1), IL.Tool_Matches.get(1));
+			RM.Welder.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(1));
 			RM.Welder.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(MT.P , 1), IL.Tool_Matches.get(4));
-			RM.Welder.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(MT.Phosphorus , 1), IL.Tool_Matches.get(4));
+			RM.Welder.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(4));
 		}
 	}
 
-	/** GT6's statements in MultiItemRandomTools.addItems that GT6U dropped, as GT6 6.14.17 wrote them: their Recipes are taken back. */
+	/** GT6's statements in MultiItemRandomTools.addItems that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_addItems() {
-		GT6U_Recipes.takeBack(() -> {
+		GT6U_Recipes.takeBack("MultiItemRandomTools_Recipes.addItems", () -> {
 			for (OreDictMaterial tWood : ANY.Wood.mToThis) {
 				RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.P , 1), IL.Tool_Matches.get(1));
-				RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.Phosphorus , 1), IL.Tool_Matches.get(1));
+				RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(1));
 				RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(MT.P , 1), IL.Tool_Matches.get(4));
-				RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(MT.Phosphorus , 1), IL.Tool_Matches.get(4));
+				RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(4));
 			}
 		});
 	}

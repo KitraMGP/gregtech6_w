@@ -77,7 +77,7 @@ public class Loader_Recipes_Handlers {
 	
 	/** GT6U's additions to Loader_Recipes_Handlers.run (GT6U gregtech/loaders/c/Loader_Recipes_Handlers.java). */
 	static void run_run() {
-		RM.Wiremill .add(new RecipeMapHandlerPrefix(wireFine , 4, NF, 16, 0, 196, NF, wireLPGt01 , 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, COATED.NOT, SMITHABLE)));
+		RM.Wiremill.add(new RecipeMapHandlerPrefix(wireFine, 4, NF, 16, 0, 196, NF, wireLPGt01, 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, COATED.NOT, SMITHABLE)));
 		RM.RollBender .add(new RecipeMapHandlerPrefix(wireFine , 2, NF, 16, 0, 256, NF, springSmall , 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE)));
 		RM.Loom .add(new RecipeMapHandlerPrefix(wireLPGt01 , 2, NF, 16, 0, 64, NF, wireLPGt02 , 1, ST.tag( 2), NI, F, F, F, ANTIMATTER.NOT));
 		RM.Loom .add(new RecipeMapHandlerPrefix(wireLPGt01 , 4, NF, 16, 0, 64, NF, wireLPGt04 , 1, ST.tag( 4), NI, F, F, F, ANTIMATTER.NOT));
@@ -114,10 +114,10 @@ public class Loader_Recipes_Handlers {
 		}
 	}
 
-	/** GT6's statements in Loader_Recipes_Handlers.run that GT6U dropped, as GT6 6.14.17 wrote them: their Recipes are taken back. */
+	/** GT6's statements in Loader_Recipes_Handlers.run that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_run() {
-		GT6U_Recipes.takeBack(() -> {
-			RM.RollBender .add(new RecipeMapHandlerPrefix(plate , 1, NF, 16, 0, 256, NF, plateCurved , 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE)));
+		GT6U_Recipes.takeBack("Loader_Recipes_Handlers.run", () -> {
+			RM.RollBender.add(new RecipeMapHandlerPrefix(plate, 1, NF, 16, 0, 256, NF, plateCurved, 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE)));
 		});
 	}
 }

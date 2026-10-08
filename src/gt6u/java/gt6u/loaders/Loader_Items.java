@@ -22,6 +22,9 @@
 
 package gt6u.loaders;
 
+import gregapi.GT_API;
+import gt6u.GT6U_Main;
+
 import gt6u.items.MultiItemPhysics;
 
 
@@ -55,13 +58,16 @@ public class Loader_Items {
 	
 	/** GT6U's additions to Loader_Items.run (GT6U gregtech/loaders/a/Loader_Items.java). */
 	static void run_run() {
-		CS_GT6U.PHYS = new MultiItemPhysics();
-		CS_GT6U.BIO = new MultiItemBiology();
-		// GT6U lists its MultiItems with GT6's ones (GT6U CS.java:1556); the array is GT6's, made longer for them.
-		CS_GT6U.TECH = new gt6u.items.MultiItemTechnological();
-		ItemsGT.ALL_MULTI_ITEMS = java.util.Arrays.copyOf(ItemsGT.ALL_MULTI_ITEMS, ItemsGT.ALL_MULTI_ITEMS.length + 3);
-		ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 3] = CS_GT6U.PHYS;
-		ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 2] = CS_GT6U.BIO;
-		ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 1] = CS_GT6U.TECH;
+		// Made on RegisterEvent, as GT6 makes its own MultiItems (gregtech/loaders/a/Loader_Items.java).
+		GT_API.registerItemLazy(GT6U_Main.MOD_ID, "gt.multiitem.physics", () -> CS_GT6U.PHYS = new MultiItemPhysics());
+		GT_API.registerItemLazy(GT6U_Main.MOD_ID, "gt.multiitem.biology", () -> CS_GT6U.BIO = new MultiItemBiology());
+		GT_API.registerItemLazy(GT6U_Main.MOD_ID, "gt.multiitem.technological", () -> CS_GT6U.TECH = new gt6u.items.MultiItemTechnological());
+		// GT6U lists its MultiItems with GT6's ones (GT6U CS.java:1556); the array is GT6's, made longer for them once GT6 filled it.
+		GT_API.deferItemInit(() -> {
+			ItemsGT.ALL_MULTI_ITEMS = java.util.Arrays.copyOf(ItemsGT.ALL_MULTI_ITEMS, ItemsGT.ALL_MULTI_ITEMS.length + 3);
+			ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 3] = CS_GT6U.PHYS;
+			ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 2] = CS_GT6U.BIO;
+			ItemsGT.ALL_MULTI_ITEMS[ItemsGT.ALL_MULTI_ITEMS.length - 1] = CS_GT6U.TECH;
+		});
 	}
 }

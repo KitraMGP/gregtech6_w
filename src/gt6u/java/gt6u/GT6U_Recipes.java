@@ -31,18 +31,24 @@ import gregapi.recipes.Recipe;
 import gregapi.recipes.RecipeCapture;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.util.CR;
+import gregapi.util.ST;
 
 import static gregapi.data.CS.*;
 
 /** Takes back GT6 Recipes GregTech6-Unofficial dropped: GT6's own statement runs with the recipe capture open, and the Recipes it
  *  would make are taken out of GT6's maps and crafting list again. */
 public class GT6U_Recipes {
-	public static void takeBack(Runnable aGT6Statements) {
+	/** Takes back the GT6 Recipes these restated GT6 statements make; what is not found is listed in GT6's log under aSource. */
+	public static void takeBack(String aSource, Runnable aGT6Statements) {
 		RecipeCapture.Captured tCaptured = RecipeCapture.capture(aGT6Statements);
 		int tMissing = 0;
-		for (Map.Entry<RecipeMap, Recipe> tEntry : tCaptured.mMachine) if (tEntry.getKey().removeSame(tEntry.getValue()) <= 0) tMissing++;
-		for (ICraftingRecipeGT tRecipe : tCaptured.mCrafting) if (CR.removeSame(tRecipe) <= 0) tMissing++;
-		for (Map.Entry<RecipeMap, IRecipeMapHandler> tEntry : tCaptured.mHandlers) if (tEntry.getKey().removeSameHandler(tEntry.getValue()) <= 0) tMissing++;
-		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size()) + " GT6 Recipes to take back were not found");
+		for (Map.Entry<RecipeMap, Recipe> tEntry : tCaptured.mMachine) if (tEntry.getKey().removeSame(tEntry.getValue()) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": " + tEntry.getKey().mNameInternal + " " + describe(tEntry.getValue()));}
+		for (ICraftingRecipeGT tRecipe : tCaptured.mCrafting) if (CR.removeSame(tRecipe) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": crafting " + tRecipe.getClass().getSimpleName() + " -> " + ST.configNames(tRecipe.getRecipeOutput()));}
+		for (Map.Entry<RecipeMap, IRecipeMapHandler> tEntry : tCaptured.mHandlers) if (tEntry.getKey().removeSameHandler(tEntry.getValue()) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": handler " + tEntry.getKey().mNameInternal + " " + tEntry.getValue().getClass().getSimpleName());}
+		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size()) + " GT6 Recipes to take back were not found in " + aSource);
+	}
+	
+	private static String describe(Recipe aRecipe) {
+		return ST.configNames(aRecipe.mInputs) + " + " + java.util.Arrays.toString(aRecipe.mFluidInputs) + " -> " + ST.configNames(aRecipe.mOutputs) + " + " + java.util.Arrays.toString(aRecipe.mFluidOutputs) + " @" + aRecipe.mEUt + "x" + aRecipe.mDuration;
 	}
 }

@@ -105,9 +105,9 @@ public class MultiItemFood_Recipes {
 		RM.Unboxinator.addRecipe1(T, 16, 16, IL.Food_ChiliChips_Packaged.get(1), IL.Food_ChiliChips.get(1), OP.scrapGt.mat(MT.Al, 2));
 	}
 
-	/** GT6's statements in MultiItemFood.addItems that GT6U dropped, as GT6 6.14.17 wrote them: their Recipes are taken back. */
+	/** GT6's statements in MultiItemFood.addItems that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_addItems() {
-		GT6U_Recipes.takeBack(() -> {
+		GT6U_Recipes.takeBack("MultiItemFood_Recipes.addItems", () -> {
 			RM.packunpack(IL.Food_Bun_Sliced.get(2), IL.Food_Buns_Sliced.get(1));
 			RM.packunpack(IL.Food_Bread_Sliced.get(2), IL.Food_Breads_Sliced.get(1));
 			CR.shapeless(IL.Food_Sandwich_Steak.get(1) , CR.DEF, new Object[] {IL.Food_Breads_Sliced, Items.COOKED_BEEF});

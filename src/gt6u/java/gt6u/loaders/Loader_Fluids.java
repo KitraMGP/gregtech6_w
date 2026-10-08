@@ -43,7 +43,7 @@ import gregapi.render.IIconContainer;
 import gregapi.render.TextureSet;
 import gregapi.util.ST;
 import net.minecraft.world.item.Items;
-
+import net.minecraft.world.item.ItemUseAnimation;
 
 import net.neoforged.neoforge.fluids.FluidStack;
 import gt6u.GT6U_Recipes;
@@ -53,6 +53,8 @@ import gt6u.GT6U_Recipes;
 public class Loader_Fluids {
 	public static void run() {
 		run_run();
+		// GT6U made these in GT6's Loader_Fluids, before its loop over the materials' own fluids: the loop runs again after them.
+		gregtech.loaders.a.Loader_Fluids.createMaterialFluids();
 	}
 	
 	public static void takeBack() {

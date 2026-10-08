@@ -40,6 +40,18 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import static gregapi.data.CS.*;
 
 public class Loader_Fluids implements Runnable {
+	/** The fluids of the materials' own forms, made last so that they are the ones linked to their materials. An addon that makes
+	 *  fluids of GT6 materials after this loader calls it again, to end in the same state. */
+	public static void createMaterialFluids() {
+		for (OreDictMaterial tMaterial : MT.ALL_MATERIALS_REGISTERED_HERE) {
+			if (tMaterial.contains(TD.ItemGenerator.LIQUID)) FL.createLiquid(tMaterial);
+			if (tMaterial.contains(TD.ItemGenerator.MOLTEN)) FL.createMolten(tMaterial);
+			if (tMaterial.contains(TD.ItemGenerator.GASES )) FL.createGas   (tMaterial);
+			if (tMaterial.contains(TD.ItemGenerator.VAPORS)) FL.createVapour(tMaterial);
+			if (tMaterial.contains(TD.ItemGenerator.PLASMA)) FL.createPlasma(tMaterial);
+		}
+	}
+	
 	@Override
 	public void run() {
 		FL.create("HeliumPlasma"             , "Helium Plasma"       , MT.He                 , 3,   1000, 10000).setLuminosity(15);
@@ -688,13 +700,7 @@ public class Loader_Fluids implements Runnable {
 		});
 		
 		
-		for (OreDictMaterial tMaterial : MT.ALL_MATERIALS_REGISTERED_HERE) {
-			if (tMaterial.contains(TD.ItemGenerator.LIQUID)) FL.createLiquid(tMaterial);
-			if (tMaterial.contains(TD.ItemGenerator.MOLTEN)) FL.createMolten(tMaterial);
-			if (tMaterial.contains(TD.ItemGenerator.GASES )) FL.createGas   (tMaterial);
-			if (tMaterial.contains(TD.ItemGenerator.VAPORS)) FL.createVapour(tMaterial);
-			if (tMaterial.contains(TD.ItemGenerator.PLASMA)) FL.createPlasma(tMaterial);
-		}
+		createMaterialFluids();
 		
 		
 		// FL.X.fluid() resolves a source-Fluid bound only at server start, so the density config here is deferred to the same
