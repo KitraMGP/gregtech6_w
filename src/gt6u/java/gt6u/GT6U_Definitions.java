@@ -25,12 +25,17 @@ package gt6u;
 import java.util.function.Supplier;
 
 import gregapi.api.IGT6Definitions;
+import gregapi.data.FL;
+import gregapi.data.RM;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.recipes.maps.RecipeMapFormingPress;
+import gregapi.util.ST;
+import gt6u.data.FL_GT6U;
+import net.minecraft.world.item.ItemStack;
 
 import static gregapi.data.CS.*;
 
-/** GregTech6-Unofficial's changes to GT6's static definitions, asked by GT6 while it builds them (META-INF/services). */
+/** GregTech6-Unofficial's changes to GT6's static definitions and recipe helpers, asked by GT6 while it runs them (META-INF/services). */
 public class GT6U_Definitions implements IGT6Definitions {
 	@Override
 	public RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {
@@ -41,6 +46,54 @@ public class GT6U_Definitions implements IGT6Definitions {
 		case "gt.recipe.assembler": return assembler();
 		default: return null;
 		}
+	}
+	
+	@Override
+	public Long number(String aName, long aGT6) {
+		switch (aName) {
+		case "gt.replicator.power_per_nucleon": return 512L; // GT6U RecipeMapReplicator.java:91
+		default: return null;
+		}
+	}
+	
+	/** GT6U's RM.biomass (GT6U RM.java): circuit 5 for the plain Recipes, circuit 6 for those sped up by Biomass Flora, no rotten
+	 *  drink or mushroom soup. GT6U's statement stands where GT6 6.17 changed the same one; the mineral water Recipe, which GT6
+	 *  added after 6.14.17, stays as GT6 makes it. */
+	@Override
+	public Boolean biomass(ItemStack aBiomass, long aSpeed) {
+		if (ST.invalid(aBiomass)) return F;
+		int tSize = aBiomass.getCount();
+		long tBiomassFloraAcc = 4;
+		
+		if (tSize <= 0) return F;
+		aBiomass = ST.amount(1, aBiomass);
+		for (String tFluid : FluidsGT.WATER) if (FL.exists(tFluid) && !"riverwater".equals(tFluid)) {
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 4) / tSize, ST.tag(5), aBiomass, FL.make(tFluid, 1080 / tSize), FL.BiomassIC2.make(1080 / tSize), ZL_IS);
+			
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 4 / tBiomassFloraAcc) / tSize, ST.tag(6), aBiomass, FL.array(FL.make(tFluid, 1080 / tSize), FL_GT6U.BiomassFlora.make(1080 / tSize / 8)), FL.BiomassIC2.make(1080 * 2 / tSize), ZL_IS);
+		}
+		RM.Fermenter.addRecipe1(F, 16, (aSpeed * 4) / tSize, aBiomass, FL.MnWtr.make(                     1080 / tSize), FL.BiomassIC2.make(1080   / tSize, FL.Biomass), ZL_IS);
+		for (String tFluid : FluidsGT.MILK ) if (FL.exists(tFluid)) {
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3) / tSize, ST.tag(5), aBiomass, FL.make(tFluid, 1080 / tSize), FL.BiomassIC2.make(2160 / tSize), ZL_IS);
+			
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3 / tBiomassFloraAcc) / tSize, ST.tag(6), aBiomass, FL.array(FL.make(tFluid, 1080 / tSize), FL_GT6U.BiomassFlora.make(1080 / tSize / 8)), FL.BiomassIC2.make(2160 * 2   / tSize), ZL_IS);
+		}
+		for (String tFluid : FluidsGT.JUICE) if (FL.exists(tFluid) && !"potion.idunsapplejuice".equals(tFluid) && !"potion.goldenapplejuice".equals(tFluid) && !"goldencarrotjuice".equals(tFluid)) {
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3) / tSize, ST.tag(5), aBiomass, FL.make(tFluid, 1080 / tSize), FL.BiomassIC2.make(3240 / tSize), ZL_IS);
+			RM.Fermenter.addRecipe2(F, 16, aSpeed / tSize, ST.tag(5), aBiomass, FL.make("potion.idunsapplejuice", 209952 / tSize), FL.BiomassIC2.make(2099520 / tSize), ZL_IS);
+			RM.Fermenter.addRecipe2(F, 16, aSpeed / tSize, ST.tag(5), aBiomass, FL.make("potion.goldenapplejuice", 23328 / tSize), FL.BiomassIC2.make(233280 / tSize), ZL_IS);
+			RM.Fermenter.addRecipe2(F, 16, aSpeed / tSize, ST.tag(5), aBiomass, FL.make("goldencarrotjuice", 2592 / tSize), FL.BiomassIC2.make(25920 / tSize), ZL_IS);
+			
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3 / tBiomassFloraAcc) / tSize, ST.tag(6), aBiomass, FL.array(FL.make(tFluid, 1080 / tSize), FL_GT6U.BiomassFlora.make(1080 / tSize / 8)), FL.BiomassIC2.make(3240 * 2  / tSize), ZL_IS);
+		}
+		for (String tFluid : FluidsGT.HONEY) if (FL.exists(tFluid)) {
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3) / tSize, ST.tag(5), aBiomass, FL.make(tFluid, 1080 / tSize), FL.BiomassIC2.make(3240 / tSize), ZL_IS);
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 2) / tSize, ST.tag(5), aBiomass, FL.Honeydew.make(1080 / tSize), FL.BiomassIC2.make(3240 / tSize), ZL_IS);
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 2) / tSize, ST.tag(5), aBiomass, FL.RoyalJelly.make(1080 / tSize), FL.BiomassIC2.make(32400 / tSize), ZL_IS);
+			
+			RM.Fermenter.addRecipe2(F, 16, (aSpeed * 3 / tBiomassFloraAcc) / tSize, ST.tag(6), aBiomass, FL.array(FL.make(tFluid, 1080 / tSize), FL_GT6U.BiomassFlora.make(1080 / tSize / 8)), FL.BiomassIC2.make(3240 * 2   / tSize), ZL_IS);
+		}
+		return T;
 	}
 	
 	/** GT6U's definitions of four GT6 maps (GT6U RM.java:106-150); they differ from GT6's only where GT6U changed them. */

@@ -26,10 +26,15 @@ package gregapi.api;
 import java.util.function.Supplier;
 
 import gregapi.recipes.Recipe.RecipeMap;
+import net.minecraft.world.item.ItemStack;
 
-/** An addon's changes to GT6's static definitions, asked while GT6 builds them, before any addon code would run otherwise.
- *  Registered as a service in META-INF/services/gregapi.api.IGT6Definitions; a null answer keeps GT6's definition. */
+/** An addon's changes to GT6's static definitions and recipe helpers, asked while GT6 runs them, before any addon code would run
+ *  otherwise. Registered as a service in META-INF/services/gregapi.api.IGT6Definitions; a null answer keeps GT6's own. */
 public interface IGT6Definitions {
 	/** The Recipe Map GT6 keeps under this internal name, or null for GT6's own; aGT6 builds GT6's own when called. */
 	default RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {return null;}
+	/** The number GT6 keeps under this name, or null for GT6's own aGT6. */
+	default Long number(String aName, long aGT6) {return null;}
+	/** Makes the Fermenter's biomass Recipes of this item in place of RM.biomass and returns its result, or null to leave them to GT6. */
+	default Boolean biomass(ItemStack aBiomass, long aSpeed) {return null;}
 }

@@ -29,10 +29,11 @@ import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 import gregapi.recipes.Recipe.RecipeMap;
+import net.minecraft.world.item.ItemStack;
 
 import static gregapi.data.CS.*;
 
-/** Where GT6's static definitions ask the addons' IGT6Definitions; without addons every answer is GT6's own. */
+/** Where GT6's static definitions and recipe helpers ask the addons' IGT6Definitions; without addons every answer is GT6's own. */
 public final class GT6Definitions {
 	private GT6Definitions() {}
 	
@@ -47,5 +48,16 @@ public final class GT6Definitions {
 	public static RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {
 		for (IGT6Definitions tAddon : ADDONS) {RecipeMap rMap = tAddon.recipeMap(aNameInternal, aGT6); if (rMap != null) return rMap;}
 		return aGT6.get();
+	}
+	
+	public static long number(String aName, long aGT6) {
+		for (IGT6Definitions tAddon : ADDONS) {Long rNumber = tAddon.number(aName, aGT6); if (rNumber != null) return rNumber;}
+		return aGT6;
+	}
+	
+	/** The addon's result of making these biomass Recipes, or null when no addon makes them. */
+	public static Boolean biomass(ItemStack aBiomass, long aSpeed) {
+		for (IGT6Definitions tAddon : ADDONS) {Boolean rResult = tAddon.biomass(aBiomass, aSpeed); if (rResult != null) return rResult;}
+		return null;
 	}
 }

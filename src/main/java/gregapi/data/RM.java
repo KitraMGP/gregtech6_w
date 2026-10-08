@@ -689,6 +689,8 @@ public class RM {
 	
 	public static boolean biomass(ItemStack aBiomass) {return biomass(aBiomass, 64);}
 	public static boolean biomass(ItemStack aBiomass, long aSpeed) {
+		Boolean tAddon = gregapi.api.GT6Definitions.biomass(aBiomass, aSpeed);
+		if (tAddon != null) return tAddon;
 		if (ST.invalid(aBiomass)) return F;
 		int tSize = aBiomass.getCount();
 		if (tSize <= 0) return F;

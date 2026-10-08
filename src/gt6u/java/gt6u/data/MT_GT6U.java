@@ -94,6 +94,8 @@ public class MT_GT6U extends MT {
 		MT.OREMATS.Chromite.ores(MT.MnO2, MT.Cr, MT.Mg, MT.OREMATS.Bromargyrite);
 		MT.OREMATS.Chromite.setSmelting(null, 0);
 		MT.Nb.ores(MT.OREMATS.Tantalite, MT.TiO2);
+		// GT6U lists Phosphorus' by-products a second time (GT6U MT.java:2442, :2446).
+		MT.Phosphorus.ores(MT.Phosphorite, MT.Apatite, MT.FluoriteYellow, MT.PO4);
 		// PORT-TODO(GT6U-DEFINITIONS): GT6U redefines Sand (MT.java:904), makes Neutronium an element (:539), drops the unknown(...) elements (:523-806) · GT6 makes them as before · needs a definition-time seam: dust's re-registrations cannot be taken back afterwards
 	}
 }
