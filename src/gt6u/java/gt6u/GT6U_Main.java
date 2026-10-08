@@ -34,8 +34,14 @@ import gt6u.items.MultiItemFood_Recipes;
 import gt6u.items.MultiItemRandomTools_Recipes;
 import gt6u.items.MultiItemTechnological_Recipes;
 import gt6u.loaders.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -52,6 +58,14 @@ public class GT6U_Main extends Abstract_Mod {
 
 	public GT6U_Main(IEventBus aModBus) {
 		subscribePhases(aModBus);
+		aModBus.addListener(this::onAddPackFinders);
+	}
+	
+	/** GT6U's versions of GT6's own textures sit in a built-in pack above GT6's resources: as mod resources they would rank below
+	 *  GregTech's, which loads after the addon. Position.TOP puts the pack last in the list, where it wins (as GT_API.onAddPackFinders). */
+	public void onAddPackFinders(AddPackFindersEvent aEvent) {
+		if (aEvent.getPackType() != PackType.CLIENT_RESOURCES) return;
+		aEvent.addPackFinders(Identifier.fromNamespaceAndPath(MOD_ID, "gt6u_overrides"), PackType.CLIENT_RESOURCES, Component.literal("GT6U Addon: GT6U's GregTech textures"), PackSource.BUILT_IN, T, Pack.Position.TOP);
 	}
 
 	/** Registry id (MultiTileEntityRegistry.currentID) of a multiblock part GT6U names by its id: GT6U kept one registry, the addon
