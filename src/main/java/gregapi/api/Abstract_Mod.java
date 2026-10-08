@@ -133,6 +133,15 @@ public abstract class Abstract_Mod {
 	
 	/** Called after the Last GT PreInit Phase happened. */
 	public void onModFinalPreInit(FMLPreInitializationEvent aEvent) {/**/}
+	
+	private static boolean sFinishedAllPreInits = F;
+	/** Calls onModFinalPreInit once on every GT-API mod, when the construct phase that carries PreInit is over (GT_API's first RegisterEvent). */
+	public static void finishPreInits() {
+		if (sFinishedAllPreInits) return;
+		sFinishedAllPreInits = T;
+		FMLPreInitializationEvent tEvent = new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile());
+		for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalPreInit(tEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
+	}
 	/** Called after the Last GT Init Phase happened. */
 	public void onModFinalInit(FMLInitializationEvent aEvent) {/**/}
 	/** Called after the Last GT PostInit Phase happened. */
@@ -215,7 +224,7 @@ public abstract class Abstract_Mod {
 			
 			loadRunnables("Saving Configs", sConfigs);
 			
-			if (sFinishedPreInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalPreInit(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
+			// The final PreInit is called by finishPreInits: PreInit runs at mod construction, so mods constructed later are not counted yet here.
 			
 			OUT.println(getModNameForLog() + ": =======================");
 			ORD.println(getModNameForLog() + ": =======================");

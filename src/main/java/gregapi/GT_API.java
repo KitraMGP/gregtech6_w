@@ -441,6 +441,7 @@ public class GT_API extends Abstract_Mod {
 		finally {sBlockRegisterEvent = null;}
 	}
 	private static void onRegisterEvent(net.neoforged.neoforge.registries.RegisterEvent aEvent) {
+		gregapi.api.Abstract_Mod.finishPreInits();
 		if (aEvent.getRegistryKey().equals(net.minecraft.core.registries.Registries.BLOCK)) runDeferredBlockInit(aEvent);
 		// This listener runs after COMPONENTS' own (added earlier on the same bus), so both holders are bound here.
 		if (aEvent.getRegistryKey().equals(net.minecraft.core.registries.Registries.DATA_COMPONENT_TYPE)) {SUBTYPE_TYPE = SUBTYPE.get(); ZEROSIZE_TYPE = ZEROSIZE.get();}
