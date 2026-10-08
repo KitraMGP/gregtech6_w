@@ -418,7 +418,18 @@ public class Recipe {
 		}
 		
 		public boolean add(IRecipeMapHandler aRecipeMapHandler) {
+			if (RecipeCapture.take(this, aRecipeMapHandler)) return T;
 			return mRecipeMapHandlers.add(aRecipeMapHandler) && aRecipeMapHandler.onAddedToMap(this);
+		}
+
+		/** Takes out the Recipe Handlers that make the same Recipes as the given one; how many went. */
+		public int removeSameHandler(IRecipeMapHandler aTemplate) {
+			int rRemoved = 0;
+			for (IRecipeMapHandler tHandler : new ArrayList<>(mRecipeMapHandlers)) {
+				boolean tSame = tHandler.getClass() == aTemplate.getClass() && (tHandler instanceof gregapi.recipes.handlers.RecipeMapHandlerPrefix ? ((gregapi.recipes.handlers.RecipeMapHandlerPrefix)tHandler).sameAs((gregapi.recipes.handlers.RecipeMapHandlerPrefix)aTemplate) : tHandler.equals(aTemplate));
+				if (tSame && mRecipeMapHandlers.remove(tHandler)) rRemoved++;
+			}
+			return rRemoved;
 		}
 		
 		public Slot_Base getSpecialSlot(ITileEntityInventoryGUI aInventory, int aIndex, int aX, int aY) {

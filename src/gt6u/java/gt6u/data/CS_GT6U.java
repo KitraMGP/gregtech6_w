@@ -32,6 +32,6 @@ public class CS_GT6U {
 	/** GT6U's electric EV tools; the ids are those GT6U gave them in GT6's MetaTool, here in the addon's own. */
 	public static final short MININGDRILL_EV = 106, CHAINSAW_EV = 116, WRENCH_EV = 126, JACKHAMMER_EV_Normal = 134, MONKEY_WRENCH_EV = 186;
 	
-	/** GT6U's MultiItems for physics and biology. */
-	public static MultiItemRandom PHYS, BIO;
+	/** GT6U's MultiItems: physics and biology, and its technological items, which GT6U kept in GT6's own. */
+	public static MultiItemRandom PHYS, BIO, TECH;
 }

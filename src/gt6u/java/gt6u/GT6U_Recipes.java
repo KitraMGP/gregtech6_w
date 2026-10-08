@@ -26,6 +26,7 @@ package gt6u;
 import java.util.Map;
 
 import gregapi.recipes.ICraftingRecipeGT;
+import gregapi.recipes.IRecipeMapHandler;
 import gregapi.recipes.Recipe;
 import gregapi.recipes.RecipeCapture;
 import gregapi.recipes.Recipe.RecipeMap;
@@ -41,6 +42,7 @@ public class GT6U_Recipes {
 		int tMissing = 0;
 		for (Map.Entry<RecipeMap, Recipe> tEntry : tCaptured.mMachine) if (tEntry.getKey().removeSame(tEntry.getValue()) <= 0) tMissing++;
 		for (ICraftingRecipeGT tRecipe : tCaptured.mCrafting) if (CR.removeSame(tRecipe) <= 0) tMissing++;
-		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size()) + " GT6 Recipes to take back were not found");
+		for (Map.Entry<RecipeMap, IRecipeMapHandler> tEntry : tCaptured.mHandlers) if (tEntry.getKey().removeSameHandler(tEntry.getValue()) <= 0) tMissing++;
+		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size()) + " GT6 Recipes to take back were not found");
 	}
 }

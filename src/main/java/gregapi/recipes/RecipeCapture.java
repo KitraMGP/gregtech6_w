@@ -30,18 +30,20 @@ import java.util.Map;
 
 import gregapi.recipes.Recipe.RecipeMap;
 
-/** Restating GT6 statements without their effect on GT6's Recipes: Recipe Maps, the crafting list and OreDict listeners hand what
- *  they would add to the capture instead. An addon takes back a GT6 Recipe this way; GT6 itself never opens it. */
+/** Restating GT6 statements without their effect on GT6's Recipes: Recipe Maps (Recipes and Recipe Handlers), the crafting list and
+ *  OreDict listeners hand what they would add to the capture instead. An addon takes back a GT6 Recipe this way; GT6 never opens it. */
 public final class RecipeCapture {
 	private RecipeCapture() {}
 
 	private static List<Map.Entry<RecipeMap, Recipe>> sMachine = null;
 	private static List<ICraftingRecipeGT> sCrafting = null;
+	private static List<Map.Entry<RecipeMap, IRecipeMapHandler>> sHandlers = null;
 
 	/** Recipes a restatement made, none of them added. */
 	public static final class Captured {
 		public final List<Map.Entry<RecipeMap, Recipe>> mMachine = new ArrayList<>();
 		public final List<ICraftingRecipeGT> mCrafting = new ArrayList<>();
+		public final List<Map.Entry<RecipeMap, IRecipeMapHandler>> mHandlers = new ArrayList<>();
 	}
 
 	public static boolean open() {return sMachine != null;}
@@ -50,8 +52,9 @@ public final class RecipeCapture {
 		Captured rCaptured = new Captured();
 		List<Map.Entry<RecipeMap, Recipe>> tMachine = sMachine;
 		List<ICraftingRecipeGT> tCrafting = sCrafting;
-		sMachine = rCaptured.mMachine; sCrafting = rCaptured.mCrafting;
-		try {aRestatement.run();} finally {sMachine = tMachine; sCrafting = tCrafting;}
+		List<Map.Entry<RecipeMap, IRecipeMapHandler>> tHandlers = sHandlers;
+		sMachine = rCaptured.mMachine; sCrafting = rCaptured.mCrafting; sHandlers = rCaptured.mHandlers;
+		try {aRestatement.run();} finally {sMachine = tMachine; sCrafting = tCrafting; sHandlers = tHandlers;}
 		return rCaptured;
 	}
 
@@ -59,6 +62,13 @@ public final class RecipeCapture {
 	public static boolean take(RecipeMap aMap, Recipe aRecipe) {
 		if (sMachine == null) return false;
 		sMachine.add(new AbstractMap.SimpleEntry<>(aMap, aRecipe));
+		return true;
+	}
+
+	/** Called by a Recipe Map about to add a Recipe Handler: true when the capture took it instead. */
+	public static boolean take(RecipeMap aMap, IRecipeMapHandler aHandler) {
+		if (sHandlers == null) return false;
+		sHandlers.add(new AbstractMap.SimpleEntry<>(aMap, aHandler));
 		return true;
 	}
 

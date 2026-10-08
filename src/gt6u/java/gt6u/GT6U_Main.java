@@ -28,6 +28,10 @@ import gregapi.api.FMLPreInitializationEvent;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ModData;
 import gt6u.data.*;
+import gregapi.data.MD;
+import gt6u.compat.Compat_Recipes_IndustrialCraft;
+import gt6u.items.MultiItemRandomTools_Recipes;
+import gt6u.items.MultiItemTechnological_Recipes;
 import gt6u.loaders.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -71,6 +75,7 @@ public class GT6U_Main extends Abstract_Mod {
 		TD_GT6U.addToGT6();
 		// Its own MultiTileEntity registry, built where GT6 builds its own: in the deferred block queue, which runs on RegisterEvent.
 		GT_API.deferBlockInit(() -> new MultiTileEntityRegistry(REGISTRY));
+		new Compat_Recipes_IndustrialCraft(MD.IC2, this);
 	}
 	// After GregTech's PreInit, still before registration: GT6U's fluids, items and tool recipes sat in GT6's PreInit loaders.
 	@Override public void onModFinalPreInit(FMLPreInitializationEvent aEvent) {
@@ -86,8 +91,8 @@ public class GT6U_Main extends Abstract_Mod {
 	// recipe equal but for its duration to a dropped GT6 one is not taken back with it.
 	@Override public void onModFinalPostInit(FMLPostInitializationEvent aEvent) {
 		GT_API.deferItemInit(() -> {
-			Loader_Blocks.takeBack(); Loader_Fuels.takeBack(); Loader_Recipes_Chem.takeBack(); Loader_Recipes_Food.takeBack(); Loader_Recipes_Other.takeBack();
-			Loader_Blocks.run(); Loader_Fuels.run(); Loader_Recipes_Chem.run(); Loader_Recipes_Food.run(); Loader_Recipes_Other.run();
+			Loader_Blocks.takeBack(); Loader_Fuels.takeBack(); Loader_Recipes_Chem.takeBack(); Loader_Recipes_Food.takeBack(); Loader_Recipes_Other.takeBack(); Loader_Recipes_Handlers.takeBack(); Loader_Recipes_Vanilla_OreDict.takeBack(); MultiItemTechnological_Recipes.takeBack(); MultiItemRandomTools_Recipes.takeBack();
+			Loader_Blocks.run(); Loader_Fuels.run(); Loader_Recipes_Chem.run(); Loader_Recipes_Food.run(); Loader_Recipes_Other.run(); Loader_Recipes_Handlers.run(); Loader_Recipes_Vanilla_OreDict.run(); MultiItemTechnological_Recipes.run(); MultiItemRandomTools_Recipes.run();
 		});
 	}
 	@Override public void onModServerStarting2(ServerStartingEvent aEvent) {/**/}

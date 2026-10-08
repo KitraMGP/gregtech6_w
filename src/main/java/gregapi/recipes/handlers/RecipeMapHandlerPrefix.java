@@ -191,6 +191,15 @@ public class RecipeMapHandlerPrefix extends RecipeMapHandler {
 		return mAlreadyAddedAllRecipes;
 	}
 	
+	/** Makes the same Recipes: same inputs and outputs per unit, energy and time. The condition is left out, it is built anew each time. */
+	public boolean sameAs(RecipeMapHandlerPrefix aOther) {
+		return aOther != null && java.util.Arrays.equals(mInputPrefixes, aOther.mInputPrefixes) && java.util.Arrays.equals(mOutputPrefixes, aOther.mOutputPrefixes)
+			&& java.util.Arrays.equals(mInputAmounts, aOther.mInputAmounts) && java.util.Arrays.equals(mOutputAmounts, aOther.mOutputAmounts)
+			&& ST.equal(mAdditionalInput, aOther.mAdditionalInput) && ST.equal(mAdditionalOutput, aOther.mAdditionalOutput)
+			&& FL.equal(mFluidInputPerUnit, aOther.mFluidInputPerUnit) && FL.equal(mFluidOutputPerUnit, aOther.mFluidOutputPerUnit)
+			&& mUnitsInputted == aOther.mUnitsInputted && mUnitsOutputted == aOther.mUnitsOutputted && mEUt == aOther.mEUt && mDuration == aOther.mDuration && mMultiplier == aOther.mMultiplier;
+	}
+
 	@Override
 	public boolean onAddedToMap(RecipeMap aMap) {
 		if (mFluidInputPerUnit != null) {
