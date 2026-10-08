@@ -22,6 +22,7 @@
 
 package gt6u.data;
 
+import gregapi.data.AM;
 import gregapi.data.MD;
 import gregapi.data.MT;
 import gregapi.data.TC;
@@ -103,6 +104,7 @@ public class MT_GT6U extends MT {
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Li_6, MT.Be_7, MT.Y, MT.Ru, MT.Rh, MT.Hf, MT.Ta, MT.U_238, MT.U_235, MT.Pu, MT.Pu_241, MT.Pu_243, MT.Pu_239, MT.Am, MT.Am_241}) tMat.put(MOLTEN);
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.W, MT.Vb, MT.Ad}) tMat.remove(UNBURNABLE);
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Tn, MT.Ke, MT.Dn, MT.Vb, MT.Nq, MT.Nq_528, MT.Nq_522, MT.An, MT.Cor, MT.Dr, MT.Etx, MT.Atl, MT.Ad, MT.Mcg, MT.Gt}) tMat.put(FUSION);
+		for (OreDictMaterial tMat : new OreDictMaterial[] {AM.H, AM.D, AM.T}) tMat.put(FUSION); // GT6U AM.java
 		MT.Al2O3.setRGBa(248, 248, 255, 255);
 		MT.OREMATS.Chromite.mByProducts.clear();
 		MT.OREMATS.Chromite.ores(MT.MnO2, MT.Cr, MT.Mg, MT.OREMATS.Bromargyrite);
