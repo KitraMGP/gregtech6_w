@@ -77,7 +77,6 @@ public class Loader_Fluids {
 		FL.create("Anti-Helium", "Anti-Helium", AM.He, 2, 1000, 273);
 		FL.create("Anti-Helium_3", "Anti-Helium_3", AM.He_3, 2, 1000, 273);
 		FL.create("Anti-Carbon_13", "Anti-Carbon_13", AM.C_13, 2, 1000, 2000);
-		FL.create("liquidoxygen" , "Liquid Oxygen" , MT.O , 1, 1000, 85);
 		FL.create("sfuel" , "Fuel Oil With Sulfur", null , 1);
 		FL.create("sdiesel" , "Diesel With Sulfur" , null , 1);
 		FL.create("spetrol" , "Petrol With Sulfur" , null , 1);
@@ -165,6 +164,7 @@ public class Loader_Fluids {
 		FL.create("polyvinylchloride" , "Molten Polyvinylchloride" , MT_GT6U.PVC , 1,1000,423);
 		FL.create("polytetrafluoroethylene" , "Molten Polytetrafluoroethylene" , MT_GT6U.PTFE , 1,1000,423);
 		FL.create("epoxid" , "Molten Epoxid" , MT_GT6U.Epoxid , 1,1000,423);
+		FL.create("liquidoxygen" , "Liquid Oxygen" , MT.O , 1, 1000, 85);
 		FL.create("liquidhydrogen" , "Liquid Hydrogen" , MT.H , 1, 1000, 20);
 		FL.create("electro_etching_solution" , "Electro-Etching Solution", MT_GT6U.ElectroEtchingSolution , 1, 1000, 273);
 		FL.create("peroxydisulfuricacid" , "Peroxydisulfuric Acid", MT_GT6U.H2S2O8 , 1, 1000, 273);
