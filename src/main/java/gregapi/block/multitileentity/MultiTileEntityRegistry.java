@@ -215,6 +215,34 @@ public class MultiTileEntityRegistry {
 		mRegistry.put(aClassContainer.mID, aClassContainer);
 		mLastRegisteredID = aClassContainer.mID;
 		mRegistrations.add(aClassContainer);
+		onRegistered(aCategoricalName, aClassContainer);
+		if (aRecipe != null && aRecipe.length > 1) {
+			if (aRecipe[0] instanceof Object[]) aRecipe = (Object[])aRecipe[0];
+			if (aRecipe.length > 2) CR.shaped(getItem(aClassContainer.mID), CR.DEF_REV_NCC, aRecipe);
+		}
+		addToRecipeMachineLists(aClassContainer);
+		return getItem(aClassContainer.mID);
+	}
+
+	/** Replaces an entry already in this registry with a new class and/or parameters under the same id, keeping every index
+	 *  consistent; this is how an addon changes a GT6 machine. GT6 never calls it, so without addons nothing changes.
+	 *  Machines already placed keep the parameters saved with them; new placements and new items take the replacement. */
+	public ItemStack override(String aLocalised, String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
+		MultiTileEntityClassContainer tOld = aClassContainer == null ? null : mRegistry.get(aClassContainer.mID);
+		if (tOld == null || aClassContainer.mClass == null) {
+			ERR.println("MTE REGISTRY ERROR: override needs an occupied MetaData and a Class: " + mNameInternal + "." + (aClassContainer == null ? "null" : aClassContainer.mID));
+			return null;
+		}
+		if (UT.Code.stringValid(aLocalised)) LH.add(mNameInternal+"."+aClassContainer.mID, aLocalised);
+		removeFromRecipeMachineLists(tOld);
+		mRegistry.put(aClassContainer.mID, aClassContainer);
+		mRegistrations.set(mRegistrations.indexOf(tOld), aClassContainer);
+		onRegistered(aCategoricalName, aClassContainer);
+		addToRecipeMachineLists(aClassContainer);
+		return getItem(aClassContainer.mID);
+	}
+
+	private void onRegistered(String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
 		if (!mCreativeTabs.containsKey(aClassContainer.mCreativeTabID)) mCreativeTabs.put(aClassContainer.mCreativeTabID, new CreativeTab(mNameInternal+"."+aClassContainer.mCreativeTabID, aCategoricalName, Item.byBlock(mBlock), aClassContainer.mCreativeTabID));
 		// A client-only render-registration hook whose old API no longer exists used to throw and abort the whole loader,
 		// registering only one MTE of hundreds; failures here are now logged and skipped, but server-side ones still are not.
@@ -232,17 +260,22 @@ public class MultiTileEntityRegistry {
 		if (CODE_CLIENT && aClassContainer.mCanonicalTileEntity instanceof IMTE_OnRegistrationClient) {
 			try {((IMTE_OnRegistrationClient)aClassContainer.mCanonicalTileEntity).onRegistrationClient(this, aClassContainer.mID);} catch (Throwable e) {e.printStackTrace(ERR);}
 		}
-		if (aRecipe != null && aRecipe.length > 1) {
-			if (aRecipe[0] instanceof Object[]) aRecipe = (Object[])aRecipe[0];
-			if (aRecipe.length > 2) CR.shaped(getItem(aClassContainer.mID), CR.DEF_REV_NCC, aRecipe);
+	}
+
+	// A simple special case to make it easier to add a Machine to Recipe Lists without having to worry about anything.
+	private void addToRecipeMachineLists(MultiTileEntityClassContainer aClassContainer) {
+		for (String tKey : new String[] {NBT_RECIPEMAP, NBT_FUELMAP}) {
+			String tRecipeMapName = aClassContainer.mParameters.getString(tKey).orElse("");
+			if (UT.Code.stringValid(tRecipeMapName)) {RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(tRecipeMapName); if (tMap != null) tMap.mRecipeMachineList.add(getItem(aClassContainer.mID));}
 		}
-		// A simple special case to make it easier to add a Machine to Recipe Lists without having to worry about anything.
-		String
-		tRecipeMapName = aClassContainer.mParameters.getString(NBT_RECIPEMAP).orElse("");
-		if (UT.Code.stringValid(tRecipeMapName)) {RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(tRecipeMapName); if (tMap != null) tMap.mRecipeMachineList.add(getItem(aClassContainer.mID));}
-		tRecipeMapName = aClassContainer.mParameters.getString(NBT_FUELMAP).orElse("");
-		if (UT.Code.stringValid(tRecipeMapName)) {RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(tRecipeMapName); if (tMap != null) tMap.mRecipeMachineList.add(getItem(aClassContainer.mID));}
-		return getItem(aClassContainer.mID);
+	}
+
+	private void removeFromRecipeMachineLists(MultiTileEntityClassContainer aClassContainer) {
+		Item tItem = Item.byBlock(mBlock);
+		for (String tKey : new String[] {NBT_RECIPEMAP, NBT_FUELMAP}) {
+			RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(aClassContainer.mParameters.getString(tKey).orElse(""));
+			if (tMap != null) tMap.mRecipeMachineList.removeIf(aStack -> aStack != null && aStack.getItem() == tItem && ST.meta_(aStack) == aClassContainer.mID);
+		}
 	}
 	
 	public short mLastRegisteredID = W;
