@@ -25,6 +25,7 @@ package gregapi.api;
 
 import java.util.function.Supplier;
 
+import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 
@@ -33,6 +34,10 @@ import net.minecraft.world.item.ItemStack;
 public interface IGT6Definitions {
 	/** The Recipe Map GT6 keeps under this internal name, or null for GT6's own; aGT6 builds GT6's own when called. */
 	default RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {return null;}
+	/** The material GT6 defines under this name, or null for GT6's own; aGT6 defines GT6's own when called. */
+	default OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {return null;}
+	/** True when the addon drops GT6's definition of this name: GT6 then does not make it at all. */
+	default boolean drops(String aName) {return false;}
 	/** The number GT6 keeps under this name, or null for GT6's own aGT6. */
 	default Long number(String aName, long aGT6) {return null;}
 	/** Makes the Fermenter's biomass Recipes of this item in place of RM.biomass and returns its result, or null to leave them to GT6. */

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
+import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 
@@ -50,6 +51,16 @@ public final class GT6Definitions {
 		return aGT6.get();
 	}
 	
+	public static OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {
+		for (IGT6Definitions tAddon : ADDONS) {OreDictMaterial rMaterial = tAddon.material(aName, aGT6); if (rMaterial != null) return rMaterial;}
+		return aGT6.get();
+	}
+
+	public static boolean drops(String aName) {
+		for (IGT6Definitions tAddon : ADDONS) if (tAddon.drops(aName)) return T;
+		return F;
+	}
+
 	public static long number(String aName, long aGT6) {
 		for (IGT6Definitions tAddon : ADDONS) {Long rNumber = tAddon.number(aName, aGT6); if (rNumber != null) return rNumber;}
 		return aGT6;

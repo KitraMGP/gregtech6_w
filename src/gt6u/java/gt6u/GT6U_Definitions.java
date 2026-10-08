@@ -27,10 +27,12 @@ import java.util.function.Supplier;
 import gregapi.api.IGT6Definitions;
 import gregapi.data.FL;
 import gregapi.data.RM;
+import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.recipes.maps.RecipeMapFormingPress;
 import gregapi.util.ST;
 import gt6u.data.FL_GT6U;
+import gt6u.data.MT_GT6U;
 import net.minecraft.world.item.ItemStack;
 
 import static gregapi.data.CS.*;
@@ -45,6 +47,26 @@ public class GT6U_Definitions implements IGT6Definitions {
 		case "gt.recipe.press"    : return press();
 		case "gt.recipe.assembler": return assembler();
 		default: return null;
+		}
+	}
+	
+	@Override
+	public OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {
+		switch (aName) {
+		case "gt.material.Sand"      : return MT_GT6U.InMT.sand();
+		case "gt.material.SluiceSand": return MT_GT6U.InMT.sluiceSand();
+		case "gt.material.Neutronium": return MT_GT6U.InMT.neutronium();
+		default: return null;
+		}
+	}
+	
+	/** GT6U has no unknown(...) elements (GT6U MT.java, GT6 6.14.17 MT.java:523-806), no Steam gas binding and no "kerosene" fluid:
+	 *  it names that fluid "kerosine" (GT6U Loader_Fluids.java:101, made by the addon's Loader_Fluids). */
+	@Override
+	public boolean drops(String aName) {
+		switch (aName) {
+		case "gt.material.unknown": case "gt.material.Steam.gas": case "gt.fluid.kerosene": return T;
+		default: return F;
 		}
 	}
 	

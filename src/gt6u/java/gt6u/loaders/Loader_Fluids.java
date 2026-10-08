@@ -177,5 +177,5 @@ public class Loader_Fluids {
 	}
 
 	// GT6U's FL.create of an existing fluid reconfigures it in place (FL.create), which covers the plasmas and gases it re-made.
-	// PORT-TODO(GT6U-DEFINITIONS): GT6U drops MT.Steam.gas(FL.Steam.make(160000)) and the fluid "kerosene" · GT6 still makes both · needs a definition-time seam like the materials'
+	// GT6U's dropped MT.Steam.gas(...) and FL.create("kerosene", ...) are not made: GT6U_Definitions.drops.
 }

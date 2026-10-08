@@ -78,6 +78,19 @@ public class MT_GT6U extends MT {
 	FIBERCABLES_04 = {OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor), OP_GT6U.cableLPGt04.dat(MT.Superconductor)},
 	FIBERCABLES_01 = {OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor), OP_GT6U.cableLPGt01.dat(MT.Superconductor)};
 	
+	/** GT6U's definitions of GT6 materials, asked by MT while it defines them (GT6U_Definitions.material). Its own class: MT is
+	 *  still being initialised then, and loading MT_GT6U would read MT's materials before they exist. */
+	public static final class InMT {
+		private InMT() {}
+		
+		/** GT6U MT.java:904 makes Sand with create, not dust (no dust prefixes, no mortar); GT6 6.17's later aspects and stats stay. */
+		public static OreDictMaterial sand() {return create(8100, "Sand", SET_SAND, 250, 250, 200, 255, FURNACE, UNRECYCLABLE).aspects(TC.TERRA, 1).stealStatsElement(SiO2).setSmelting(Glass, U);}
+		/** GT6U MT.java:907 makes Sluice Sand an ore dust; GT6 6.17's later aspects and stats stay. */
+		public static OreDictMaterial sluiceSand() {return oredust(8102, "Sluice Sand", SET_SAND, 165, 165, 120, 255).aspects(TC.TERRA, 1, TC.LUCRUM, 1).stealStatsElement(SiO2);}
+		/** GT6U MT.java:539 makes Neutronium an element with GT6's id 3800; in the addon it takes an id of GT6U's own range. */
+		public static OreDictMaterial neutronium() {return element(15802, "Neutronium", "Nt", 0, 1, 3000, 100000, 100000, SET_SHINY, 255, 255, 255, 255).qual(3, 1000000000.0, 1000000000, 15).put(FUSION, MOLTEN, VALUABLE, UNBURNABLE, MAGICAL, WITHER_PROOF, ENDER_DRAGON_PROOF, GLOWING, LIGHTING, MAGNETIC_ACTIVE).aspects(TC.POTENTIA, 10, TC.NEBRISUM, 10, TC.PERMUTATIO, 10, TC.MAGNETO, 10, TC.PRAECANTIO, 10, TC.AURAM, 10);}
+	}
+	
 	/** GT6U's edits of GT6's own materials (GT6U MT.java), made before GT6 generates items, fluids and recipes from them. */
 	public static void changeGT6() {
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.y, MT.v, MT.n, MT.p, MT.e}) tMat.setTextures(SET_NONE);
@@ -89,13 +102,11 @@ public class MT_GT6U extends MT {
 		MT.Tn.mMeltingPoint = 1500; MT.Tn.mBoilingPoint = 2500; MT.Tn.mPlasmaPoint = 2500 * 100;
 		MT.Dn.mBoilingPoint = 2100; MT.Dn.mPlasmaPoint = 2100 * 100;
 		MT.Al2O3.setRGBa(248, 248, 255, 255);
-		MT.SluiceSand.put(G_DUST_ORES);
 		MT.OREMATS.Chromite.mByProducts.clear();
 		MT.OREMATS.Chromite.ores(MT.MnO2, MT.Cr, MT.Mg, MT.OREMATS.Bromargyrite);
 		MT.OREMATS.Chromite.setSmelting(null, 0);
 		MT.Nb.ores(MT.OREMATS.Tantalite, MT.TiO2);
 		// GT6U lists Phosphorus' by-products a second time (GT6U MT.java:2442, :2446).
 		MT.Phosphorus.ores(MT.Phosphorite, MT.Apatite, MT.FluoriteYellow, MT.PO4);
-		// PORT-TODO(GT6U-DEFINITIONS): GT6U redefines Sand (MT.java:904), makes Neutronium an element (:539), drops the unknown(...) elements (:523-806) · GT6 makes them as before · needs a definition-time seam: dust's re-registrations cannot be taken back afterwards
 	}
 }
