@@ -2185,7 +2185,12 @@ public class CS {
 	public static class ModIDs {
 		/** Lives here rather than on the client proxy so both the client render path and the common datagen code
 		 *  can ask it without either duplicating the check or leaking a client-only type into the dedicated server. */
-		public static boolean isGregNamespace(String aNS) {return GT.equals(aNS) || GAPI.equals(aNS);}
+		public static boolean isGregNamespace(String aNS) {
+			if (GT.equals(aNS) || GAPI.equals(aNS)) return true;
+			// Content of every mod built on the GT API is GT6 content too, as addons' blocks and items were in 1.7.10.
+			for (gregapi.api.Abstract_Mod tMod : gregapi.api.Abstract_Mod.MODS_USING_GT_API) if (tMod.getModID().equals(aNS)) return true;
+			return false;
+		}
 		/** MOD ID Strings */
 		@SuppressWarnings("hiding")
 		public static final String

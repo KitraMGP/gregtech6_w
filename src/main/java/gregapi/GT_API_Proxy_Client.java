@@ -180,7 +180,7 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 		java.util.List<net.minecraft.world.level.block.Block> tBlocks = new java.util.ArrayList<>();
 		for (net.minecraft.world.level.block.Block tBlock : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
 			net.minecraft.resources.Identifier tID = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(tBlock);
-			if (tID == null || !(tID.getNamespace().equals(gregapi.data.CS.ModIDs.GT) || tID.getNamespace().equals("gregtech"))) continue;
+			if (tID == null || !gregapi.data.CS.ModIDs.isGregNamespace(tID.getNamespace())) continue;
 			if (tBlock instanceof gregapi.block.IBlock) tBlocks.add(tBlock);
 		}
 		if (!tBlocks.isEmpty()) aEvent.register(tSource, tBlocks.toArray(new net.minecraft.world.level.block.Block[0]));

@@ -422,7 +422,17 @@ public class GT_API extends Abstract_Mod {
 	 *  event.register branch, since this phase's DeferredRegister may already have been processed). BlockItem is
 	 *  registered in the ITEMS DR (RegisterEvent&lt;Item&gt; fires later). */
 	public static final List<Runnable> DEFERRED_BLOCK_INIT = new ArrayListNoNulls<>();
-	public static void deferBlockInit(Runnable aInit) {if (aInit != null) DEFERRED_BLOCK_INIT.add(aInit);}
+	/** A block belongs to the mod that asked for it, as 1.7.10 FML prefixed it with the active container (GameData.addPrefix).
+	 *  The job runs later, on RegisterEvent, under another active mod, so the asking mod travels with the job. */
+	public static void deferBlockInit(Runnable aInit) {
+		if (aInit == null) return;
+		String tAsker = net.neoforged.fml.ModLoadingContext.get().getActiveNamespace();
+		String tOwner = ModIDs.MC.equals(tAsker) ? null : tAsker;
+		DEFERRED_BLOCK_INIT.add(() -> {String tOuter = sBlockOwner; sBlockOwner = tOwner; try {aInit.run();} finally {sBlockOwner = tOuter;}});
+	}
+	private static String sBlockOwner = null;
+	/** Namespace of the MultiTileEntity block being built and registered right now; GT's own when nobody queued it. */
+	public static String blockOwner() {return sBlockOwner == null ? ModIDs.GT : sBlockOwner;}
 	/** The active RegisterEvent&lt;Block&gt; while DEFERRED_BLOCK_INIT is draining; non-null ⇒ {@link #registerBlock} registers
 	 *  the block directly into this event's registry (this phase's DeferredRegister has already been processed). */
 	public static net.neoforged.neoforge.registries.RegisterEvent sBlockRegisterEvent = null;
@@ -527,15 +537,15 @@ public class GT_API extends Abstract_Mod {
 			// F12-followup (block-split, MTE): called from deferBlockInit during RegisterEvent<Block> — the block is ALREADY built
 			// (registry unfrozen), so we register it directly into the event's registry (the key is sanitized, matching the block's setId);
 			// BlockItem goes into the ITEMS DR (processed on RegisterEvent<Item> later). The BLOCKS DeferredRegister may already have been processed.
-			// F12-namespace (MTE): namespace=GT — GT6's gt.multitileentity content (the golden gregtech:), not gregapi. The only
-			// caller of registerBlock is MTE (ST.register from MultiTileEntityRegistry/MultiTileEntityBlock). The registry/item-DR key
-			// matches the block's setId (ModIDs.GT) and the item key (BuiltInRegistries.BLOCK.getKey(block)=GT). ~17k parity recipes.
-			sBlockRegisterEvent.register(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(ModIDs.GT, sanitizeRegName(aRegistryName)), () -> aBlock);
-			itemsFor(ModIDs.GT).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
+			// F12-namespace (MTE): the namespace is blockOwner(), the mod that queued the block — gregtech for GT6's own
+			// gt.multitileentity content (the golden gregtech:), an addon's id for its registry. The only caller of registerBlock
+			// is MTE (ST.register from MultiTileEntityRegistry/MultiTileEntityBlock); the key matches the block's setId.
+			sBlockRegisterEvent.register(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(blockOwner(), sanitizeRegName(aRegistryName)), () -> aBlock);
+			itemsFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
 			return null;
 		}
-		DeferredBlock<Block> rBlock = blocksFor(ModIDs.GT).register(sanitizeRegName(aRegistryName), () -> aBlock);
-		itemsFor(ModIDs.GT).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
+		DeferredBlock<Block> rBlock = blocksFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> aBlock);
+		itemsFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
 		return rBlock;
 	}
 
