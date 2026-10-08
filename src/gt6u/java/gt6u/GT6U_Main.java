@@ -28,7 +28,7 @@ import gregapi.api.FMLPreInitializationEvent;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ModData;
 import gt6u.data.*;
-import gt6u.loaders.Loader_MultiTileEntities;
+import gt6u.loaders.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
@@ -72,10 +72,24 @@ public class GT6U_Main extends Abstract_Mod {
 		// Its own MultiTileEntity registry, built where GT6 builds its own: in the deferred block queue, which runs on RegisterEvent.
 		GT_API.deferBlockInit(() -> new MultiTileEntityRegistry(REGISTRY));
 	}
+	// After GregTech's PreInit, still before registration: GT6U's fluids, items and tool recipes sat in GT6's PreInit loaders.
+	@Override public void onModFinalPreInit(FMLPreInitializationEvent aEvent) {
+		Loader_Fluids.run();
+		Loader_Items.run();
+		Loader_Tools.run();
+	}
 	@Override public void onModInit2(FMLInitializationEvent aEvent) {/**/}
 	// GregTech's Init has queued its MultiTileEntity loader by now, so GT6U's runs after it and finds GT6's entries to change.
 	@Override public void onModFinalInit(FMLInitializationEvent aEvent) {GT_API.deferItemInit(() -> new Loader_MultiTileEntities().run());}
 	@Override public void onModPostInit2(FMLPostInitializationEvent aEvent) {/**/}
+	// GregTech's recipe loaders are queued by now; GT6U's run after them. What GT6U dropped is taken back first, so that a GT6U
+	// recipe equal but for its duration to a dropped GT6 one is not taken back with it.
+	@Override public void onModFinalPostInit(FMLPostInitializationEvent aEvent) {
+		GT_API.deferItemInit(() -> {
+			Loader_Blocks.takeBack(); Loader_Fuels.takeBack(); Loader_Recipes_Chem.takeBack(); Loader_Recipes_Food.takeBack(); Loader_Recipes_Other.takeBack();
+			Loader_Blocks.run(); Loader_Fuels.run(); Loader_Recipes_Chem.run(); Loader_Recipes_Food.run(); Loader_Recipes_Other.run();
+		});
+	}
 	@Override public void onModServerStarting2(ServerStartingEvent aEvent) {/**/}
 	@Override public void onModServerStarted2(ServerStartedEvent aEvent) {/**/}
 	@Override public void onModServerStopping2(ServerStoppingEvent aEvent) {/**/}

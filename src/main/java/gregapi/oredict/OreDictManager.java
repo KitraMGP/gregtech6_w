@@ -137,6 +137,8 @@ public final class OreDictManager {
 	
 	private Set<IOreDictListenerEvent> mBufferedListeners1 = new HashSetNoNulls<>(16, 0.75F, T);
 	private void addListenerInternal(IOreDictListenerEvent aListener) {
+		// A restated listener (RecipeCapture) replays what it would have made and does not stay to make more.
+		if (gregapi.recipes.RecipeCapture.open()) {for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) aListener.onOreRegistration(tEvent); return;}
 		if (mGlobalOreDictListeners.add(aListener)) for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) aListener.onOreRegistration(tEvent);
 	}
 	
