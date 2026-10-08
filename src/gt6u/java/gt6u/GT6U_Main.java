@@ -27,6 +27,7 @@ import gregapi.api.FMLPostInitializationEvent;
 import gregapi.api.FMLPreInitializationEvent;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ModData;
+import gt6u.data.*;
 import gt6u.loaders.Loader_MultiTileEntities;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -48,15 +49,32 @@ public class GT6U_Main extends Abstract_Mod {
 		subscribePhases(aModBus);
 	}
 
+	/** Registry id (MultiTileEntityRegistry.currentID) of a multiblock part GT6U names by its id: GT6U kept one registry, the addon
+	 *  has its own beside GT6's, and every part not in the addon's is GT6's. */
+	public static int partRegistry(int aPartID) {
+		MultiTileEntityRegistry tAddon = MultiTileEntityRegistry.getRegistry(REGISTRY);
+		return (tAddon != null && tAddon.getClassContainer(aPartID) != null ? tAddon : MultiTileEntityRegistry.getRegistry("gt.multitileentity")).currentID();
+	}
+	
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
 	@Override public String getModNameForLog() {return "GT6U_Addon";}
 	@Override public Abstract_Proxy getProxy() {return null;}
 
-	// Its own MultiTileEntity registry, built where GT6 builds its own: in the deferred block queue, which runs on RegisterEvent.
-	@Override public void onModPreInit2(FMLPreInitializationEvent aEvent) {GT_API.deferBlockInit(() -> new MultiTileEntityRegistry(REGISTRY));}
-	// Queued after GT6's own MultiTileEntity loader (this mod's Init follows gregtech's), so GT6's entries exist to be overridden.
-	@Override public void onModInit2(FMLInitializationEvent aEvent) {GT_API.deferItemInit(() -> new Loader_MultiTileEntities().run());}
+	// Before GregTech's PreInit, which generates items, fluids and recipes from the materials, prefixes and tags defined here.
+	@Override public void onModPreInit2(FMLPreInitializationEvent aEvent) {
+		// A class literal does not run static definitions; forName does, in this order: tags before the prefixes that name them.
+		for (Class<?> tClass : new Class<?>[] {TD_GT6U.class, MT_GT6U.class, OP_GT6U.class, FL_GT6U.class, IL_GT6U.class, RM_GT6U.class, BI_GT6U.class}) {
+			try {Class.forName(tClass.getName(), true, tClass.getClassLoader());} catch (ClassNotFoundException e) {throw new IllegalStateException(e);}
+		}
+		MT_GT6U.changeGT6();
+		TD_GT6U.addToGT6();
+		// Its own MultiTileEntity registry, built where GT6 builds its own: in the deferred block queue, which runs on RegisterEvent.
+		GT_API.deferBlockInit(() -> new MultiTileEntityRegistry(REGISTRY));
+	}
+	@Override public void onModInit2(FMLInitializationEvent aEvent) {/**/}
+	// GregTech's Init has queued its MultiTileEntity loader by now, so GT6U's runs after it and finds GT6's entries to change.
+	@Override public void onModFinalInit(FMLInitializationEvent aEvent) {GT_API.deferItemInit(() -> new Loader_MultiTileEntities().run());}
 	@Override public void onModPostInit2(FMLPostInitializationEvent aEvent) {/**/}
 	@Override public void onModServerStarting2(ServerStartingEvent aEvent) {/**/}
 	@Override public void onModServerStarted2(ServerStartedEvent aEvent) {/**/}

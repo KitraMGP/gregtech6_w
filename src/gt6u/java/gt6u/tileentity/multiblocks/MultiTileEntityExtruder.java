@@ -24,8 +24,8 @@ package gt6u.tileentity.multiblocks;
 
 import java.util.List;
 
-import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.LH;
+import gt6u.GT6U_Main;
 import gregapi.data.LH.Chat;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.tileentity.multiblocks.ITileEntityMultiBlockController;
@@ -59,12 +59,10 @@ public class MultiTileEntityExtruder extends TileEntityBase10MultiBlockMachine {
 		tMaxZ = getBlockPos().getZ()+(SIDE_Z_POS==mFacing?0:SIDE_Z_NEG==mFacing?3:1);
 
 		if (WD.exists(level, tMinX, tMinY, tMinZ) && WD.exists(level, tMaxX, tMaxY, tMaxZ)) {
-			// The coils are GT6's own parts, so they are looked up in GT6's registry; the walls are this addon's.
-			int tGregRegistryID = MultiTileEntityRegistry.getRegistry("gt.multitileentity").currentID();
 			boolean tSuccess = T;
 			for (int tX = tMinX; tX <= tMaxX; tX++) for (int tY = tMinY; tY <= tMaxY; tY++) for (int tZ = tMinZ; tZ <= tMaxZ; tZ++) {
 				boolean tCoil = SIDES_AXIS_X[mFacing]?tX!=tMinX&&tX!=tMaxX:SIDES_AXIS_Z[mFacing]?tZ!=tMinZ&&tZ!=tMaxZ:tY!=tMinY&&tY!=tMaxY;
-				if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, tCoil ? 18043 : mDryerWalls, tCoil ? tGregRegistryID : getMultiTileEntityRegistryID(), 0, tCoil ? MultiTileEntityMultiBlockPart.NOTHING : MultiTileEntityMultiBlockPart.EVERYTHING, aCoordinates, aPlayer, aInventory)) tSuccess = F;
+				if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, tCoil ? 18043 : mDryerWalls, GT6U_Main.partRegistry(tCoil ? 18043 : mDryerWalls), 0, tCoil ? MultiTileEntityMultiBlockPart.NOTHING : MultiTileEntityMultiBlockPart.EVERYTHING, aCoordinates, aPlayer, aInventory)) tSuccess = F;
 			}
 			return tSuccess;
 		}

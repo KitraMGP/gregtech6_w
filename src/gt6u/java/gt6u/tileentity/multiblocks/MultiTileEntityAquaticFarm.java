@@ -21,6 +21,8 @@
 
 package gt6u.tileentity.multiblocks;
 
+import gt6u.GT6U_Main;
+
 import gregapi.util.WD;
 
 import gregapi.data.LH;
@@ -66,20 +68,20 @@ public class MultiTileEntityAquaticFarm extends TileEntityBase10MultiBlockMachin
 				boolean isNotSides = tX != tMinX && tX != tMaxX && tZ != tMinZ && tZ != tMaxZ;
 
 				// Layer 1
-				if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY(), tZ, isSides ? 18002 : 18298, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY)) tSuccess = F;
+				if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY(), tZ, isSides ? 18002 : 18298, GT6U_Main.partRegistry(isSides ? 18002 : 18298), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY)) tSuccess = F;
 
 				// Layer 2
 				if (isNotSides) {
 					if (getWater(tX, getBlockPos().getY() + 1, tZ)) WD.set(level, tX, getBlockPos().getY() + 1, tZ, Blocks.WATER, 0, 3); else tSuccess = F;
 				} else {
-					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY() + 1, tZ, isCorners ? 18002 : 18298, getMultiTileEntityRegistryID(), isCorners ? 0 : tD, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
+					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY() + 1, tZ, isCorners ? 18002 : 18298, GT6U_Main.partRegistry(isCorners ? 18002 : 18298), isCorners ? 0 : tD, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
 				}
 
 				// Layer 3
 				if (isNotSides) {
 					if (getWater(tX, getBlockPos().getY() + 2, tZ)) WD.set(level, tX, getBlockPos().getY() + 2, tZ, Blocks.WATER, 0, 3); else tSuccess = F;
 				} else {
-					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY() + 2, tZ, 18002, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
+					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, getBlockPos().getY() + 2, tZ, 18002, GT6U_Main.partRegistry(18002), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
 				}
 
 			}

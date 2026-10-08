@@ -1,5 +1,7 @@
 package gt6u.tileentity.multiblocks;
 
+import gt6u.GT6U_Main;
+
 import gregapi.util.WD;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.LH;
@@ -71,7 +73,9 @@ public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11
                               (tX == tMinX-1 || tX == tMaxX+1 || tY == tMinY-1 || tY == tMaxY+1 || tZ == tMinZ-1 || tZ == tMaxZ+1) ? mBatteryCasing
                             : (SIDES_AXIS_X[mFacing] ? tX == tMinX || tX == tMaxX: SIDES_AXIS_Z[mFacing] ? tZ == tMinZ || tZ == tMaxZ : tY == tMinY || tY == tMaxY) ? mElectrode
                             : mBatteryCore
-                            , getMultiTileEntityRegistryID(), 0,
+                            , GT6U_Main.partRegistry((tX == tMinX-1 || tX == tMaxX+1 || tY == tMinY-1 || tY == tMaxY+1 || tZ == tMinZ-1 || tZ == tMaxZ+1) ? mBatteryCasing
+                            : (SIDES_AXIS_X[mFacing] ? tX == tMinX || tX == tMaxX: SIDES_AXIS_Z[mFacing] ? tZ == tMinZ || tZ == tMaxZ : tY == tMinY || tY == tMaxY) ? mElectrode
+                            : mBatteryCore), 0,
                             (SIDES_AXIS_X[mFacing] ? tX == tInX : SIDES_AXIS_Z[mFacing] ? tZ == tInZ : tY == tInY) ? MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN : MultiTileEntityMultiBlockPart.NOTHING)) tSuccess = F;
                 }
 

@@ -1,5 +1,7 @@
 package gt6u.tileentity.multiblocks;
 
+import gt6u.GT6U_Main;
+
 import gregapi.data.LH;
 import gregapi.old.Textures;
 import gregapi.render.BlockTextureDefault;
@@ -54,7 +56,7 @@ public class MultiTileEntityHeatMixer extends TileEntityBase10MultiBlockMachine 
                         tBits = MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID_OUT;
                     }
                 }
-                if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, 18009, getMultiTileEntityRegistryID(), tX == tOutX && tY == tOutY && tZ == tOutZ ? 2 : 0, tBits)) tSuccess = F;
+                if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, 18009, GT6U_Main.partRegistry(18009), tX == tOutX && tY == tOutY && tZ == tOutZ ? 2 : 0, tBits)) tSuccess = F;
             }
 
             return tSuccess;

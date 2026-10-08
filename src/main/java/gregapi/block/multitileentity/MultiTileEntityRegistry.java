@@ -226,7 +226,7 @@ public class MultiTileEntityRegistry {
 
 	/** Replaces an entry under the same id keeping every index consistent: how an addon changes a GT6 machine; GT6 never calls it.
 	 *  Placed machines fill parameters they did not save from the current entry on load (TileEntityBase04MultiTileEntities), as for any changed registration; entries with a per-id registration hook are refused, their effects cannot be taken back. */
-	public ItemStack override(String aLocalised, String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
+	public ItemStack override(String aLocalised, String aCategoricalName, MultiTileEntityClassContainer aClassContainer, Object... aRecipe) {
 		MultiTileEntityClassContainer tOld = aClassContainer == null ? null : mRegistry.get(aClassContainer.mID);
 		if (tOld == null || aClassContainer.mClass == null || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistration || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistrationClient) {
 			ERR.println("MTE REGISTRY ERROR: override needs an occupied MetaData, a Class, and an entry without a per-id registration hook: " + mNameInternal + "." + (aClassContainer == null ? "null" : aClassContainer.mID));
@@ -237,6 +237,11 @@ public class MultiTileEntityRegistry {
 		mRegistrations.set(mRegistrations.indexOf(tOld), aClassContainer);
 		onRegistered(aCategoricalName, aClassContainer);
 		replaceInRecipeMachineLists(tOld, aClassContainer);
+		// A replacement recipe takes the place of every crafting recipe of this item, then is added as add() adds one.
+		if (aRecipe != null && aRecipe.length > 1) {
+			if (aRecipe[0] instanceof Object[]) aRecipe = (Object[])aRecipe[0];
+			if (aRecipe.length > 2) {CR.remout(getItem(aClassContainer.mID)); CR.shaped(getItem(aClassContainer.mID), CR.DEF_REV_NCC, aRecipe);}
+		}
 		return getItem(aClassContainer.mID);
 	}
 
