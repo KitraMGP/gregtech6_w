@@ -48,6 +48,22 @@ sourceSets.main.java.srcDir('src/compat-mirror/java')
 // Those jars own the packages at runtime, so the set builds apart and never enters the mod's output or jar.
 sourceSets { provided { java.srcDir('src/compat-mirror/provided') } }
 
+// GT6U ADDON: a second mod in its own source set and its own jar. It compiles against GregTech 6 and never the
+// other way round, so GregTech 6 cannot come to depend on it. Runs and tests load it only with -Pgt6u; without
+// the flag every run is pure GregTech 6.
+def withGt6u = project.hasProperty('gt6u')
+sourceSets {
+    gt6u {
+        // src/gt6u/java and src/gt6u/resources by Gradle's convention for a source set named gt6u.
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations {
+    gt6uCompileOnly.extendsFrom compileOnly
+    gt6uImplementation.extendsFrom implementation
+}
+
 // The -PcoreOnly mode was REMOVED together with the mass-compilation phase it served: it narrowed the
 // build to the core via two file lists, because the content layer didn't compile yet back then. The
 // content now compiles, the phase is closed — the mode and its lists (core_unit_v2_files.txt,
@@ -251,6 +267,11 @@ neoForge {
         "${mod_id}" {
             sourceSet(sourceSets.main)
         }
+        if (withGt6u) {
+            gt6u {
+                sourceSet(sourceSets.gt6u)
+            }
+        }
     }
 
     // ModDevGradle unit tests: sets up the 'test' sourceSet with Minecraft on the classpath.
@@ -260,6 +281,7 @@ neoForge {
     }
 }
 neoForge.addModdingDependenciesTo(sourceSets.provided)
+neoForge.addModdingDependenciesTo(sourceSets.gt6u)
 
 // Local mode: NeoFormRuntime takes the game from the platform copy beside the repository instead of asking Mojang.
 // Its manifests under minecraft/resolved point every address at a file of that copy.
@@ -391,24 +413,39 @@ test {
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+def modMetadataProperties = [
+        minecraft_version      : minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neo_version            : neo_version,
+        mod_id                 : mod_id,
+        mod_name               : mod_name,
+        mod_license            : mod_license,
+        mod_version            : mod_version,
+]
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-    ]
-    inputs.properties replaceProperties
-    expand replaceProperties
+    inputs.properties modMetadataProperties
+    expand modMetadataProperties
     from "src/main/templates"
     into "build/generated/sources/modMetadata"
 }
 // Include the output of "generateModMetadata" as an input directory for the build
 // this works with both building through Gradle and the IDE.
 sourceSets.main.resources.srcDir generateModMetadata
+
+// The GT6U addon's metadata and jar, with the same version as GregTech 6: the addon takes exactly the GregTech it was built with.
+var generateGt6uMetadata = tasks.register("generateGt6uMetadata", ProcessResources) {
+    inputs.properties modMetadataProperties
+    expand modMetadataProperties
+    from "src/gt6u/templates"
+    into "build/generated/sources/gt6uMetadata"
+}
+sourceSets.gt6u.resources.srcDir generateGt6uMetadata
+var gt6uJar = tasks.register('gt6uJar', Jar) {
+    archiveBaseName = 'gt6u'
+    archiveVersion = mod_version
+    from sourceSets.gt6u.output
+}
+tasks.named('assemble') { dependsOn gt6uJar }
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask generateModMetadata
 

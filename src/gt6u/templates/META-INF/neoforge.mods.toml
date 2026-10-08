@@ -1,0 +1,29 @@
+license="${mod_license}"
+issueTrackerURL="https://github.com/wolfram0108/gregtech6_w/issues"
+
+[[mods]]
+modId="gt6u"
+version="${mod_version}"
+displayName="GT6U Addon"
+displayURL="https://github.com/wolfram0108/gregtech6_w"
+authors="GT6U-Team (GregTech6-Unofficial), GregTech 6 NeoForge port"
+description='''
+Content of GregTech6-Unofficial by the GT6U-Team as an addon of GregTech 6: its own machines and materials,
+and the changes it makes to GregTech 6 machines. Without this addon GregTech 6 stays as Gregorius made it.
+'''
+
+# The addon is built on the internals of the GT API, so it takes exactly the GregTech 6 it was built with,
+# and runs every phase after GregTech's, whose machines it extends.
+[[dependencies.gt6u]]
+    modId="gregtech"
+    type="required"
+    versionRange="[${mod_version}]"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.gt6u]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
