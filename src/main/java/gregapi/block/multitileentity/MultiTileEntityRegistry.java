@@ -226,19 +226,20 @@ public class MultiTileEntityRegistry {
 
 	/** Replaces an entry already in this registry with a new class and/or parameters under the same id, keeping every index
 	 *  consistent; this is how an addon changes a GT6 machine. GT6 never calls it, so without addons nothing changes.
-	 *  Machines already placed keep the parameters saved with them; new placements and new items take the replacement. */
+	 *  Machines already placed keep the parameters saved with them; new placements and new items take the replacement.
+	 *  An entry whose class has a per-id registration hook is refused: the hook's effects are already applied and cannot be
+	 *  taken back, so running it again for the replacement would double them. */
 	public ItemStack override(String aLocalised, String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
 		MultiTileEntityClassContainer tOld = aClassContainer == null ? null : mRegistry.get(aClassContainer.mID);
-		if (tOld == null || aClassContainer.mClass == null) {
-			ERR.println("MTE REGISTRY ERROR: override needs an occupied MetaData and a Class: " + mNameInternal + "." + (aClassContainer == null ? "null" : aClassContainer.mID));
+		if (tOld == null || aClassContainer.mClass == null || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistration || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistrationClient) {
+			ERR.println("MTE REGISTRY ERROR: override needs an occupied MetaData, a Class, and an entry without a per-id registration hook: " + mNameInternal + "." + (aClassContainer == null ? "null" : aClassContainer.mID));
 			return null;
 		}
 		if (UT.Code.stringValid(aLocalised)) LH.add(mNameInternal+"."+aClassContainer.mID, aLocalised);
-		removeFromRecipeMachineLists(tOld);
 		mRegistry.put(aClassContainer.mID, aClassContainer);
 		mRegistrations.set(mRegistrations.indexOf(tOld), aClassContainer);
 		onRegistered(aCategoricalName, aClassContainer);
-		addToRecipeMachineLists(aClassContainer);
+		replaceInRecipeMachineLists(tOld, aClassContainer);
 		return getItem(aClassContainer.mID);
 	}
 
@@ -270,11 +271,16 @@ public class MultiTileEntityRegistry {
 		}
 	}
 
-	private void removeFromRecipeMachineLists(MultiTileEntityClassContainer aClassContainer) {
+	// A machine that stays with the same map keeps its place in the list, so the order a recipe viewer shows does not change.
+	private void replaceInRecipeMachineLists(MultiTileEntityClassContainer aOld, MultiTileEntityClassContainer aNew) {
 		Item tItem = Item.byBlock(mBlock);
 		for (String tKey : new String[] {NBT_RECIPEMAP, NBT_FUELMAP}) {
-			RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(aClassContainer.mParameters.getString(tKey).orElse(""));
-			if (tMap != null) tMap.mRecipeMachineList.removeIf(aStack -> aStack != null && aStack.getItem() == tItem && ST.meta_(aStack) == aClassContainer.mID);
+			RecipeMap tOldMap = RecipeMap.RECIPE_MAPS.get(aOld.mParameters.getString(tKey).orElse("")), tNewMap = RecipeMap.RECIPE_MAPS.get(aNew.mParameters.getString(tKey).orElse(""));
+			int tIndex = -1;
+			if (tOldMap != null) for (int i = 0; i < tOldMap.mRecipeMachineList.size(); i++) {ItemStack tStack = tOldMap.mRecipeMachineList.get(i); if (tStack != null && tStack.getItem() == tItem && ST.meta_(tStack) == aOld.mID) {tIndex = i; break;}}
+			if (tOldMap != null && tOldMap == tNewMap && tIndex >= 0) {tOldMap.mRecipeMachineList.set(tIndex, getItem(aNew.mID)); continue;}
+			if (tIndex >= 0) tOldMap.mRecipeMachineList.remove(tIndex);
+			if (tNewMap != null) tNewMap.mRecipeMachineList.add(getItem(aNew.mID));
 		}
 	}
 	

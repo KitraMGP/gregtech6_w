@@ -47,6 +47,8 @@ public class Loader_MultiTileEntities implements Runnable {
 	@Override
 	public void run() {
 		MultiTileEntityRegistry aRegistry = MultiTileEntityRegistry.getRegistry(GT6U_Main.REGISTRY);
+		// GT6's own machine carrier, built in GT6's PreInit (Loader_Others); this runs after the block registry froze, so it is
+		// only found here. A carrier with other parameters would be a new block, and MultiTileEntityBlock throws outside PreInit.
 		MultiTileEntityBlock aMachine = MultiTileEntityBlock.getOrCreate(MD.GT.mID, "machine", MaterialMachines.instance, SoundType.METAL, TOOL_wrench, 0, 0, 15, F, F);
 		OreDictMaterial aMat;
 
