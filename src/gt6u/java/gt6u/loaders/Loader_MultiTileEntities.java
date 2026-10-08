@@ -176,6 +176,13 @@ import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gt6u.GT6U_Main;
+// GT6U's versions of these GT6 classes: GT6U's own entries of them name these.
+import gt6u.tileentity.multiblocks.MultiTileEntityDistillationTower;
+import gt6u.tileentity.multiblocks.MultiTileEntityCryoDistillationTower;
+import gt6u.tileentity.multiblocks.MultiTileEntityFusionReactor;
+import gt6u.tileentity.multiblocks.MultiTileEntityLargeHeatExchanger;
+import java.util.ArrayList;
+import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.SoundType;
@@ -225,7 +232,18 @@ public class Loader_MultiTileEntities implements Runnable {
 
 		// GT6U gives these GT6 entries their material's colour (NBT_COLOR); in GT6 they stay uncoloured.
 		for (int tID : COLOURED) colour(tGT6, tID);
+		// GT6U changed these GT6 classes; in GT6U every GT6 entry of them ran the changed class, so here every one runs the subclass.
+		for (MultiTileEntityClassContainer tEntry : new ArrayList<>(tGT6.mRegistrations)) {
+			Class<? extends BlockEntity> tChanged = CHANGED_CLASSES.get(tEntry.mClass);
+			if (tChanged != null) tGT6.override(null, null, new MultiTileEntityClassContainer(tEntry.mID, tEntry.mCreativeTabID, tChanged, tEntry.mBlockMetaData, tEntry.mStackSize, tEntry.mBlock, tEntry.mParameters));
+		}
 	}
+	
+	private static final Map<Class<?>, Class<? extends BlockEntity>> CHANGED_CLASSES = Map.of(
+		  gregtech.tileentity.multiblocks.MultiTileEntityDistillationTower    .class, gt6u.tileentity.multiblocks.MultiTileEntityDistillationTower    .class
+		, gregtech.tileentity.multiblocks.MultiTileEntityCryoDistillationTower.class, gt6u.tileentity.multiblocks.MultiTileEntityCryoDistillationTower.class
+		, gregtech.tileentity.multiblocks.MultiTileEntityFusionReactor        .class, gt6u.tileentity.multiblocks.MultiTileEntityFusionReactor        .class
+		, gregtech.tileentity.multiblocks.MultiTileEntityLargeHeatExchanger   .class, gt6u.tileentity.multiblocks.MultiTileEntityLargeHeatExchanger   .class);
 
 	private static final int[] COLOURED = {1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1048, 1049, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1150, 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1652, 1653, 1654, 1655, 1656, 1657, 1658, 1659, 1660, 1720, 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742, 1743, 1744, 1770, 1771, 1772, 1773, 1774, 1775, 1776, 1777, 1778, 1779, 1780, 1781, 1782, 1783, 1784, 1785, 1786, 1787, 1788, 1789, 1790, 1791, 1792, 1793, 1794, 1870, 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, 1885, 1886, 1887, 1888, 1889, 1890, 1891, 1892, 1893, 1894, 9000, 9001, 9002, 9003, 9004, 9005, 9006, 9007, 9008, 9009, 9010, 9050, 9051, 9052, 9053, 9054, 9055, 9056, 9057, 9058, 9059, 9060, 17002, 17003, 17004, 17005, 17006, 17007, 17022, 17023, 17024, 17025, 17026, 17027, 17042, 17043, 17044, 17045, 17046, 17047, 17062, 17063, 17064, 17065, 17066, 17067, 17100, 17102, 17103, 17104, 17105, 17107, 17108, 17109, 17113, 17114, 17201, 17202, 17203, 17204, 17205, 17211, 17212, 17213, 17214, 17221, 17222, 17223, 17224, 17302, 17303, 17304, 17305, 17306, 17307, 17309, 17312, 17997, 17998, 17999, 18002, 18003, 18004, 18005, 18006, 18007, 18008, 18009, 18010, 18011, 18012, 18022, 18023, 18024, 18025, 18026, 18027, 18028, 18029, 18030, 18031, 18032, 18040, 18041, 18042, 18043, 18044, 18045, 18100, 18101, 18102, 18103, 18104, 18105, 18107, 18108, 18200, 18201, 18202, 18203, 18204, 18299, 20501, 20502, 20503, 20504, 20505, 20591, 20592, 20593, 20594, 20595, 22000, 22001, 22002, 22003, 22004};
 
