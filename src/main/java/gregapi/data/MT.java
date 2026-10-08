@@ -699,7 +699,7 @@ public class MT {
 	Ubb     = unknown( 1220,  184),
 	Ubt     = unknown( 1230,  186),
 	Ubq     = unknown( 1240,  188),
-	Tn      = element( 1250, "TritaniumElemental"    , "Tn"      , 125, 198, 2000, 3138, 25.0    , SET_DULL    ,  55, 155, 155, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbipentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 2, TC.VITREUS, 1).setLocal("Elemental Tritanium"), Ubp = Tn,
+	Tn      = GT6Definitions.material("gt.material.Tn", () -> element( 1250, "TritaniumElemental"    , "Tn"      , 125, 198, 2000, 3138, 25.0    , SET_DULL    ,  55, 155, 155, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbipentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 2, TC.VITREUS, 1).setLocal("Elemental Tritanium")), Ubp = Tn,
 	Ke      = element( 1260, "Trinium"               , "Ke"      , 126, 192, 2645, 4523,  1.06874, SET_COPPER  , 234, 234, 234, 255, G_INGOT_MACHINE_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbihexium").aspects(TC.METALLUM, 3, TC.TUTAMEN, 1, TC.VITREUS, 1).qual(3, 12.0, 2560, 4), Ubh = Ke,
 	Ubs     = unknown( 1270,  194),
 	Ubo     = unknown( 1280,  196),
@@ -719,7 +719,7 @@ public class MT {
 	Uqb     = unknown( 1420,  236),
 	Uqt     = unknown( 1430,  239),
 	Uqq     = unknown( 1440,  242),
-	Dn      = element( 1450, "DuraniumElemental"     , "Dn"      , 145, 190,  1200, 2491, 20.0, SET_DULL,  75, 175, 175, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unquadpentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 1).setLocal("Elemental Duranium"), Uqp = Dn, // material refined from dolamide ore
+	Dn      = GT6Definitions.material("gt.material.Dn", () -> element( 1450, "DuraniumElemental"     , "Dn"      , 145, 190,  1200, 2491, 20.0, SET_DULL,  75, 175, 175, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unquadpentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 1).setLocal("Elemental Duranium")), Uqp = Dn, // material refined from dolamide ore
 	Uqh     = unknown( 1460,  248),
 	Uqs     = unknown( 1470,  251),
 	Uqo     = unknown( 1480,  254),

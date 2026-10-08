@@ -89,6 +89,10 @@ public class MT_GT6U extends MT {
 		/** GT6U MT.java:907 makes Sluice Sand an ore dust; GT6 6.17's later aspects and stats stay. */
 		public static OreDictMaterial sluiceSand() {return oredust(8102, "Sluice Sand", SET_SAND, 165, 165, 120, 255).aspects(TC.TERRA, 1, TC.LUCRUM, 1).stealStatsElement(SiO2);}
 		/** GT6U MT.java:539 makes Neutronium an element with GT6's id 3800; in the addon it takes an id of GT6U's own range. */
+		/** GT6U MT.java:524, :526 give Elemental Tritanium and Duranium lower melting and boiling points, set at creation so that the
+		 *  alloys and compounds made of them, which MT defines afterwards, take them over. */
+		public static OreDictMaterial tritanium() {return element( 1250, "TritaniumElemental"    , "Tn"      , 125, 198, 1500, 2500, 25.0     , SET_DULL     ,  55, 155, 155, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbipentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 2, TC.VITREUS, 1).setLocal("Elemental Tritanium").put(FUSION);}
+		public static OreDictMaterial duranium() {return element( 1450, "DuraniumElemental"     , "Dn"      , 145, 190, 1200, 2100, 20.0, SET_DULL, 75, 175, 175, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unquadpentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 1).setLocal("Elemental Duranium").put(FUSION);}
 		public static OreDictMaterial neutronium() {return element(15802, "Neutronium", "Nt", 0, 1, 3000, 100000, 100000, SET_SHINY, 255, 255, 255, 255).qual(3, 1000000000.0, 1000000000, 15).put(FUSION, MOLTEN, VALUABLE, UNBURNABLE, MAGICAL, WITHER_PROOF, ENDER_DRAGON_PROOF, GLOWING, LIGHTING, MAGNETIC_ACTIVE).aspects(TC.POTENTIA, 10, TC.NEBRISUM, 10, TC.PERMUTATIO, 10, TC.MAGNETO, 10, TC.PRAECANTIO, 10, TC.AURAM, 10);}
 	}
 	
@@ -99,9 +103,6 @@ public class MT_GT6U extends MT {
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Li_6, MT.Be_7, MT.Y, MT.Ru, MT.Rh, MT.Hf, MT.Ta, MT.U_238, MT.U_235, MT.Pu, MT.Pu_241, MT.Pu_243, MT.Pu_239, MT.Am, MT.Am_241}) tMat.put(MOLTEN);
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.W, MT.Vb, MT.Ad}) tMat.remove(UNBURNABLE);
 		for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Tn, MT.Ke, MT.Dn, MT.Vb, MT.Nq, MT.Nq_528, MT.Nq_522, MT.An, MT.Cor, MT.Dr, MT.Etx, MT.Atl, MT.Ad, MT.Mcg, MT.Gt}) tMat.put(FUSION);
-		// Set as fields: heat() on an existing element reports tampering with the periodic table, GT6U set these at creation.
-		MT.Tn.mMeltingPoint = 1500; MT.Tn.mBoilingPoint = 2500; MT.Tn.mPlasmaPoint = 2500 * 100;
-		MT.Dn.mBoilingPoint = 2100; MT.Dn.mPlasmaPoint = 2100 * 100;
 		MT.Al2O3.setRGBa(248, 248, 255, 255);
 		MT.OREMATS.Chromite.mByProducts.clear();
 		MT.OREMATS.Chromite.ores(MT.MnO2, MT.Cr, MT.Mg, MT.OREMATS.Bromargyrite);

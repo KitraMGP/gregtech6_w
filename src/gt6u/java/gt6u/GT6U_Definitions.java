@@ -56,6 +56,8 @@ public class GT6U_Definitions implements IGT6Definitions {
 		case "gt.material.Sand"      : return MT_GT6U.InMT.sand();
 		case "gt.material.SluiceSand": return MT_GT6U.InMT.sluiceSand();
 		case "gt.material.Neutronium": return MT_GT6U.InMT.neutronium();
+		case "gt.material.Tn"        : return MT_GT6U.InMT.tritanium();
+		case "gt.material.Dn"        : return MT_GT6U.InMT.duranium();
 		default: return null;
 		}
 	}

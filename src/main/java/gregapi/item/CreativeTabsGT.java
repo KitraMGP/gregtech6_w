@@ -109,8 +109,10 @@ public final class CreativeTabsGT {
 			int tNew = 0;
 			for (java.util.Map.Entry<String, CreativeTab> tE : OWN_TABS.entrySet()) {
 				CreativeTab tTab = tE.getValue();
-				String tLocal = gregapi.data.LH.get("itemGroup." + tE.getKey(), tE.getKey());
 				java.util.Map<String, gregapi.config.ConfigValue> tCat = tCfg.mConfig.getCategory(SHELL_CATEGORY);
+				// Still a shell at server start: nothing made this tab any more (its mod is gone), so it leaves the cache.
+				if (tTab.mItem == null) {tCat.remove(tE.getKey()); continue;}
+				String tLocal = gregapi.data.LH.get("itemGroup." + tE.getKey(), tE.getKey());
 				if (!tCat.containsKey(tE.getKey())) tNew++;
 				tCfg.mConfig.get(SHELL_CATEGORY, tE.getKey(), tTab.mMetaData + "|" + tLocal);
 			}
