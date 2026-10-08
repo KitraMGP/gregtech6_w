@@ -263,11 +263,17 @@ public class MultiTileEntityRegistry {
 		}
 	}
 
+	// The recipe map an entry names under NBT_RECIPEMAP or NBT_FUELMAP; none when the entry names none (an empty name is not a map).
+	private static RecipeMap recipeMapOf(MultiTileEntityClassContainer aClassContainer, String aKey) {
+		String tRecipeMapName = aClassContainer.mParameters.getString(aKey).orElse("");
+		return UT.Code.stringValid(tRecipeMapName) ? RecipeMap.RECIPE_MAPS.get(tRecipeMapName) : null;
+	}
+	
 	// A simple special case to make it easier to add a Machine to Recipe Lists without having to worry about anything.
 	private void addToRecipeMachineLists(MultiTileEntityClassContainer aClassContainer) {
 		for (String tKey : new String[] {NBT_RECIPEMAP, NBT_FUELMAP}) {
-			String tRecipeMapName = aClassContainer.mParameters.getString(tKey).orElse("");
-			if (UT.Code.stringValid(tRecipeMapName)) {RecipeMap tMap = RecipeMap.RECIPE_MAPS.get(tRecipeMapName); if (tMap != null) tMap.mRecipeMachineList.add(getItem(aClassContainer.mID));}
+			RecipeMap tMap = recipeMapOf(aClassContainer, tKey);
+			if (tMap != null) tMap.mRecipeMachineList.add(getItem(aClassContainer.mID));
 		}
 	}
 
@@ -275,7 +281,7 @@ public class MultiTileEntityRegistry {
 	private void replaceInRecipeMachineLists(MultiTileEntityClassContainer aOld, MultiTileEntityClassContainer aNew) {
 		Item tItem = Item.byBlock(mBlock);
 		for (String tKey : new String[] {NBT_RECIPEMAP, NBT_FUELMAP}) {
-			RecipeMap tOldMap = RecipeMap.RECIPE_MAPS.get(aOld.mParameters.getString(tKey).orElse("")), tNewMap = RecipeMap.RECIPE_MAPS.get(aNew.mParameters.getString(tKey).orElse(""));
+			RecipeMap tOldMap = recipeMapOf(aOld, tKey), tNewMap = recipeMapOf(aNew, tKey);
 			int tIndex = -1;
 			if (tOldMap != null) for (int i = 0; i < tOldMap.mRecipeMachineList.size(); i++) {ItemStack tStack = tOldMap.mRecipeMachineList.get(i); if (tStack != null && tStack.getItem() == tItem && ST.meta_(tStack) == aOld.mID) {tIndex = i; break;}}
 			if (tOldMap != null && tOldMap == tNewMap && tIndex >= 0) {tOldMap.mRecipeMachineList.set(tIndex, getItem(aNew.mID)); continue;}
