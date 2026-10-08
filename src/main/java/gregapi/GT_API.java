@@ -28,7 +28,6 @@ import net.neoforged.fml.InterModComms;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
-import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
@@ -537,9 +536,7 @@ public class GT_API extends Abstract_Mod {
 			// F12-followup (block-split, MTE): called from deferBlockInit during RegisterEvent<Block> — the block is ALREADY built
 			// (registry unfrozen), so we register it directly into the event's registry (the key is sanitized, matching the block's setId);
 			// BlockItem goes into the ITEMS DR (processed on RegisterEvent<Item> later). The BLOCKS DeferredRegister may already have been processed.
-			// F12-namespace (MTE): the namespace is blockOwner(), the mod that queued the block — gregtech for GT6's own
-			// gt.multitileentity content (the golden gregtech:), an addon's id for its registry. The only caller of registerBlock
-			// is MTE (ST.register from MultiTileEntityRegistry/MultiTileEntityBlock); the key matches the block's setId.
+			// The namespace is blockOwner(), the mod that queued the block: gregtech for GT6's registry, an addon's id for its own.
 			sBlockRegisterEvent.register(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(blockOwner(), sanitizeRegName(aRegistryName)), () -> aBlock);
 			itemsFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
 			return null;
@@ -701,19 +698,7 @@ public class GT_API extends Abstract_Mod {
 		// are gated by the -Pgt6probes flag, and subscribe to the mod bus themselves (@EventBusSubscriber). They are no
 		// longer called from here — production code doesn't know about the rigging.
 
-		// F12: replacement for the @Mod.EventHandler annotation dispatcher — phases subscribe to the mod bus directly.
-		// GT6's three-phase contract (Pre/Init/Post) is preserved 1:1 on top of neo's native lifecycle events:
-		// PreInit -> FMLConstructModEvent; Init -> FMLCommonSetupEvent; PostInit -> FMLLoadCompleteEvent
-		// (decisions/F12-registration-lifecycle.md §4).
-		aModBus.addListener(this::onPreLoad);
-		aModBus.addListener(this::onLoad);
-		aModBus.addListener(this::onPostLoad);
-
-		// GT6's server phases (Abstract_Mod is already on neo's native events) — on the game bus, not the mod bus.
-		NeoForge.EVENT_BUS.addListener(this::onServerStarting);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarted);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopping);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopped);
+		subscribePhases(aModBus);
 		// BUG-033 (ROOT CAUSE): the deferred item-init must complete BEFORE the spawn area is pre-generated — see onLevelLoadEarlyItemInit.
 		NeoForge.EVENT_BUS.addListener(this::onLevelLoadEarlyItemInit);
 		// F11-recipe-scan (boundary M-52): /reload recreates the datapack RecipeMap — Replace suppression
@@ -927,6 +912,7 @@ public class GT_API extends Abstract_Mod {
 	 * inside PreInit works); formally relative to
 	 * FMLConstructModEvent on all builds; verify on the first real registration via ITEMS/BLOCKS.
 	 */
+	@Override
 	public void onPreLoad(FMLConstructModEvent aModEvent) {
 		FMLPreInitializationEvent aEvent = new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile());
 
@@ -949,6 +935,7 @@ public class GT_API extends Abstract_Mod {
 	 * Init. Replacement for {@code @Mod.EventHandler onLoad(FMLInitializationEvent)}: subscribed in the constructor to
 	 * {@link FMLCommonSetupEvent} (mod bus).
 	 */
+	@Override
 	public void onLoad(FMLCommonSetupEvent aModEvent) {
 		// F1/F12/F16 boot-timing: ore-targets + recipes create an ItemStack (ST.make(Blocks/Items)) — onLoad(CommonSetup) is NOT
 		// post-bind (Holder.components is bound by ReloadableServerResources on server-start). Wrapped in deferItemInit →
@@ -1000,17 +987,12 @@ public class GT_API extends Abstract_Mod {
 		// (verified: Holder.components is bound by ReloadableServerResources on server-start, Holder.java:108).
 	}
 
-	// PostInit: subscribed in the constructor to FMLLoadCompleteEvent (mod bus) — neo's native event
-	// replaces the old FML 1.7.10 complexity around loadComplete (the oracle comment above was removed along
-	// with the @Mod.EventHandler dispatcher, which was the source of the problem).
-	public void onPostLoad(FMLLoadCompleteEvent aModEvent) {onModPostInit(new FMLPostInitializationEvent());}
-
 	@Override public String getModID() {return MD.GAPI.mID;}
 	@Override public String getModName() {return MD.GAPI.mName;}
 	@Override public String getModNameForLog() {return "GT_API";}
 	@Override public Abstract_Proxy getProxy() {return api_proxy;}
 
-	// Server phases — subscribed in the constructor to NeoForge.EVENT_BUS (game bus), not the mod bus.
+	@Override
 	public void onServerStarting  (ServerStartingEvent aEvent) {
 		// LOCALIZATION CENTER (BUG-082), SERVER ARM. In 1.7.10 name injection lived in shared code
 		// (LanguageRegistry.injectLanguage — both sides), so server-side strings were human-readable too.
@@ -1020,9 +1002,6 @@ public class GT_API extends Abstract_Mod {
 		if (tInjected > 0) OUT.println("GT6 localization: GT6 names appended to the engine table (server): " + tInjected);
 		onModServerStarting(aEvent);
 	}
-	public void onServerStarted   (ServerStartedEvent  aEvent) {onModServerStarted(aEvent);}
-	public void onServerStopping  (ServerStoppingEvent aEvent) {onModServerStopping(aEvent);}
-	public void onServerStopped   (ServerStoppedEvent  aEvent) {onModServerStopped(aEvent);}
 
 	@Override
 	@SuppressWarnings({ "resource", "deprecation" })

@@ -30,11 +30,6 @@ import gregapi.code.ModData;
 import gt6u.loaders.Loader_MultiTileEntities;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
-import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -50,13 +45,7 @@ public class GT6U_Main extends Abstract_Mod {
 	public static final String REGISTRY = "gt6u.multitileentity";
 
 	public GT6U_Main(IEventBus aModBus) {
-		aModBus.addListener(this::onPreLoad);
-		aModBus.addListener(this::onLoad);
-		aModBus.addListener(this::onPostLoad);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarting);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarted);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopping);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopped);
+		subscribePhases(aModBus);
 	}
 
 	@Override public String getModID() {return MOD_ID;}
@@ -73,12 +62,4 @@ public class GT6U_Main extends Abstract_Mod {
 	@Override public void onModServerStarted2(ServerStartedEvent aEvent) {/**/}
 	@Override public void onModServerStopping2(ServerStoppingEvent aEvent) {/**/}
 	@Override public void onModServerStopped2(ServerStoppedEvent aEvent) {/**/}
-
-	public void onPreLoad         (FMLConstructModEvent aEvent) {onModPreInit(new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile()));}
-	public void onLoad            (FMLCommonSetupEvent  aEvent) {onModInit(new FMLInitializationEvent());}
-	public void onPostLoad        (FMLLoadCompleteEvent aEvent) {onModPostInit(new FMLPostInitializationEvent());}
-	public void onServerStarting  (ServerStartingEvent  aEvent) {onModServerStarting(aEvent);}
-	public void onServerStarted   (ServerStartedEvent   aEvent) {onModServerStarted(aEvent);}
-	public void onServerStopping  (ServerStoppingEvent  aEvent) {onModServerStopping(aEvent);}
-	public void onServerStopped   (ServerStoppedEvent   aEvent) {onModServerStopped(aEvent);}
 }

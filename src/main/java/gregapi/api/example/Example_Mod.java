@@ -62,16 +62,8 @@ public final class Example_Mod extends gregapi.api.Abstract_Mod {
 	@Override public String getModNameForLog() {return "Example_Mod";}
 	@Override public gregapi.api.Abstract_Proxy getProxy() {return PROXY;}
 	
-	// Do not change these 7 Functions. Just keep them this way.
-	// Wraps the neo event in GregTech6's own phase-marker mirror event before calling, the same
-	// technique as GT_API.onPreLoad/onLoad/onPostLoad.
-	@cpw.mods.fml.common.Mod.EventHandler public final void onPreLoad           (net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent    aEvent) {onModPreInit(new gregapi.api.FMLPreInitializationEvent(net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get().toFile()));}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onLoad              (net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent       aEvent) {onModInit(new gregapi.api.FMLInitializationEvent());}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onPostLoad          (net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent   aEvent) {onModPostInit(new gregapi.api.FMLPostInitializationEvent());}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onServerStarting    (net.neoforged.neoforge.event.server.ServerStartingEvent       aEvent) {onModServerStarting(aEvent);}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onServerStarted     (net.neoforged.neoforge.event.server.ServerStartedEvent        aEvent) {onModServerStarted(aEvent);}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onServerStopping    (net.neoforged.neoforge.event.server.ServerStoppingEvent       aEvent) {onModServerStopping(aEvent);}
-	@cpw.mods.fml.common.Mod.EventHandler public final void onServerStopped     (net.neoforged.neoforge.event.server.ServerStoppedEvent        aEvent) {onModServerStopped(aEvent);}
+	// Do not change this Constructor. NeoForge hands it the Mod Bus, and Abstract_Mod subscribes all the GT Phases to it.
+	public Example_Mod(net.neoforged.bus.api.IEventBus aModBus) {subscribePhases(aModBus);}
 	
 	// @Override
 	public void onModPreInit2(gregapi.api.FMLPreInitializationEvent aEvent) {

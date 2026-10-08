@@ -224,11 +224,8 @@ public class MultiTileEntityRegistry {
 		return getItem(aClassContainer.mID);
 	}
 
-	/** Replaces an entry already in this registry with a new class and/or parameters under the same id, keeping every index
-	 *  consistent; this is how an addon changes a GT6 machine. GT6 never calls it, so without addons nothing changes.
-	 *  Machines already placed keep the parameters saved with them; new placements and new items take the replacement.
-	 *  An entry whose class has a per-id registration hook is refused: the hook's effects are already applied and cannot be
-	 *  taken back, so running it again for the replacement would double them. */
+	/** Replaces an entry under the same id keeping every index consistent: how an addon changes a GT6 machine; GT6 never calls it.
+	 *  Placed machines fill parameters they did not save from the current entry on load (TileEntityBase04MultiTileEntities), as for any changed registration; entries with a per-id registration hook are refused, their effects cannot be taken back. */
 	public ItemStack override(String aLocalised, String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
 		MultiTileEntityClassContainer tOld = aClassContainer == null ? null : mRegistry.get(aClassContainer.mID);
 		if (tOld == null || aClassContainer.mClass == null || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistration || tOld.mCanonicalTileEntity instanceof IMTE_OnRegistrationClient) {

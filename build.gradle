@@ -48,9 +48,8 @@ sourceSets.main.java.srcDir('src/compat-mirror/java')
 // Those jars own the packages at runtime, so the set builds apart and never enters the mod's output or jar.
 sourceSets { provided { java.srcDir('src/compat-mirror/provided') } }
 
-// GT6U ADDON: a second mod in its own source set and its own jar. It compiles against GregTech 6 and never the
-// other way round, so GregTech 6 cannot come to depend on it. Runs and tests load it only with -Pgt6u; without
-// the flag every run is pure GregTech 6.
+// GT6U addon: a second mod in its own source set and jar, compiled against GregTech 6 and never the other way round.
+// Runs and tests load it only with -Pgt6u; without the flag every run is pure GregTech 6.
 def withGt6u = project.hasProperty('gt6u')
 sourceSets {
     gt6u {

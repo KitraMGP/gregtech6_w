@@ -30,6 +30,12 @@ import java.util.List;
 import gregapi.api.FMLInitializationEvent;
 import gregapi.api.FMLPostInitializationEvent;
 import gregapi.api.FMLPreInitializationEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -134,6 +140,26 @@ public abstract class Abstract_Mod {
 	
 	
 	@Override public String toString() {return getModID();}
+	
+	/** Subscribes the phases below to NeoForge, in place of the @Mod.EventHandler methods every 1.7.10 GT-API mod had. Call from the mod constructor. */
+	public final void subscribePhases(IEventBus aModBus) {
+		aModBus.addListener(this::onPreLoad);
+		aModBus.addListener(this::onLoad);
+		aModBus.addListener(this::onPostLoad);
+		NeoForge.EVENT_BUS.addListener(this::onServerStarting);
+		NeoForge.EVENT_BUS.addListener(this::onServerStarted);
+		NeoForge.EVENT_BUS.addListener(this::onServerStopping);
+		NeoForge.EVENT_BUS.addListener(this::onServerStopped);
+	}
+	
+	// PreInit, Init and PostInit are the mod-bus events below (decisions/F12-registration-lifecycle.md §4); server phases are on the game bus.
+	public void onPreLoad       (FMLConstructModEvent aEvent) {onModPreInit(new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile()));}
+	public void onLoad          (FMLCommonSetupEvent  aEvent) {onModInit(new FMLInitializationEvent());}
+	public void onPostLoad      (FMLLoadCompleteEvent aEvent) {onModPostInit(new FMLPostInitializationEvent());}
+	public void onServerStarting(ServerStartingEvent  aEvent) {onModServerStarting(aEvent);}
+	public void onServerStarted (ServerStartedEvent   aEvent) {onModServerStarted(aEvent);}
+	public void onServerStopping(ServerStoppingEvent  aEvent) {onModServerStopping(aEvent);}
+	public void onServerStopped (ServerStoppedEvent   aEvent) {onModServerStopped(aEvent);}
 	
 	public void loadRunnables(String aName, List<Runnable> aList) {
 		if (aList.isEmpty()) return;

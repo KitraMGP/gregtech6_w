@@ -25,11 +25,6 @@ package gregapi;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
-import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -68,38 +63,13 @@ public class GT_API_Post extends Abstract_Mod {
 	public GT_API_Post(IEventBus aModBus) {
 		GAPI_POST = this;
 
-		// Subscribes lifecycle phases directly to the mod bus instead of the old @Mod.EventHandler
-		// annotation dispatcher, the same technique as gregapi.GT_API.
-		aModBus.addListener(this::onPreLoad);
-		aModBus.addListener(this::onLoad);
-		aModBus.addListener(this::onPostLoad);
-
-		// Server phases are on the game bus, not the mod bus, as in gregapi.GT_API.
-		NeoForge.EVENT_BUS.addListener(this::onServerStarting);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarted);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopping);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopped);
+		subscribePhases(aModBus);
 	}
 
 	@Override public String getModID() {return MD.GAPI_POST.mID;}
 	@Override public String getModName() {return MD.GAPI_POST.mName;}
 	@Override public String getModNameForLog() {return "GT_API_POST";}
 	@Override public Abstract_Proxy getProxy() {return null;}
-
-	// PreInit, subscribed in the constructor to FMLConstructModEvent instead of the old
-	// @Mod.EventHandler annotation, the same technique as gregapi.GT_API#onPreLoad.
-	public void onPreLoad(FMLConstructModEvent aModEvent) {onModPreInit(new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile()));}
-	// Init, subscribed to FMLCommonSetupEvent instead of the old @Mod.EventHandler annotation.
-	public void onLoad(FMLCommonSetupEvent aModEvent) {onModInit(new FMLInitializationEvent());}
-	// PostInit, subscribed to FMLLoadCompleteEvent instead of the old annotation; this is also where
-	// CR.stopBuffering() fires once every GT-API mod has finished post-init, unchanged from before.
-	public void onPostLoad(FMLLoadCompleteEvent aModEvent) {onModPostInit(new FMLPostInitializationEvent());}
-
-	// Server phases are subscribed in the constructor to NeoForge.EVENT_BUS, not the mod bus.
-	public void onServerStarting  (ServerStartingEvent aEvent) {onModServerStarting(aEvent);}
-	public void onServerStarted   (ServerStartedEvent  aEvent) {onModServerStarted(aEvent);}
-	public void onServerStopping  (ServerStoppingEvent aEvent) {onModServerStopping(aEvent);}
-	public void onServerStopped   (ServerStoppedEvent  aEvent) {onModServerStopped(aEvent);}
 
 	@Override
 	// Data-init can't run during preInit (Holder isn't bound yet), so it is deferred, but it must be

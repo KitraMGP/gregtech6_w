@@ -28,9 +28,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import gregapi.api.FMLPreInitializationEvent;
 import gregapi.api.FMLInitializationEvent;
 import gregapi.api.FMLPostInitializationEvent;
@@ -114,14 +111,7 @@ public class GT6_Main extends Abstract_Mod {
 		// entity renderers via EntityRenderersEvent (registerClientRenderers — a no-op on the server).
 		gregtech.entities.EntitiesGT.register(aModBus);
 		gt_proxy.registerClientRenderers(aModBus);
-		// F12: replaces the @Mod.EventHandler annotation dispatcher — phase subscriptions on the bus (pattern from gregapi.GT_API_Post).
-		aModBus.addListener(this::onPreLoad);
-		aModBus.addListener(this::onLoad);
-		aModBus.addListener(this::onPostLoad);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarting);
-		NeoForge.EVENT_BUS.addListener(this::onServerStarted);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopping);
-		NeoForge.EVENT_BUS.addListener(this::onServerStopped);
+		subscribePhases(aModBus);
 	}
 	
 	@Override
@@ -692,13 +682,4 @@ public class GT6_Main extends Abstract_Mod {
 	@Override public String getModName() {return MD.GT.mName;}
 	@Override public String getModNameForLog() {return "GT_Mod";}
 	@Override public Abstract_Proxy getProxy() {return gt_proxy;}
-
-	// F12: subscribed in the constructor (replaces @Mod.EventHandler). PreInit->FMLConstructModEvent, Init->FMLCommonSetupEvent, PostInit->FMLLoadCompleteEvent (mapping as in gregapi.GT_API_Post).
-	public void onPreLoad         (FMLConstructModEvent aEvent) {onModPreInit(new gregapi.api.FMLPreInitializationEvent(net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get().toFile()));}
-	public void onLoad            (FMLCommonSetupEvent  aEvent) {onModInit(new gregapi.api.FMLInitializationEvent());}
-	public void onPostLoad        (FMLLoadCompleteEvent aEvent) {onModPostInit(new gregapi.api.FMLPostInitializationEvent());}
-	public void onServerStarting  (net.neoforged.neoforge.event.server.ServerStartingEvent aEvent) {onModServerStarting(aEvent);}
-	public void onServerStarted   (net.neoforged.neoforge.event.server.ServerStartedEvent  aEvent) {onModServerStarted(aEvent);}
-	public void onServerStopping  (net.neoforged.neoforge.event.server.ServerStoppingEvent aEvent) {onModServerStopping(aEvent);}
-	public void onServerStopped   (net.neoforged.neoforge.event.server.ServerStoppedEvent  aEvent) {onModServerStopped(aEvent);}
 }
