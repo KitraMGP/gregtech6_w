@@ -142,18 +142,22 @@ public final class OreDictManager {
 		if (mGlobalOreDictListeners.add(aListener)) for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) aListener.onOreRegistration(tEvent);
 	}
 	
-	/** Takes out the listeners of aOreDictName in GT6's Names listeners that make the same Recipes as aRestated on what is
-	 *  registered under that name; how many went. A listener that makes nothing yet cannot be told apart and stays. */
-	public int removeSameListeners(String aOreDictName, IOreDictListenerEvent aRestated) {
+	/** Takes out of GT6's Names listeners the listener that makes the same Recipes as aRestated on what is registered under
+	 *  aOreDictNames (the names aRestated listens to), from each of these names; how many names it left. -1 when nothing is
+	 *  registered under any of them yet: a listener that makes nothing cannot be told apart, and stays. */
+	public int removeSameListeners(Collection<String> aOreDictNames, IOreDictListenerEvent aRestated) {
 		List<OreDictRegistrationContainer> tRegistrations = new ArrayList<>();
-		for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) if (aOreDictName.equals(tEvent.mOreDictName)) tRegistrations.add(tEvent);
+		for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) if (aOreDictNames.contains(tEvent.mOreDictName)) tRegistrations.add(tEvent);
 		gregapi.recipes.RecipeCapture.Captured tWanted = gregapi.recipes.RecipeCapture.capture(() -> {for (OreDictRegistrationContainer tEvent : tRegistrations) aRestated.onOreRegistration(tEvent);});
-		if (tWanted.isEmpty()) return 0;
+		if (tWanted.isEmpty()) return -1;
 		int rRemoved = 0;
 		for (IOreDictListenerEvent tGlobal : new ArrayList<>(mGlobalOreDictListeners)) if (tGlobal instanceof gregapi.oredict.event.OreDictListenerEvent_Names tNames) {
-			for (IOreDictListenerEvent tListener : new ArrayList<>(tNames.listeners(aOreDictName))) {
-				gregapi.recipes.RecipeCapture.Captured tMade = gregapi.recipes.RecipeCapture.capture(() -> {for (OreDictRegistrationContainer tEvent : tRegistrations) tListener.onOreRegistration(tEvent);});
-				if (tWanted.sameRecipes(tMade) && tNames.removeListener(aOreDictName, tListener)) rRemoved++;
+			Set<IOreDictListenerEvent> tCandidates = Collections.newSetFromMap(new IdentityHashMap<>());
+			for (String tName : aOreDictNames) tCandidates.addAll(tNames.listeners(tName));
+			for (IOreDictListenerEvent tListener : tCandidates) {
+				// a candidate hears what is registered under the names it listens to
+				gregapi.recipes.RecipeCapture.Captured tMade = gregapi.recipes.RecipeCapture.capture(() -> {for (OreDictRegistrationContainer tEvent : tRegistrations) if (tNames.listeners(tEvent.mOreDictName).contains(tListener)) tListener.onOreRegistration(tEvent);});
+				if (tWanted.sameRecipes(tMade)) for (String tName : aOreDictNames) if (tNames.removeListener(tName, tListener)) rRemoved++;
 			}
 		}
 		return rRemoved;
