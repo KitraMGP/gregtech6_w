@@ -201,19 +201,14 @@ public class Loader_MultiTileEntities implements Runnable {
 		, aHive       = MultiTileEntityBlock.getOrCreate(MD.GT.mID, "rock"         , MaterialScoopable.instance, SoundType.WOOD , TOOL_scoop  , 0, 0, 15, F, F)
 		;
 
-		storages(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		crucible(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		unsorted1(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		unsorted2(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
-		computer(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		multiblocks(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
-		machines1(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		machines2(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		machines3(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		machines4(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
-		kinetic(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		connectors(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
-		extenders(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		sensors(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 		misc(aRegistry, tGT6, aMetal, aMetalChips, aMetalWires, aMachine, aWooden, aBush, aStone, aWool, aTNT, aHive, aUtilMetal, aUtilStone, aUtilWood, aUtilWool, MT.NULL, null);
 
@@ -253,10 +248,6 @@ public class Loader_MultiTileEntities implements Runnable {
 		CompoundTag tParameters = tOld.mParameters.copy();
 		tParameters.putInt(NBT_COLOR, UT.Code.getRGBInt(tMat.fRGBaSolid));
 		aGT6.override(null, null, new MultiTileEntityClassContainer(aID, tOld.mCreativeTabID, tOld.mClass, tOld.mBlockMetaData, tOld.mStackSize, tOld.mBlock, tParameters));
-	}
-
-	@SuppressWarnings("unused")
-	private static void storages(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 	}
 
 	@SuppressWarnings("unused")
@@ -307,23 +298,11 @@ public class Loader_MultiTileEntities implements Runnable {
 
 	@SuppressWarnings("unused")
 	private static void unsorted2(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
-		aClass = MultiTileEntityTransformerElectric.class;
-		aMat = MT.DATA.Electric_T[8];
-		for (int i = 0; i < 10; i++) {
-		}
-		aClass = MultiTileEntityQuantumEnergizerLaser.class;
-		aMat = MT.Osmiridium;
-		for (int i = 0; i < 10; i++) {
-		}
 		IL_GT6U.Battery_Lead_Acid_IV         .set(aRegistry.add("Lead-Acid Battery ("+VN[5]+")"                  , "Batteries"                           , 14005, 14013, MultiTileEntityBatteryEU8192 .class, 0, 16, aUtilMetal , UT.NBT.make(NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_COLOR, DYES_INT[DYE_INDEX_Orange]                     , NBT_INPUT, V[5], NBT_CAPACITY, V[5] *   2000, NBT_ENERGY_ACCEPTED, TD.Energy.EU), "WPW", "BCB", "BBB", 'P', OP.plate.dat(MT.BatteryAlloy), 'B', IL.Battery_Lead_Acid_Cell_Filled, 'W', MT.DATA.CABLES_01[5], 'C', OD_CIRCUITS[5]), null, "gt:re-battery5");
 		IL_GT6U.Battery_Alkaline_IV          .set(aRegistry.add("Alkaline Battery ("+VN[5]+")"                   , "Batteries"                           , 14015, 14013, MultiTileEntityBatteryEU8192.class      , 0, 16, aUtilMetal , UT.NBT.make(NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_COLOR, DYES_INT[DYE_INDEX_Blue]                       , NBT_INPUT, V[5], NBT_CAPACITY, V[5] *   4000, NBT_ENERGY_ACCEPTED, TD.Energy.EU), "WPW", "BCB", "BBB", 'P', OP.plate.dat(MT.BatteryAlloy), 'B', IL.Battery_Alkaline_Cell_Filled, 'W', MT.DATA.CABLES_01[5], 'C', OD_CIRCUITS[5]), null, "gt:re-battery5");
 		IL_GT6U.Battery_NiCd_IV              .set(aRegistry.add("Nickel-Cadmium Battery ("+VN[5]+")"             , "Batteries"                           , 14025, 14013, MultiTileEntityBatteryEU8192.class      , 0, 16, aUtilMetal , UT.NBT.make(NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_COLOR, DYES_INT[DYE_INDEX_Lime]                       , NBT_INPUT, V[5], NBT_CAPACITY, V[5] *   4000, NBT_ENERGY_ACCEPTED, TD.Energy.EU), "WPW", "BCB", "BBB", 'P', OP.plate.dat(MT.BatteryAlloy), 'B', IL.Battery_NiCd_Cell_Filled, 'W', MT.DATA.CABLES_01[5], 'C', OD_CIRCUITS[5]), null, "gt:re-battery5");
 		IL_GT6U.Battery_LiCoO2_IV            .set(aRegistry.add("Lithium-Cobalt Battery ("+VN[5]+")"             , "Batteries"                           , 14035, 14013, MultiTileEntityBatteryAdvEU8192.class   , 0, 16, aUtilMetal , UT.NBT.make(NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_COLOR, DYES_INT[DYE_INDEX_Blue]                       , NBT_INPUT, V[5], NBT_CAPACITY, V[5] *  64000, NBT_ENERGY_ACCEPTED, TD.Energy.EU), "WPW", "BCB", "BBB", 'P', OP.plate.dat(MT.BatteryAlloy), 'B', IL.Battery_LiCoO2_Cell_Filled, 'W', MT.DATA.CABLES_01[5], 'C', OD_CIRCUITS[6]), null, "gt:re-battery5");
 		IL_GT6U.Battery_LiMn_IV              .set(aRegistry.add("Lithium-Manganese Battery ("+VN[5]+")"          , "Batteries"                           , 14045, 14013, MultiTileEntityBatteryAdvEU8192.class   , 0, 16, aUtilMetal , UT.NBT.make(NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_COLOR, DYES_INT[DYE_INDEX_Green]                      , NBT_INPUT, V[5], NBT_CAPACITY, V[5] * 128000, NBT_ENERGY_ACCEPTED, TD.Energy.EU), "WPW", "BCB", "BBB", 'P', OP.plate.dat(MT.BatteryAlloy), 'B', IL.Battery_LiMn_Cell_Filled, 'W', MT.DATA.CABLES_01[5], 'C', OD_CIRCUITS[6]), null, "gt:re-battery5");
-	}
-
-	@SuppressWarnings("unused")
-	private static void computer(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 	}
 
 	@SuppressWarnings("unused")
@@ -426,10 +405,6 @@ public class Loader_MultiTileEntities implements Runnable {
 	}
 
 	@SuppressWarnings("unused")
-	private static void machines1(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
-	}
-
-	@SuppressWarnings("unused")
 	private static void machines2(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 		aMat = MT.DATA.Kinetic_T[1]; override(tGT6, 20231, "Press (" + aMat.getLocal() + ")", null, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   7.0F, NBT_RESISTANCE,   7.0F, NBT_INPUT,   32, NBT_TEXTURE, "press", NBT_ENERGY_ACCEPTED, TD.Energy.KU, NBT_RECIPEMAP, RM.Press, NBT_INV_SIDE_IN, SBIT_L, NBT_INV_SIDE_AUTO_IN, SIDE_LEFT, NBT_INV_SIDE_OUT, SBIT_R, NBT_INV_SIDE_AUTO_OUT, SIDE_RIGHT, NBT_ENERGY_ACCEPTED_SIDES, SBIT_U, NBT_PARALLEL, 4, NBT_PARALLEL_DURATION, T), UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   7.0F, NBT_RESISTANCE,   7.0F, NBT_COLOR, UT.Code.getRGBInt(aMat.fRGBaSolid), NBT_INPUT,   32, NBT_TEXTURE, "press", NBT_ENERGY_ACCEPTED, TD.Energy.KU, NBT_RECIPEMAP, RM.Press, NBT_INV_SIDE_IN, SBIT_L, NBT_INV_SIDE_AUTO_IN, SIDE_LEFT, NBT_INV_SIDE_OUT, SBIT_R, NBT_INV_SIDE_AUTO_OUT, SIDE_RIGHT, NBT_TANK_SIDE_IN, SBIT_B, NBT_TANK_SIDE_AUTO_IN, SIDE_BACK, NBT_TANK_SIDE_OUT, SBIT_D, NBT_TANK_SIDE_AUTO_OUT, SIDE_BOTTOM, NBT_ENERGY_ACCEPTED_SIDES, SBIT_U, NBT_PARALLEL, 4, NBT_PARALLEL_DURATION, T));
 		aMat = MT.DATA.Kinetic_T[2]; override(tGT6, 20232, "Press (" + aMat.getLocal() + ")", null, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_INPUT,  128, NBT_TEXTURE, "press", NBT_ENERGY_ACCEPTED, TD.Energy.KU, NBT_RECIPEMAP, RM.Press, NBT_INV_SIDE_IN, SBIT_L, NBT_INV_SIDE_AUTO_IN, SIDE_LEFT, NBT_INV_SIDE_OUT, SBIT_R, NBT_INV_SIDE_AUTO_OUT, SIDE_RIGHT, NBT_ENERGY_ACCEPTED_SIDES, SBIT_U, NBT_PARALLEL, 8, NBT_PARALLEL_DURATION, T), UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_COLOR, UT.Code.getRGBInt(aMat.fRGBaSolid), NBT_INPUT,  128, NBT_TEXTURE, "press", NBT_ENERGY_ACCEPTED, TD.Energy.KU, NBT_RECIPEMAP, RM.Press, NBT_INV_SIDE_IN, SBIT_L, NBT_INV_SIDE_AUTO_IN, SIDE_LEFT, NBT_INV_SIDE_OUT, SBIT_R, NBT_INV_SIDE_AUTO_OUT, SIDE_RIGHT, NBT_TANK_SIDE_IN, SBIT_B, NBT_TANK_SIDE_AUTO_IN, SIDE_BACK, NBT_TANK_SIDE_OUT, SBIT_D, NBT_TANK_SIDE_AUTO_OUT, SIDE_BOTTOM, NBT_ENERGY_ACCEPTED_SIDES, SBIT_U, NBT_PARALLEL, 8, NBT_PARALLEL_DURATION, T));
@@ -478,10 +453,6 @@ public class Loader_MultiTileEntities implements Runnable {
 	}
 
 	@SuppressWarnings("unused")
-	private static void kinetic(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
-	}
-
-	@SuppressWarnings("unused")
 	private static void connectors(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 		aMat = MT_GT6U.PTFE; OreDictManager.INSTANCE.setTarget_(OP.capcellcon, aMat, aRegistry.add("Capsule-Cell-Container ("+aMat.getLocal()+")", "Fluid Containers", 32634, 32719, MultiTileEntityCell.class, 0, 64, aUtilMetal   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F, NBT_COLOR, UT.Code.getRGBInt(aMat.fRGBaSolid), NBT_TANK_CAPACITY, 1000, NBT_PLASMAPROOF, F, NBT_GASPROOF, T, NBT_ACIDPROOF, T, NBT_TEMPERATURE, aMat.mMeltingPoint-10 )), T, F, T);
 		aClass = MultiTileEntityPipeItem.class;
@@ -499,10 +470,6 @@ public class Loader_MultiTileEntities implements Runnable {
 	}
 
 	@SuppressWarnings("unused")
-	private static void extenders(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
-	}
-
-	@SuppressWarnings("unused")
 	private static void sensors(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 		aRegistry.add("Light Power Sensor"                                  , "Sensors"                             , 31022, 31015, MultiTileEntityLPmeter.class                            ,                 1, 16, aUtilMetal     , null, "WGW", "YXY", "WPW", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.COMPARATOR, 'X', OD.lever, 'Y', OP.wireFine.dat(MT.Au));
 	}
@@ -510,23 +477,6 @@ public class Loader_MultiTileEntities implements Runnable {
 	@SuppressWarnings("unused")
 	private static void misc(MultiTileEntityRegistry aRegistry, MultiTileEntityRegistry tGT6, MultiTileEntityBlock aMetal, MultiTileEntityBlock aMetalChips, MultiTileEntityBlock aMetalWires, MultiTileEntityBlock aMachine, MultiTileEntityBlock aWooden, MultiTileEntityBlock aBush, MultiTileEntityBlock aStone, MultiTileEntityBlock aWool, MultiTileEntityBlock aTNT, MultiTileEntityBlock aHive, MultiTileEntityBlock aUtilMetal, MultiTileEntityBlock aUtilStone, MultiTileEntityBlock aUtilWood, MultiTileEntityBlock aUtilWool, OreDictMaterial aMat, Class<? extends BlockEntity> aClass) {
 		aRegistry.add("Fluid Well"                                          , "Untyped"                             , 32699, 32764, MultiTileEntityFluidWell.class                        ,                 0, 64, aStone         , null);
-		for (int i = 0; i < 16; i++) {
-		}
-		for (int i = 0; i < 100; i++) {
-			if (ST.valid(PlankData.PLANKS[i])) {
-			} else {
-			}
-		}
-		for (int i = 0; i < 100; i++) {
-			if (ST.valid(PlankData.PLANKS[i+100])) {
-			} else {
-			}
-		}
-		for (int i = 0; i < 100; i++) {
-			if (ST.valid(PlankData.PLANKS[i+200])) {
-			} else {
-			}
-		}
 		aMat = MT_GT6U.PTFE; aRegistry.add("Polytetrafluoroethylene Drum"                        , "Fluid Containers"                    , 32100, 32719, MultiTileEntityBarrelMetal.class                        ,                 0, 16, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   6.0F, NBT_COLOR, UT.Code.getRGBInt(aMat.fRGBaSolid), NBT_TANK_CAPACITY,     256000, NBT_PLASMAPROOF, F, NBT_GASPROOF, T, NBT_ACIDPROOF, T                             ), " h ", "PSP", "PSP", 'P', OP.plateCurved.dat(aMat), 'S', OP.stickLong.dat(aMat));
 		aMat = MT_GT6U.Nb2Ti3C4; aRegistry.add("Titanium Niobium Carbide Drum"                       , "Fluid Containers"                    , 32087, 32719, MultiTileEntityBarrelMetal.class                        ,                 0, 16, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE, 100.0F, NBT_COLOR, UT.Code.getRGBInt(aMat.fRGBaSolid), NBT_TANK_CAPACITY,    4096000, NBT_PLASMAPROOF, T, NBT_GASPROOF, T, NBT_ACIDPROOF, F                             ), " h ", "PSP", "PSP", 'P', OP.plateCurved.dat(aMat), 'S', OP.stickLong.dat(aMat));
 	}
