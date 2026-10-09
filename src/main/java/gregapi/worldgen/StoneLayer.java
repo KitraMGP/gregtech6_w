@@ -129,7 +129,13 @@ public class StoneLayer {
 		mOreBroken       = BlocksGT.stoneToBrokenOres.get(mStack);
 		mOreSmall        = BlocksGT.stoneToSmallOres .get(mStack);
 		mOres            = new ArrayListNoNulls<>(8);
+		addOres(aOreChances);
+	}
+	
+	/** Ores of this layer, each switchable in the worldgen config under the layer's material; an addon adds to a GT6 layer here. */
+	public StoneLayer addOres(StoneLayerOres... aOreChances) {
 		for (StoneLayerOres tOre : aOreChances) if (tOre != null && tOre.mMaterial != MT.Empty && ConfigsGT.WORLDGEN.get("stonelayers."+mMaterial.mNameInternal, tOre.mMaterial.mNameInternal, T)) mOres.add(tOre);
+		return this;
 	}
 	
 	public StoneLayer setNoDeep() {mNoDeep = T; return this;}

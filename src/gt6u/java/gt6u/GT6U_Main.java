@@ -108,6 +108,8 @@ public class GT6U_Main extends Abstract_Mod {
 		GT_API.deferItemInit(() -> {
 			for (Runnable[] tEdit : EDITS) tEdit[0].run();
 			for (Runnable[] tEdit : EDITS) tEdit[1].run();
+			// GT6's stone layers are made by its Init loaders, queued before this
+			Loader_Worldgen.run();
 		});
 	}
 

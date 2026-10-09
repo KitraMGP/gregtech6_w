@@ -24,16 +24,12 @@ package gt6u.data;
 
 import java.util.Collection;
 
-import gregapi.data.FL;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import gregapi.fluid.IFluidName;
 
 import static gregapi.data.CS.FluidsGT.*;
 
-/** The fluid names GregTech6-Unofficial added to FL (GT6U FL.java). The same calls as on FL, served by FL's own static helpers. */
-public enum FL_GT6U {
+/** The fluid names GregTech6-Unofficial added to FL (GT6U FL.java); what a constant does with its fluid is IFluidName's, as for FL. */
+public enum FL_GT6U implements IFluidName {
 	  HeliumP                   ("heliumplasma"                                             , PLASMA)
 	, NitrogenP                 ("nitrogenplasma"                                           , PLASMA)
 	, OxygenP                   ("oxygenplasma"                                             , PLASMA)
@@ -145,15 +141,8 @@ public enum FL_GT6U {
 	@SafeVarargs
 	FL_GT6U(String aName, Collection<String>... aFluidSets) {
 		mName = aName;
-		for (Collection<String> aFluidSet : aFluidSets) aFluidSet.add(mName);
+		IFluidName.addTo(mName, aFluidSets);
 	}
 
-	public Fluid fluid() {return FL.fluid_(mName);}
-	public boolean exists() {return FL.exists(mName);}
-	public FluidStack make (long aAmount) {return FL.make (mName, aAmount);}
-	public FluidStack make_(long aAmount) {return FL.make_(mName, aAmount);}
-	public ItemStack display(long aAmount) {return FL.display(make(aAmount), aAmount, false, false);}
-	public boolean is(IFluidTank aTank) {return is(aTank.getFluid());}
-	public boolean is(FluidStack aFluid) {return aFluid != null && FL.is(aFluid, mName);}
-	public boolean is(String aFluidName) {return mName.equalsIgnoreCase(aFluidName);}
+	@Override public String fluidName() {return mName;}
 }
