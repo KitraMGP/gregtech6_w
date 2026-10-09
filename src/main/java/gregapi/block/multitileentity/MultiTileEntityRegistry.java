@@ -91,7 +91,10 @@ public class MultiTileEntityRegistry {
 	/** The mod this registry was built for: its creative tabs, built later, take that mod's namespace. */
 	public final String mOwner;
 	public final MultiTileEntityBlockInternal mBlock;
-	
+	/** The registry this one answers from for ids it does not hold: an addon's machines name the parts of the registry they
+	 *  extend by their ids, as they did while they sat in it. GT6's own registries have none. */
+	private String mFallback = null;
+
 	private static final MultiTileEntityBlockInternal regblock(String aNameInternal, MultiTileEntityBlockInternal aBlock, Class<? extends BlockItem> aItemClass) {
 		ST.register(aBlock, aNameInternal, aItemClass);
 		return aBlock;
@@ -303,7 +306,23 @@ public class MultiTileEntityRegistry {
 	public ItemStack getItem(int aID, CompoundTag aNBT) {return getItem(aID, 1, aNBT);}
 	public ItemStack getItem(int aID, long aAmount) {return getItem(aID, aAmount, null);}
 	
+	/** Names the registry this one answers from for ids it does not hold; resolved by name on use, as it may be built later. */
+	public MultiTileEntityRegistry setFallback(String aRegistryName) {mFallback = aRegistryName; return this;}
+
+	/** The registry holding aID: this one, else the holder in its fallback; an id none holds yet stays this one's, as a
+	 *  loader may name an entry of its own before adding it. Without a fallback always this one. */
+	public MultiTileEntityRegistry holder(int aID) {
+		if (mFallback == null || mRegistry.containsKey((short)aID)) return this;
+		MultiTileEntityRegistry tFallback = NAMED_REGISTRIES.get(mFallback);
+		if (tFallback == null || tFallback == this) return this;
+		MultiTileEntityRegistry tHolder = tFallback.holder(aID);
+		return tHolder.mRegistry.containsKey((short)aID) ? tHolder : this;
+	}
+
 	public ItemStack getItem(int aID, long aAmount, CompoundTag aNBT) {
+		// An id this registry does not hold would make a stack of no machine; its holder makes the real one.
+		MultiTileEntityRegistry tHolder = holder(aID);
+		if (tHolder != this) return tHolder.getItem(aID, aAmount, aNBT);
 		ItemStack rStack = ST.make(mBlock, (int)aAmount, aID);
 		if (aNBT == null) aNBT = UT.NBT.make();
 		if (aNBT.isEmpty()) {
