@@ -38,12 +38,37 @@ public final class RecipeCapture {
 	private static List<Map.Entry<RecipeMap, Recipe>> sMachine = null;
 	private static List<ICraftingRecipeGT> sCrafting = null;
 	private static List<Map.Entry<RecipeMap, IRecipeMapHandler>> sHandlers = null;
+	private static List<Map.Entry<String, gregapi.oredict.event.IOreDictListenerEvent>> sListeners = null;
 
 	/** Recipes a restatement made, none of them added. */
 	public static final class Captured {
 		public final List<Map.Entry<RecipeMap, Recipe>> mMachine = new ArrayList<>();
 		public final List<ICraftingRecipeGT> mCrafting = new ArrayList<>();
 		public final List<Map.Entry<RecipeMap, IRecipeMapHandler>> mHandlers = new ArrayList<>();
+		/** OreDict listeners the restatement made, by name: replayed on what is registered, they are not kept to hear more. */
+		public final List<Map.Entry<String, gregapi.oredict.event.IOreDictListenerEvent>> mListeners = new ArrayList<>();
+
+		public boolean isEmpty() {return mMachine.isEmpty() && mCrafting.isEmpty() && mHandlers.isEmpty();}
+
+		/** Made the same Recipes: equal machine Recipes in equal maps and equal crafting Recipes, as many of each. */
+		public boolean sameRecipes(Captured aOther) {
+			if (mMachine.size() != aOther.mMachine.size() || mCrafting.size() != aOther.mCrafting.size()) return false;
+			List<Map.Entry<RecipeMap, Recipe>> tLeft = new ArrayList<>(aOther.mMachine);
+			for (Map.Entry<RecipeMap, Recipe> tEntry : mMachine) {
+				Map.Entry<RecipeMap, Recipe> tMatch = null;
+				for (Map.Entry<RecipeMap, Recipe> tOther : tLeft) if (tOther.getKey() == tEntry.getKey() && tOther.getValue().sameAs(tEntry.getValue())) {tMatch = tOther; break;}
+				if (tMatch == null) return false;
+				tLeft.remove(tMatch);
+			}
+			List<ICraftingRecipeGT> tLeftCrafting = new ArrayList<>(aOther.mCrafting);
+			for (ICraftingRecipeGT tRecipe : mCrafting) {
+				ICraftingRecipeGT tMatch = null;
+				for (ICraftingRecipeGT tOther : tLeftCrafting) if (gregapi.util.CR.sameRecipe(tOther, tRecipe)) {tMatch = tOther; break;}
+				if (tMatch == null) return false;
+				tLeftCrafting.remove(tMatch);
+			}
+			return true;
+		}
 	}
 
 	public static boolean open() {return sMachine != null;}
@@ -53,8 +78,9 @@ public final class RecipeCapture {
 		List<Map.Entry<RecipeMap, Recipe>> tMachine = sMachine;
 		List<ICraftingRecipeGT> tCrafting = sCrafting;
 		List<Map.Entry<RecipeMap, IRecipeMapHandler>> tHandlers = sHandlers;
-		sMachine = rCaptured.mMachine; sCrafting = rCaptured.mCrafting; sHandlers = rCaptured.mHandlers;
-		try {aRestatement.run();} finally {sMachine = tMachine; sCrafting = tCrafting; sHandlers = tHandlers;}
+		List<Map.Entry<String, gregapi.oredict.event.IOreDictListenerEvent>> tListeners = sListeners;
+		sMachine = rCaptured.mMachine; sCrafting = rCaptured.mCrafting; sHandlers = rCaptured.mHandlers; sListeners = rCaptured.mListeners;
+		try {aRestatement.run();} finally {sMachine = tMachine; sCrafting = tCrafting; sHandlers = tHandlers; sListeners = tListeners;}
 		return rCaptured;
 	}
 
@@ -70,6 +96,11 @@ public final class RecipeCapture {
 		if (sHandlers == null) return false;
 		sHandlers.add(new AbstractMap.SimpleEntry<>(aMap, aHandler));
 		return true;
+	}
+
+	/** Called by an OreDict Names listener adding a listener of one name: the capture notes it. */
+	public static void take(String aOreDictName, gregapi.oredict.event.IOreDictListenerEvent aListener) {
+		if (sListeners != null) sListeners.add(new AbstractMap.SimpleEntry<>(aOreDictName, aListener));
 	}
 
 	/** Called by the crafting list about to add a Recipe: true when the capture took it instead. */

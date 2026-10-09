@@ -142,6 +142,23 @@ public final class OreDictManager {
 		if (mGlobalOreDictListeners.add(aListener)) for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) aListener.onOreRegistration(tEvent);
 	}
 	
+	/** Takes out the listeners of aOreDictName in GT6's Names listeners that make the same Recipes as aRestated on what is
+	 *  registered under that name; how many went. A listener that makes nothing yet cannot be told apart and stays. */
+	public int removeSameListeners(String aOreDictName, IOreDictListenerEvent aRestated) {
+		List<OreDictRegistrationContainer> tRegistrations = new ArrayList<>();
+		for (OreDictRegistrationContainer tEvent : mGlobalRegistrations) if (aOreDictName.equals(tEvent.mOreDictName)) tRegistrations.add(tEvent);
+		gregapi.recipes.RecipeCapture.Captured tWanted = gregapi.recipes.RecipeCapture.capture(() -> {for (OreDictRegistrationContainer tEvent : tRegistrations) aRestated.onOreRegistration(tEvent);});
+		if (tWanted.isEmpty()) return 0;
+		int rRemoved = 0;
+		for (IOreDictListenerEvent tGlobal : new ArrayList<>(mGlobalOreDictListeners)) if (tGlobal instanceof gregapi.oredict.event.OreDictListenerEvent_Names tNames) {
+			for (IOreDictListenerEvent tListener : new ArrayList<>(tNames.listeners(aOreDictName))) {
+				gregapi.recipes.RecipeCapture.Captured tMade = gregapi.recipes.RecipeCapture.capture(() -> {for (OreDictRegistrationContainer tEvent : tRegistrations) tListener.onOreRegistration(tEvent);});
+				if (tWanted.sameRecipes(tMade) && tNames.removeListener(aOreDictName, tListener)) rRemoved++;
+			}
+		}
+		return rRemoved;
+	}
+
 	/**
 	 * This Function adds a global Listener for Recycling Events. These Events let you create Reversal Recipes inside your Machines, and contain all the Components, which can be recycled out of the passed ItemStack.
 	 * Unlike the Forge Event System, which replaced Eloraams better System, this Interface ensures, like the great old System, that also all the older Events, which have been called before your Listener-Registration, are getting passed onto your Listener.

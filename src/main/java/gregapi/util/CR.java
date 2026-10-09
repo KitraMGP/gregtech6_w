@@ -605,7 +605,7 @@ public class CR {
 		for (ICraftingRecipeGT tRecipe : new ArrayList<>(BUFFER)) if (sameRecipe(tRecipe, aTemplate) && BUFFER.remove(tRecipe)) rRemoved++;
 		return rRemoved;
 	}
-	private static boolean sameRecipe(ICraftingRecipeGT aA, ICraftingRecipeGT aB) {
+	public static boolean sameRecipe(ICraftingRecipeGT aA, ICraftingRecipeGT aB) {
 		if (aA.getClass() != aB.getClass() || !ST.equal(aA.getRecipeOutput(), aB.getRecipeOutput(), F) || aA.getRecipeOutput().getCount() != aB.getRecipeOutput().getCount()) return F;
 		Object[] tA = aA instanceof ShapedOreRecipe ? ((ShapedOreRecipe)aA).getInput() : aA instanceof ShapelessOreRecipe ? ((ShapelessOreRecipe)aA).getInput().toArray() : null;
 		Object[] tB = aB instanceof ShapedOreRecipe ? ((ShapedOreRecipe)aB).getInput() : aB instanceof ShapelessOreRecipe ? ((ShapelessOreRecipe)aB).getInput().toArray() : null;

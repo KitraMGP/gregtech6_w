@@ -25,6 +25,8 @@ package gt6u;
 
 import java.util.Map;
 
+import gregapi.oredict.OreDictManager;
+import gregapi.oredict.event.IOreDictListenerEvent;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.recipes.IRecipeMapHandler;
 import gregapi.recipes.Recipe;
@@ -38,14 +40,17 @@ import static gregapi.data.CS.*;
 /** Takes back GT6 Recipes GregTech6-Unofficial dropped: GT6's own statement runs with the recipe capture open, and the Recipes it
  *  would make are taken out of GT6's maps and crafting list again. */
 public class GT6U_Recipes {
-	/** Takes back the GT6 Recipes these restated GT6 statements make; what is not found is listed in GT6's log under aSource. */
+	/** Takes back the GT6 Recipes, Recipe Handlers and OreDict listeners these restated GT6 statements make; what is not found is
+	 *  listed in GT6's log under aSource. */
 	public static void takeBack(String aSource, Runnable aGT6Statements) {
 		RecipeCapture.Captured tCaptured = RecipeCapture.capture(aGT6Statements);
 		int tMissing = 0;
 		for (Map.Entry<RecipeMap, Recipe> tEntry : tCaptured.mMachine) if (tEntry.getKey().removeSame(tEntry.getValue()) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": " + tEntry.getKey().mNameInternal + " " + describe(tEntry.getValue()));}
 		for (ICraftingRecipeGT tRecipe : tCaptured.mCrafting) if (CR.removeSame(tRecipe) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": crafting " + tRecipe.getClass().getSimpleName() + " -> " + ST.configNames(tRecipe.getRecipeOutput()));}
 		for (Map.Entry<RecipeMap, IRecipeMapHandler> tEntry : tCaptured.mHandlers) if (tEntry.getKey().removeSameHandler(tEntry.getValue()) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": handler " + tEntry.getKey().mNameInternal + " " + tEntry.getValue().getClass().getSimpleName());}
-		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size()) + " GT6 Recipes to take back were not found in " + aSource);
+		// A dropped OreDict listener goes whole, or OreDict registrations after this would make its Recipes again.
+		for (Map.Entry<String, IOreDictListenerEvent> tEntry : tCaptured.mListeners) if (OreDictManager.INSTANCE.removeSameListeners(tEntry.getKey(), tEntry.getValue()) <= 0) {tMissing++; ERR.println("GT6U take back, not found in " + aSource + ": OreDict listener of " + tEntry.getKey());}
+		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size() + tCaptured.mListeners.size()) + " GT6 Recipes and listeners to take back were not found in " + aSource);
 	}
 	
 	private static String describe(Recipe aRecipe) {
