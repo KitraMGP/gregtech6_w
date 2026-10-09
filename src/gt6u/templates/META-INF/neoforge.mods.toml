@@ -12,8 +12,7 @@ Content of GregTech6-Unofficial by the GT6U-Team as an addon of GregTech 6: its 
 and the changes it makes to GregTech 6 machines. Without this addon GregTech 6 stays as Gregorius made it.
 '''
 
-# The addon is built on the internals of the GT API, so it takes exactly the GregTech 6 it was built with,
-# and runs every phase after GregTech's, whose machines it extends.
+# The addon is built on the internals of the GT API, so it takes exactly the GregTech 6 it was built with.
 # As GT6 addons in 1.7.10: after the API, before GregTech itself, whose PreInit generates items and fluids from the
 # materials the addon defines; the addon's work after GregTech's phases runs in the onModFinal* hooks.
 [[dependencies.gt6u]]

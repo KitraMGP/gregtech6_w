@@ -163,18 +163,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 
-import gregapi.block.MaterialMachines;
-import gregapi.block.MaterialScoopable;
-import gregapi.block.multitileentity.MultiTileEntityBlock;
 import gregapi.block.multitileentity.MultiTileEntityClassContainer;
-import gregapi.block.multitileentity.MultiTileEntityRegistry;
-import gregapi.block.Material;
-import gregapi.data.*;
-import gregapi.oredict.OreDictMaterial;
-import gregapi.util.CR;
-import gregapi.util.OM;
-import gregapi.util.ST;
-import gregapi.util.UT;
 import gt6u.GT6U_Main;
 // GT6U's versions of these GT6 classes: GT6U's own entries of them name these.
 import gt6u.tileentity.multiblocks.MultiTileEntityDistillationTower;
@@ -186,9 +175,7 @@ import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
-import static gregapi.data.CS.*;
 
 /** GregTech6-Unofficial's part of gregtech/loaders/b/Loader_MultiTileEntities.java: its own entries in the addon's registry, its
  *  changes to GT6's entries laid onto GT6's registry. */
