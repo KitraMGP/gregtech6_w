@@ -43,7 +43,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -310,21 +309,20 @@ public class MultiTileEntityRegistry {
 	/** Names the registry this one answers from for ids it does not hold; resolved by name on use, as it may be built later. */
 	public MultiTileEntityRegistry setFallback(String aRegistryName) {mFallback = aRegistryName; return this;}
 
-	/** The registry holding aID: this one, else the nearest one it falls back to, else one falling back to it, as an addon's
-	 *  class set into the registry it extends names the addon's parts there. An id none holds yet stays this one's, as a loader
-	 *  may name an entry of its own before adding it; a registry no other one is linked with always answers itself. */
+	/** The registry holding aID among those linked by fallbacks, both ways, as GT6U's one registry held every id; else this one. */
 	public MultiTileEntityRegistry holder(int aID) {
 		if (mRegistry.containsKey((short)aID)) return this;
-		for (MultiTileEntityRegistry tBase : bases()) if (tBase.mRegistry.containsKey((short)aID)) return tBase;
-		for (MultiTileEntityRegistry tExtension : NAMED_REGISTRIES.values()) if (tExtension.mRegistry.containsKey((short)aID) && tExtension.bases().contains(this)) return tExtension;
+		MultiTileEntityRegistry tBase = fallback();
+		for (int i = 0; i < NAMED_REGISTRIES.size() && tBase != null && tBase != this; i++, tBase = tBase.fallback()) if (tBase.mRegistry.containsKey((short)aID)) return tBase;
+		for (MultiTileEntityRegistry tExtension : NAMED_REGISTRIES.values()) if (tExtension != this && tExtension.mRegistry.containsKey((short)aID) && tExtension.fallsBackTo(this)) return tExtension;
 		return this;
 	}
 
-	/** The registries this one falls back to, nearest first; a ring of fallbacks ends at the first one met again. */
-	private List<MultiTileEntityRegistry> bases() {
-		List<MultiTileEntityRegistry> rBases = new ArrayList<>();
-		for (MultiTileEntityRegistry tBase = fallback(); tBase != null && tBase != this && !rBases.contains(tBase); tBase = tBase.fallback()) rBases.add(tBase);
-		return rBases;
+	/** Whether aBase is in this one's fallback chain; the walk is bounded by the number of registries, so a ring of fallbacks ends. */
+	private boolean fallsBackTo(MultiTileEntityRegistry aBase) {
+		MultiTileEntityRegistry tBase = fallback();
+		for (int i = 0; i < NAMED_REGISTRIES.size() && tBase != null; i++, tBase = tBase.fallback()) if (tBase == aBase) return T;
+		return F;
 	}
 
 	private MultiTileEntityRegistry fallback() {return mFallback == null ? null : NAMED_REGISTRIES.get(mFallback);}
@@ -367,6 +365,9 @@ public class MultiTileEntityRegistry {
 	
 	public MultiTileEntityContainer getNewTileEntityContainer(int aID, CompoundTag aNBT) {return getNewTileEntityContainer(null, 0, 0, 0, aID, aNBT);}
 	public MultiTileEntityContainer getNewTileEntityContainer(net.minecraft.world.level.LevelAccessor aWorld, int aX, int aY, int aZ, int aID, CompoundTag aNBT) {
+		// A machine of an id this registry does not hold is made by the registry holding it, so a block placing it places the real one.
+		MultiTileEntityRegistry tHolder = holder(aID);
+		if (tHolder != this) return tHolder.getNewTileEntityContainer(aWorld, aX, aY, aZ, aID, aNBT);
 		MultiTileEntityClassContainer tClass = mRegistry.get((short)aID);
 		if (tClass == null || tClass.mBlock == null) return null;
 		// Real placement coordinates pass through the shared PENDING_WORLD_POS channel before construction, since a tile
