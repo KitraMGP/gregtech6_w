@@ -98,7 +98,7 @@ public class BlockMetaType extends BlockBaseMeta implements net.minecraft.world.
 		{
 			java.util.Set<Object> tSeenSlabs = new java.util.HashSet<>();
 			for (BlockMetaType tSlab : mSlabs) if (tSlab != null && tSeenSlabs.add(tSlab)) {
-				net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.BLOCK, net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.data.CS.ModIDs.GT, gregapi.GT_API.sanitizeRegName(tSlab.mNameInternal))), tSlab);
+				net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.BLOCK, net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(tSlab.mNameInternal))), tSlab);
 			}
 		}
 		// Block construction runs during the registry event, but building an ItemStack needs components

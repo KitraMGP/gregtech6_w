@@ -31,7 +31,7 @@ import net.minecraft.world.item.Item;
  * @author Gregorius Techneticies
  */
 public class CreativeTab extends CreativeModeTab {
-	public final String mName;
+	public final String mName, mOwner;
 	public final Item mItem;
 	public final short mMetaData;
 
@@ -42,6 +42,7 @@ public class CreativeTab extends CreativeModeTab {
 		// A shell raised from the tab cache has no item and names nothing: its tab, once made, adds the name.
 		if (aItem != null) LH.add("itemGroup." + aName, aLocal);
 		mName = aName;
+		mOwner = gregapi.GT_API.owner();
 		mItem = aItem;
 		mMetaData = aMetaData;
 		CreativeTabsGT.registerOwnTab(this);

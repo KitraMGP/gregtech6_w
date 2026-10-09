@@ -88,6 +88,8 @@ public class MultiTileEntityRegistry {
 	public List<MultiTileEntityClassContainer> mRegistrations = new ArrayListNoNulls<>();
 	
 	public final String mNameInternal;
+	/** The mod this registry was built for: its creative tabs, built later, take that mod's namespace. */
+	public final String mOwner;
 	public final MultiTileEntityBlockInternal mBlock;
 	
 	private static final MultiTileEntityBlockInternal regblock(String aNameInternal, MultiTileEntityBlockInternal aBlock, Class<? extends BlockItem> aItemClass) {
@@ -110,6 +112,7 @@ public class MultiTileEntityRegistry {
 		if (!GAPI.mStartedPreInit) throw new IllegalStateException("The MultiTileEntity Registry must be initialised at the Preload Phase and not before, because it relies on an ItemBlock being created!");
 		if (GAPI.mStartedInit) throw new IllegalStateException("The MultiTileEntity Registry must be initialised at the Preload Phase and not later, because it relies on an ItemBlock being created!");
 		mNameInternal = aNameInternal;
+		mOwner = gregapi.GT_API.owner();
 		mBlock = aBlock;
 		mBlock.mMultiTileEntityRegistry = this;
 		NAMED_REGISTRIES.put(mNameInternal, this);
@@ -246,7 +249,7 @@ public class MultiTileEntityRegistry {
 	}
 
 	private void onRegistered(String aCategoricalName, MultiTileEntityClassContainer aClassContainer) {
-		if (!mCreativeTabs.containsKey(aClassContainer.mCreativeTabID)) mCreativeTabs.put(aClassContainer.mCreativeTabID, new CreativeTab(mNameInternal+"."+aClassContainer.mCreativeTabID, aCategoricalName, Item.byBlock(mBlock), aClassContainer.mCreativeTabID));
+		if (!mCreativeTabs.containsKey(aClassContainer.mCreativeTabID)) mCreativeTabs.put(aClassContainer.mCreativeTabID, gregapi.GT_API.asOwner(mOwner, () -> new CreativeTab(mNameInternal+"."+aClassContainer.mCreativeTabID, aCategoricalName, Item.byBlock(mBlock), aClassContainer.mCreativeTabID)));
 		// A client-only render-registration hook whose old API no longer exists used to throw and abort the whole loader,
 		// registering only one MTE of hundreds; failures here are now logged and skipped, but server-side ones still are not.
 		if (sRegisteredTileEntityClassNames.add(aClassContainer.mCanonicalTileEntity.getClass().getName()) && sRegisteredTileEntities.add(aClassContainer.mCanonicalTileEntity.getClass())) {

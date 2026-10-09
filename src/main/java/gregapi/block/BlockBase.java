@@ -134,7 +134,7 @@ public abstract class BlockBase extends Block implements IBlockBase {
 	// Whether a tool is required for the drop is decided by the material, as in 1.7.10 canHarvestBlock:
 	// rock needs a pickaxe, wood/cloth/dirt drop by hand; without the gate the whole family dropped by hand.
 	private static net.minecraft.world.level.block.state.BlockBehaviour.Properties mkProps(String aNameInternal, Material aMaterial, SoundType aSoundType) {
-		net.minecraft.world.level.block.state.BlockBehaviour.Properties p = net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(aSoundType).lightLevel(BlockBase::lightOf).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.data.CS.ModIDs.GT, gregapi.GT_API.sanitizeRegName(aNameInternal))));
+		net.minecraft.world.level.block.state.BlockBehaviour.Properties p = net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(aSoundType).lightLevel(BlockBase::lightOf).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(aNameInternal))));
 		if (aMaterial != null && !aMaterial.isToolNotRequired()) p = p.requiresCorrectToolForDrops();
 		p = mapColorOf(p, aMaterial);
 		return p;

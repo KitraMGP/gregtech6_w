@@ -86,7 +86,7 @@ public abstract class BlockBaseFlower extends FlowerBlock implements IBlockBase,
 	public BlockBaseFlower(Class<? extends ItemBlockBase> aItemClass, String aNameInternal, long aMaxMeta, IIconContainer[] aIcons) {
 		// FlowerBlock's constructor now requires a stew effect, so decorative GT6 flowers pass EMPTY; noCollision() is also
 		// required, or occlusion treats the flower as solid and kills the grass underneath it, as happened before this fix.
-		super(net.minecraft.world.item.component.SuspiciousStewEffects.EMPTY, gregapi.block.BlockBase.mapColorOf(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().noCollision().sound(net.minecraft.world.level.block.SoundType.GRASS).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.data.CS.ModIDs.GT, gregapi.GT_API.sanitizeRegName(aNameInternal)))), gregapi.block.Material.plants));
+		super(net.minecraft.world.item.component.SuspiciousStewEffects.EMPTY, gregapi.block.BlockBase.mapColorOf(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().noCollision().sound(net.minecraft.world.level.block.SoundType.GRASS).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(aNameInternal)))), gregapi.block.Material.plants));
 		registerDefaultState(getStateDefinition().any().setValue(META, 0)); // defaults to META=0
 		mMaxMeta = (byte)(UT.Code.bind4(aMaxMeta-1)+1);
 		mIcons = aIcons;

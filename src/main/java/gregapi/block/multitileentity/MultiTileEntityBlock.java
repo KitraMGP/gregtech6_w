@@ -180,7 +180,7 @@ public class MultiTileEntityBlock extends Block implements IBlock, IItemGT, IBlo
 		// (BlockBehaviour:472-478) returns false when cache==null => legacySolid=false => blocksMotion()=false =>
 		// vanilla water considers the block permeable (FlowingFluid.canHoldFluid) and DESTROYS it when flooded.
 		// 1.7.10: MTE had a solid Material (machine/rock) — water flowed around it. forceSolidOn() (BlockBehaviour:473) => 1:1.
-		net.minecraft.world.level.block.state.BlockBehaviour.Properties p = net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().dynamicShape().forceSolidOn().sound(aSoundType).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.blockOwner(), gregapi.GT_API.sanitizeRegName(aRegName))));
+		net.minecraft.world.level.block.state.BlockBehaviour.Properties p = net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().dynamicShape().forceSolidOn().sound(aSoundType).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(aRegName))));
 		if (!aOpaque) p = p.noOcclusion();
 		// BUG-064 (Jade stayed silent about the tool on machines): in 1.7.10 block hardness was queried POSITIONALLY —
 		// getBlockHardness(World,x,y,z) (original :299), and GT6 returned it from the TE, with the default when
@@ -204,7 +204,7 @@ public class MultiTileEntityBlock extends Block implements IBlock, IItemGT, IBlo
 		return p;
 	}
 	protected MultiTileEntityBlock(String aModID, String aNameOfVanillaMaterialField, Material aVanillaMaterial, SoundType aSoundType, String aTool, int aHarvestLevelOffset, int aHarvestLevelMinimum, int aHarvestLevelMaximum, boolean aOpaque, boolean aNormalCube) {
-		// F12 follow-up (block-split, MTE): setId in Properties (neo Block requires an id); namespace = GT_API.blockOwner(), the mod
+		// F12 follow-up (block-split, MTE): setId in Properties (neo Block requires an id); namespace = GT_API.owner(), the mod
 		// that queued the block (gregtech for GT6's own, golden = gregtech:), matching ST.register→registerBlock below. The name is computed with the same getName(...) as mNameInternal (line below) → the key matches.
 		// Construction happens on RegisterEvent via GT_API.deferBlockInit (call site getOrCreate/Loader_Others).
 		// F16: sound(aSoundType) (step sound). F13/F16: non-opaque → .noOcclusion() (otherwise render is solid + light is blocked). mkProps below.

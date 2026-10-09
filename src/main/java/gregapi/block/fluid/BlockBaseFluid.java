@@ -89,7 +89,7 @@ public class BlockBaseFluid extends BlockFluidBaseGT implements IBlock, IItemGT,
 	public BlockBaseFluid(String aNameInternal, Fluid aFluid, int aAmountPerQuanta, int aFlammability, Material aMaterial) {
 		// neo's Block properties are immutable, so resistance is computed from the constructor parameter before calling super;
 		// replaceable() is required or nothing could ever place a block into this fluid, matching vanilla water's own flags.
-		super(gregapi.block.BlockBase.mapColorOf(BlockBehaviour.Properties.of().replaceable().liquid().pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY).noLootTable().explosionResistance(FL.gas(aFluid) ? 1F : 30F).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.data.CS.ModIDs.GT, gregapi.GT_API.sanitizeRegName(aNameInternal)))), aMaterial), aMaterial, aFluid,
+		super(gregapi.block.BlockBase.mapColorOf(BlockBehaviour.Properties.of().replaceable().liquid().pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY).noLootTable().explosionResistance(FL.gas(aFluid) ? 1F : 30F).setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(aNameInternal)))), aMaterial), aMaterial, aFluid,
 			// Role passport in the ancestor: water/lava material gets its own tagged engine fluid; oils and
 			// gases have no engine fluid at all, so their medium comes through setMedium instead.
 			aMaterial == Material.water || aMaterial == Material.lava ? EngineRole.OWN_TAGGED_FLUID : EngineRole.NO_ENGINE_FLUID);

@@ -430,8 +430,13 @@ public class GT_API extends Abstract_Mod {
 		DEFERRED_BLOCK_INIT.add(() -> {String tOuter = sBlockOwner; sBlockOwner = tOwner; try {aInit.run();} finally {sBlockOwner = tOuter;}});
 	}
 	private static String sBlockOwner = null;
-	/** Namespace of the MultiTileEntity block being built and registered right now; GT's own when nobody queued it. */
-	public static String blockOwner() {return sBlockOwner == null ? ModIDs.GT : sBlockOwner;}
+	/** Namespace of the block, item or creative tab being built and registered right now; GT's own when nobody asked for it. */
+	public static String owner() {return sBlockOwner == null ? ModIDs.GT : sBlockOwner;}
+	/** Builds something for aOwner outside its registration: what it names gets aOwner's namespace, as if aOwner were asking now. */
+	public static <T> T asOwner(String aOwner, java.util.function.Supplier<T> aBuild) {
+		String tOuter = sBlockOwner; sBlockOwner = aOwner;
+		try {return aBuild.get();} finally {sBlockOwner = tOuter;}
+	}
 	/** The active RegisterEvent&lt;Block&gt; while DEFERRED_BLOCK_INIT is draining; non-null ⇒ {@link #registerBlock} registers
 	 *  the block directly into this event's registry (this phase's DeferredRegister has already been processed). */
 	public static net.neoforged.neoforge.registries.RegisterEvent sBlockRegisterEvent = null;
@@ -490,7 +495,7 @@ public class GT_API extends Abstract_Mod {
 	 *  {@code GT_API.registerItemLazy(modId, name, () -> Field = new ItemX(...))} — the supplier builds the item, assigns the field and
 	 *  returns it. The same approach as fluid-split (FluidGT source supplier). Replaces the eager {@code new ItemX()} + self-register. */
 	public static DeferredItem<Item> registerItemLazy(String aModIDOwner, String aRegistryName, java.util.function.Supplier<? extends Item> aSupplier) {
-		return itemsFor(aModIDOwner).register(sanitizeRegName(aRegistryName), aSupplier);
+		return itemsFor(aModIDOwner).register(sanitizeRegName(aRegistryName), () -> asOwner(aModIDOwner, aSupplier));
 	}
 
 	private static final Map<String, DeferredRegister.Blocks> BLOCKS_BY_NS = new HashMap<>();
@@ -506,7 +511,7 @@ public class GT_API extends Abstract_Mod {
 	 *  {@link #registerItemLazy} (works on RegisterEvent&lt;Block&gt;, since RegisterEvent&lt;Item&gt; hasn't fired yet). Call site:
 	 *  {@code GT_API.registerBlockLazy(modId, name, () -> Field = new BlockX(...))}. The same approach as item/fluid-split. */
 	public static void registerBlockLazy(String aModIDOwner, String aRegistryName, java.util.function.Supplier<? extends Block> aBlockSupplier) {
-		blocksFor(aModIDOwner).register(sanitizeRegName(aRegistryName), aBlockSupplier);
+		blocksFor(aModIDOwner).register(sanitizeRegName(aRegistryName), () -> asOwner(aModIDOwner, aBlockSupplier));
 	}
 
 	/** neo's {@link net.minecraft.resources.Identifier} path only allows [a-z0-9/._-]; GT6 item names contain
@@ -537,13 +542,13 @@ public class GT_API extends Abstract_Mod {
 			// F12-followup (block-split, MTE): called from deferBlockInit during RegisterEvent<Block> — the block is ALREADY built
 			// (registry unfrozen), so we register it directly into the event's registry (the key is sanitized, matching the block's setId);
 			// BlockItem goes into the ITEMS DR (processed on RegisterEvent<Item> later). The BLOCKS DeferredRegister may already have been processed.
-			// The namespace is blockOwner(), the mod that queued the block: gregtech for GT6's registry, an addon's id for its own.
-			sBlockRegisterEvent.register(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(blockOwner(), sanitizeRegName(aRegistryName)), () -> aBlock);
-			itemsFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
+			// The namespace is owner(), the mod that queued the block: gregtech for GT6's registry, an addon's id for its own.
+			sBlockRegisterEvent.register(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(owner(), sanitizeRegName(aRegistryName)), () -> aBlock);
+			itemsFor(owner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
 			return null;
 		}
-		DeferredBlock<Block> rBlock = blocksFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> aBlock);
-		itemsFor(blockOwner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
+		DeferredBlock<Block> rBlock = blocksFor(owner()).register(sanitizeRegName(aRegistryName), () -> aBlock);
+		itemsFor(owner()).register(sanitizeRegName(aRegistryName), () -> blockItemFor(aBlock, aItemClass));
 		return rBlock;
 	}
 

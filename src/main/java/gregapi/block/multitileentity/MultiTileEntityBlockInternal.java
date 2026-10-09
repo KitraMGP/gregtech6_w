@@ -58,7 +58,7 @@ public class MultiTileEntityBlockInternal extends Block implements IBlock, IItem
 	public MultiTileEntityBlockInternal(String aNameInternal) {
 		// dynamicShape() is mandatory, or neo caches an empty-world collision shape and every per-tile shape bridge below
 		// is ignored; map color is also restored explicitly here, since neo's own default shows no color at all.
-		super(gregapi.block.BlockBase.mapColorOf(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().dynamicShape().setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.blockOwner(), gregapi.GT_API.sanitizeRegName(aNameInternal)))), gregapi.block.Material.anvil));
+		super(gregapi.block.BlockBase.mapColorOf(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().dynamicShape().setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.fromNamespaceAndPath(gregapi.GT_API.owner(), gregapi.GT_API.sanitizeRegName(aNameInternal)))), gregapi.block.Material.anvil));
 	}
 
 	/** IBlock bounds live in the RenderBounds center, since neo's bounds are immutable and 1.7.10 mutated the Block itself. */

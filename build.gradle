@@ -439,12 +439,14 @@ var generateGt6uMetadata = tasks.register("generateGt6uMetadata", ProcessResourc
     into "build/generated/sources/gt6uMetadata"
 }
 sourceSets.gt6u.resources.srcDir generateGt6uMetadata
+// Its own output directory, built only with -Pgt6u: GregTech 6's build/libs, its jar check and its release stay as they were.
 var gt6uJar = tasks.register('gt6uJar', Jar) {
     archiveBaseName = 'gt6u'
     archiveVersion = mod_version
+    destinationDirectory = layout.buildDirectory.dir('libs-gt6u')
     from sourceSets.gt6u.output
 }
-tasks.named('assemble') { dependsOn gt6uJar }
+if (withGt6u) tasks.named('assemble') { dependsOn gt6uJar }
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask generateModMetadata
 
