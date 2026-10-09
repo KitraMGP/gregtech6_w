@@ -57,7 +57,7 @@ public class Loader_Fuels {
 		FM.Burn .addRecipe0(T, - 64, 5, FL.make("naphtha", 1) , FL.make("carbondioxide", 1), ZL_IS);
 		FM.Engine .addRecipe0(T, - 64, 7, FL.make("naphtha", 1) , FL.make("carbondioxide", 1), ZL_IS);
 		if (FL.LPG.exists()) {
-			FM.Burn.addRecipe0(T, -64, 42, FL.make("butane", 7), FL.Water.make(7), FL.make("carbondioxide", 6));
+			FM.Burn.addRecipe0(T, -64, 42, FL.LPG.make(7), FL.Water.make(7), FL.make("carbondioxide", 6));
 		}
 	}
 
@@ -65,7 +65,7 @@ public class Loader_Fuels {
 	static void takeBack_run() {
 		GT6U_Recipes.takeBack("Loader_Fuels.run", () -> {
 			if (FL.LPG.exists()) {
-				FM.Burn.addRecipe0(T, -64, 42, FL.make("butane", 7), FL.Water.make(7), FL.CarbonDioxide.make(6));
+				FM.Burn.addRecipe0(T, -64, 42, FL.LPG.make(7), FL.Water.make(7), FL.CarbonDioxide.make(6));
 			}
 		});
 	}
