@@ -73,6 +73,31 @@ public final class RecipeCapture {
 
 	public static boolean open() {return sMachine != null;}
 
+	private static List<Map.Entry<RecipeMap, Recipe>> sFirst = null, sGaveWay = new ArrayList<>();
+
+	/** Before an addon's statement that its sources put before these GT6 statements (aLaterGT6, restated under the capture): a
+	 *  Recipe of theirs it collides with gives way, as one of theirs never got in where the addon's statement came first. null
+	 *  ends it. */
+	public static void first(Runnable aLaterGT6) {sFirst = aLaterGT6 == null ? null : capture(aLaterGT6).mMachine;}
+
+	/** Called by a Recipe Map whose new Recipe collides with aOld: true when aOld gave way and is out of the map. */
+	public static boolean yields(RecipeMap aMap, Recipe aOld) {
+		if (sFirst == null) return false;
+		for (Map.Entry<RecipeMap, Recipe> tLater : sFirst) if (tLater.getKey() == aMap && tLater.getValue().sameAs(aOld)) {
+			if (!aMap.remove(aOld)) return false;
+			sGaveWay.add(new AbstractMap.SimpleEntry<>(aMap, aOld));
+			return true;
+		}
+		return false;
+	}
+
+	/** The Recipes that gave way since the last call. */
+	public static List<Map.Entry<RecipeMap, Recipe>> gaveWay() {
+		List<Map.Entry<RecipeMap, Recipe>> rGaveWay = sGaveWay;
+		sGaveWay = new ArrayList<>();
+		return rGaveWay;
+	}
+
 	public static Captured capture(Runnable aRestatement) {
 		Captured rCaptured = new Captured();
 		List<Map.Entry<RecipeMap, Recipe>> tMachine = sMachine;

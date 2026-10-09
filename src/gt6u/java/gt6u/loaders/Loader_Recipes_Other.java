@@ -69,45 +69,45 @@ public class Loader_Recipes_Other {
 		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
 			for (OreDictMaterial tMat : ANY.Diamond.mToThis) {
 				OreDictMaterial tOutput = MT.DiamondIndustrial;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_0); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_1); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_2); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_3); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 			for (OreDictMaterial tMat : ANY.Sapphire.mToThis) {
 				OreDictMaterial tOutput = MT.Sapphire;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_4); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_5); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_6); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_7); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 			for (OreDictMaterial tMat : ANY.Garnet.mToThis) {
 				OreDictMaterial tOutput = tMat;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_8); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_9); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_10); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_11); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 			for (OreDictMaterial tMat : ANY.Jasper.mToThis) {
 				OreDictMaterial tOutput = tMat;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_12); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_13); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_14); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_15); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 			for (OreDictMaterial tMat : ANY.TigerEye.mToThis) {
 				OreDictMaterial tOutput = tMat;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_16); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_17); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_18); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_19); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 			for (OreDictMaterial tMat : ANY.Aventurine.mToThis) {
 				OreDictMaterial tOutput = tMat;
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
-				RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_20); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_21); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_22); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1)); GT6U_Recipes.first(null);
+				GT6U_Recipes.first(Loader_Recipes_Other::later_run_23); RM.ImplosionCompressor.addRecipeX(T, 16, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1)); GT6U_Recipes.first(null);
 			}
 		}
 		RM.Massfab .addRecipe2(T, 16, 144 , ST.tag(0), OP.dustDiv72.mat(MT.AncientDebris, 1), NF, FL.Ender.make(L ), ZL_IS);
@@ -193,6 +193,430 @@ public class Loader_Recipes_Other {
 		RM_GT6U.AquaticFarm.addRecipe1(T, 256,200, new long[] {3000, 3000, 3000, 3000}, ST.make(Items.COD, 1, 1), FL_GT6U.AquaticNutrition.make(50), FL_GT6U.AquaticWaste.make(50), ST.array(ST.make(Items.COD, 4, 1), ST.make(Items.COD, 4, 1), ST.make(Items.COD, 4, 1), ST.make(Items.COD, 4, 1)));
 		RM_GT6U.AquaticFarm.addRecipe1(T, 256,200, new long[] {3000, 3000, 3000, 3000}, ST.make(Items.COD, 1, 2), FL_GT6U.AquaticNutrition.make(50), FL_GT6U.AquaticWaste.make(50), ST.array(ST.make(Items.COD, 4, 2), ST.make(Items.COD, 4, 2), ST.make(Items.COD, 4, 2), ST.make(Items.COD, 4, 2)));
 		RM_GT6U.AquaticFarm.addRecipe1(T, 256,200, new long[] {3000, 3000, 3000, 3000}, ST.make(Items.COD, 1, 3), FL_GT6U.AquaticNutrition.make(50), FL_GT6U.AquaticWaste.make(50), ST.array(ST.make(Items.COD, 3, 3), ST.make(Items.COD, 3, 3), ST.make(Items.COD, 3, 3), ST.make(Items.COD, 3, 3)));
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_0() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_1() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_2() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_3() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_4() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_5() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_6() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_7() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : ANY.Emerald.mToThis) {
+				OreDictMaterial tOutput = MT.Emerald;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : ANY.Amethyst.mToThis) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_8() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_9() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_10() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_11() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_12() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_13() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_14() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_15() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_16() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_17() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_18() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_19() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_20() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_21() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_22() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_23() {
+		for (ItemStack tTNT : ST.array(ST.make(Blocks.TNT, 8, W), IL.IC2_ITNT.get(4), IL.Boomstick.get(12), IL.Dynamite.get(2), IL.Dynamite_Strong.get(1))) if (ST.valid(tTNT)) {
+			for (OreDictMaterial tMat : new OreDictMaterial[] {MT.Spinel, MT.BalasRuby, MT.Topaz, MT.BlueTopaz, MT.Tanzanite, MT.Amazonite, MT.Alexandrite, MT.Opal, MT.OnyxRed, MT.OnyxBlack, MT.Olivine, MT.Dioptase, MT.Craponite}) {
+				OreDictMaterial tOutput = tMat;
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(0)), plateGem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 1), tTNT , ST.tag(1)), gem .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 2), ST.mul(4, tTNT), ST.tag(2)), gemFlawless .mat(tOutput, 1));
+				RM.ImplosionCompressor.addRecipeX(T, 0, 256, ST.array(dust.mat(tMat, 4), ST.mul(8, tTNT), ST.tag(3)), gemExquisite.mat(tOutput, 1));
+			}
+		}
 	}
 
 	/** GT6's statements in Loader_Recipes_Other.run that GT6U dropped, as the port has them: their Recipes are taken back. */

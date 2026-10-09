@@ -137,28 +137,248 @@ public class Loader_Recipes_Chem {
 		RM.Mixer .addRecipe0(T, 16, 400, FL.array(MT_GT6U.COCl2.gas(U*4, T), FL.BioEthanol.make(2000)), FL.array(MT_GT6U.C5H10O3.liquid(U*18, F), MT.HCl.fluid(U*4, F)), ZL_IS);
 		RM.Mixer .addRecipe0(T, 16, 400, FL.array(MT_GT6U.C5H10O3.liquid(U*72, T), FL_GT6U.Methanol.make(6000)), FL.array(FL_GT6U.MixedEster.make(78000)), ZL_IS);
 		RM.DistillationTower.addRecipe0(T, 64, 1000, FL.array(FL_GT6U.MixedEster.make(78000)), FL.array(MT_GT6U.C3H6O3.liquid(U*12, F), MT_GT6U.C5H10O3.liquid(U*18, F), MT_GT6U.C4H8O3.liquid(U*30, F), FL_GT6U.Methanol.make(2000), FL.BioEthanol.make(4000)), ZL_IS);
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.Pyrite ), MT. O .gas( 4*U3 , T), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Fe, U3 ));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Sphalerite ), MT. O .gas( 2*U2 , T), MT.SO2.gas( 3*U2 , F), OM.dust(MT.Zn, U2 ));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Molybdenite ), MT. O .gas( 4*U3 , T), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Mo, U3 ));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stibnite ), MT. O .gas( 6*U5 , T), MT.SO2.gas( 9*U5 , F), OM.dust(MT.Sb, 2*U5 ));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Pentlandite ), MT. O .gas(16*U17, T), MT.SO2.gas(24*U17, F), OM.dust(MT.Ni, 9*U17));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Chalcopyrite ), MT. O .gas( 4*U4 , T), MT.SO2.gas( 6*U4 , F), OM.dust(MT.Fe, U4 ), OM.dust(MT.Cu, U4));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Arsenopyrite ), MT. O .gas( 2*U3 , T), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Fe, U3 ), OM.dust(MT.As, U3));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cobaltite ), MT. O .gas( 2*U3 , T), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Co, U3 ), OM.dust(MT.As, U3));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Galena ), MT. O .gas( 4*U8 , T), MT.SO2.gas( 6*U8 , F), OM.dust(MT.Ag, 3*U8 ), OM.dust(MT.Pb, 3*U8));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cooperite ), MT. O .gas( 2*U6 , T), MT.SO2.gas( 3*U6 , F), OM.dust(MT.Pt, 3*U6 ), OM.dust(MT.Ni, 1*U6), OM.dust(MT.Pd, 1*U6));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Tetrahedrite ), MT. O .gas( 6*U8 , T), MT.SO2.gas( 9*U8 , F), OM.dust(MT.Cu, 3*U8 ), OM.dust(MT.Sb, 1*U8), OM.dust(MT.Fe, 1*U8));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stannite ), MT. O .gas( 8*U8 , T), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu, 2*U8 ), OM.dust(MT.Fe, 1*U8), OM.dust(MT.Sn, 1*U8));
-		RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Kesterite ), MT. O .gas( 8*U8 , T), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu, 2*U8 ), OM.dust(MT.Zn, 1*U8), OM.dust(MT.Sn, 1*U8));
-		RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Li ), MT. O .gas( U2 , T), NF , OM.dust(MT.Li2O, 3*U2));
-		RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.V ), MT. O .gas( 5*U2 , T), NF , OM.dust(MT.V2O5, 7*U2));
-		RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Cr ), MT. O .gas( 2*U , T), NF , OM.dust(MT.CrO2, U ));
-		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.S ), MT. O .gas( 2*U , T), MT.SO2.gas( 3*U , F), ZL_IS);
-		for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT. O .gas( 2*U , T), MT.CO2.gas( 3*U , F), ZL_IS);
-		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Charcoal ), MT. O .gas( 2*U , T), MT.CO2.gas( 3*U , F), ZL_IS);
-		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Coal ), MT. O .gas( 4*U , T), MT.CO2.gas( 6*U , F), ZL_IS);
-		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.CoalCoke ), MT. O .gas( 4*U , T), MT.CO2.gas( 6*U , F), ZL_IS);
-		for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT. O .gas( 8*U , T), MT.CO2.gas(12*U , F), ZL_IS);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_0); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.Pyrite ), MT. O .gas( 4*U3 , T), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Fe, U3 )); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_1); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Sphalerite ), MT. O .gas( 2*U2 , T), MT.SO2.gas( 3*U2 , F), OM.dust(MT.Zn, U2 )); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_2); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Molybdenite ), MT. O .gas( 4*U3 , T), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Mo, U3 )); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_3); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stibnite ), MT. O .gas( 6*U5 , T), MT.SO2.gas( 9*U5 , F), OM.dust(MT.Sb, 2*U5 )); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_4); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Pentlandite ), MT. O .gas(16*U17, T), MT.SO2.gas(24*U17, F), OM.dust(MT.Ni, 9*U17)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_5); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Chalcopyrite ), MT. O .gas( 4*U4 , T), MT.SO2.gas( 6*U4 , F), OM.dust(MT.Fe, U4 ), OM.dust(MT.Cu, U4)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_6); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Arsenopyrite ), MT. O .gas( 2*U3 , T), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Fe, U3 ), OM.dust(MT.As, U3)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_7); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cobaltite ), MT. O .gas( 2*U3 , T), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Co, U3 ), OM.dust(MT.As, U3)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_8); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Galena ), MT. O .gas( 4*U8 , T), MT.SO2.gas( 6*U8 , F), OM.dust(MT.Ag, 3*U8 ), OM.dust(MT.Pb, 3*U8)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_9); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cooperite ), MT. O .gas( 2*U6 , T), MT.SO2.gas( 3*U6 , F), OM.dust(MT.Pt, 3*U6 ), OM.dust(MT.Ni, 1*U6), OM.dust(MT.Pd, 1*U6)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_10); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Tetrahedrite ), MT. O .gas( 6*U8 , T), MT.SO2.gas( 9*U8 , F), OM.dust(MT.Cu, 3*U8 ), OM.dust(MT.Sb, 1*U8), OM.dust(MT.Fe, 1*U8)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_11); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stannite ), MT. O .gas( 8*U8 , T), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu, 2*U8 ), OM.dust(MT.Fe, 1*U8), OM.dust(MT.Sn, 1*U8)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_12); RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Kesterite ), MT. O .gas( 8*U8 , T), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu, 2*U8 ), OM.dust(MT.Zn, 1*U8), OM.dust(MT.Sn, 1*U8)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_13); RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Li ), MT. O .gas( U2 , T), NF , OM.dust(MT.Li2O, 3*U2)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_14); RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.V ), MT. O .gas( 5*U2 , T), NF , OM.dust(MT.V2O5, 7*U2)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_15); RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Cr ), MT. O .gas( 2*U , T), NF , OM.dust(MT.CrO2, U )); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_16); RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.S ), MT. O .gas( 2*U , T), MT.SO2.gas( 3*U , F), ZL_IS); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_17); for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT. O .gas( 2*U , T), MT.CO2.gas( 3*U , F), ZL_IS); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_18); RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Charcoal ), MT. O .gas( 2*U , T), MT.CO2.gas( 3*U , F), ZL_IS); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_19); RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Coal ), MT. O .gas( 4*U , T), MT.CO2.gas( 6*U , F), ZL_IS); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_20); RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.CoalCoke ), MT. O .gas( 4*U , T), MT.CO2.gas( 6*U , F), ZL_IS); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(Loader_Recipes_Chem::later_run_21); for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT. O .gas( 8*U , T), MT.CO2.gas(12*U , F), ZL_IS); GT6U_Recipes.first(null);
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_0() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.Pyrite ), FL.make(tOxygen, 1834), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Fe2O3, 5*U6 ));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.Pyrite ), FL.make(tAir, 8000), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Fe2O3, 5*U6 ));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_1() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Sphalerite ), FL.make(tOxygen, 1000), MT.SO2.gas( 3*U2 , F), OM.dust(MT.Zn , U2 ));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Sphalerite ), FL.make(tAir, 4000), MT.SO2.gas( 3*U2 , F), OM.dust(MT.Zn , U2 ));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_2() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Molybdenite ), FL.make(tOxygen, 1334), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Mo , U3 ));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Molybdenite ), FL.make(tAir, 6000), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Mo , U3 ));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_3() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stibnite ), FL.make(tOxygen, 1200), MT.SO2.gas( 9*U5 , F), OM.dust(MT.Sb , 2*U5 ));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Stibnite ), FL.make(tAir, 5000), MT.SO2.gas( 9*U5 , F), OM.dust(MT.Sb , 2*U5 ));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_4() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Pentlandite ), FL.make(tOxygen, 942), MT.SO2.gas(24*U17, F), OM.dust(MT.Ni , 9*U17));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Pentlandite ), FL.make(tAir, 4000), MT.SO2.gas(24*U17, F), OM.dust(MT.Ni , 9*U17));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_5() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Chalcopyrite ), FL.make(tOxygen, 1375), MT.SO2.gas( 6*U4 , F), OM.dust(MT.Fe2O3, 5*U8 ), OM.dust(MT.Cu, U4));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Chalcopyrite), FL.make(tAir, 6000), MT.SO2.gas( 6*U4 , F), OM.dust(MT.Fe2O3, 5*U8 ), OM.dust(MT.Cu, U4));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_6() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Arsenopyrite ), FL.make(tOxygen, 1167), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Fe2O3, 5*U6 ), OM.dust(MT.As, U3));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Arsenopyrite), FL.make(tAir, 5000), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Fe2O3, 5*U6 ), OM.dust(MT.As, U3));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_7() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cobaltite ), FL.make(tOxygen, 667), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Co , U3 ), OM.dust(MT.As, U3));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Cobaltite ), FL.make(tAir, 3000), MT.SO2.gas( 3*U3 , F), OM.dust(MT.Co , U3 ), OM.dust(MT.As, U3));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_8() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Galena ), FL.make(tOxygen, 500), MT.SO2.gas( 6*U8 , F), OM.dust(MT.Ag , 3*U8 ), OM.dust(MT.Pb, 3*U8));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Galena ), FL.make(tAir, 2000), MT.SO2.gas( 6*U8 , F), OM.dust(MT.Ag , 3*U8 ), OM.dust(MT.Pb, 3*U8));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_9() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Cooperite ), FL.make(tOxygen, 334), MT.SO2.gas( 3*U6 , F), OM.dust(MT.Pt , 3*U6 ), OM.dust(MT.Ni, 1*U6), OM.dust(MT.Pd , 1*U6));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Cooperite ), FL.make(tAir, 2000), MT.SO2.gas( 3*U6 , F), OM.dust(MT.Pt , 3*U6 ), OM.dust(MT.Ni, 1*U6), OM.dust(MT.Pd , 1*U6));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_10() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Tetrahedrite ), FL.make(tOxygen, 938), MT.SO2.gas( 9*U8 , F), OM.dust(MT.Cu , 3*U8 ), OM.dust(MT.Sb, 1*U8), OM.dust(MT.Fe2O3, 5*U16));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Tetrahedrite), FL.make(tAir, 4000), MT.SO2.gas( 9*U8 , F), OM.dust(MT.Cu , 3*U8 ), OM.dust(MT.Sb, 1*U8), OM.dust(MT.Fe2O3, 5*U16));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_11() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Stannite ), FL.make(tOxygen, 1188), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu , 2*U8 ), OM.dust(MT.Sn, 1*U8), OM.dust(MT.Fe2O3, 5*U16));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Stannite ), FL.make(tAir, 5000), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu , 2*U8 ), OM.dust(MT.Sn, 1*U8), OM.dust(MT.Fe2O3, 5*U16));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_12() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 512, OM.dust(MT.OREMATS.Kesterite ), FL.make(tOxygen, 1000), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu , 2*U8 ), OM.dust(MT.Zn, 1*U8), OM.dust(MT.Sn , 1*U8));
+		}
+		final long[] tChances = new long[] {8000, 8000, 8000};
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 512, tChances, OM.dust(MT.OREMATS.Kesterite ), FL.make(tAir, 4000), MT.SO2.gas(12*U8 , F), OM.dust(MT.Cu , 2*U8 ), OM.dust(MT.Zn, 1*U8), OM.dust(MT.Sn , 1*U8));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_13() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Li ), FL.make(tOxygen, 500), NF , OM.dust(MT.Li2O, 3*U2));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_14() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.V ), FL.make(tOxygen, 2500), NF , OM.dust(MT.V2O5, 7*U2));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_15() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 128, OM.dust(MT.Cr ), FL.make(tOxygen, 2000), NF , OM.dust(MT.CrO2, U ));
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_16() {
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 16, OP.dust.mat(MT.S , 1), FL.make(tOxygen, 2000), MT.SO2.gas( 3*U , F), ZL_IS);
+			RM.Roasting.addRecipe1(T, 16, 144, OP.blockDust.mat(MT.S, 1), FL.make(tOxygen, 18000), MT.SO2.gas(27*U, F), ZL_IS);
+		}
+		for (String tAir : FluidsGT.AIR) if (FL.exists(tAir)) {
+			RM.Roasting .addRecipe1(T, 16, 16, OP.dust.mat(MT.S , 1), FL.make(tAir, 8000), MT.SO2.gas( 3*U, F), ZL_IS);
+			RM.Roasting.addRecipe1(T, 16, 144, OP.blockDust.mat(MT.S, 1), FL.make(tAir, 72000), MT.SO2.gas(27*U, F), ZL_IS);
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_17() {
+		for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT.CO2.gas( 3*U , T), MT.CO .gas( 4*U , F), ZL_IS);
+		for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT.CO2.gas(12*U , T), MT.CO .gas(16*U , F), ZL_IS);
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), FL.make(tOxygen, 2000), MT.CO2.gas( 3*U , F), ZL_IS);
+			for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), FL.make(tOxygen, 8000), MT.CO2.gas(12*U , F), ZL_IS);
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_18() {
+		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Charcoal ), MT.CO2.gas( 3*U , T), MT.CO .gas( 4*U , F), ZL_IS);
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Charcoal ), FL.make(tOxygen, 2000), MT.CO2.gas( 3*U , F), ZL_IS);
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_19() {
+		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Coal ), MT.CO2.gas( 6*U , T), MT.CO .gas( 8*U , F), ZL_IS);
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.Coal ), FL.make(tOxygen, 4000), MT.CO2.gas( 6*U , F), ZL_IS);
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_20() {
+		RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.CoalCoke ), MT.CO2.gas( 6*U , T), MT.CO .gas( 8*U , F), ZL_IS);
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			RM.Roasting .addRecipe1(T, 16, 16, OM.dust(MT.CoalCoke ), FL.make(tOxygen, 4000), MT.CO2.gas( 6*U , F), ZL_IS);
+		}
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_21() {
+		for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT.CO2.gas( 3*U , T), MT.CO .gas( 4*U , F), ZL_IS);
+		for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), MT.CO2.gas(12*U , T), MT.CO .gas(16*U , F), ZL_IS);
+		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
+			for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), FL.make(tOxygen, 2000), MT.CO2.gas( 3*U , F), ZL_IS);
+			for (OreDictMaterial tMat : ANY.Diamond.mToThis) RM.Roasting .addRecipe1(T, 16, 16, OM.dust(tMat ), FL.make(tOxygen, 8000), MT.CO2.gas(12*U , F), ZL_IS);
+		}
 	}
 
 	/** GT6's statements in Loader_Recipes_Chem.run that GT6U dropped, as the port has them: their Recipes are taken back. */

@@ -69,9 +69,19 @@ public class Loader_Recipes_Food {
 	/** GT6U's additions to Loader_Recipes_Food.run (GT6U gregtech/loaders/c/Loader_Recipes_Food.java). */
 	static void run_run() {
 		for (FluidStack tWater : FL.array(FL.Water.make(1000), FL.SpDew.make(1000), FL.DistW.make(1000))) {
-			for (OreDictMaterial tMat : ANY.Flour.mToThis) RM.Mixer .addRecipe1(T, 16, 16, OM.dust(tMat), FL.mul(tWater, 1, 4, T), FL_GT6U.AmylumSolution.make(1000), IL.Food_Dough.get(2));
+			GT6U_Recipes.first(Loader_Recipes_Food::later_run_0); for (OreDictMaterial tMat : ANY.Flour.mToThis) RM.Mixer .addRecipe1(T, 16, 16, OM.dust(tMat), FL.mul(tWater, 1, 4, T), FL_GT6U.AmylumSolution.make(1000), IL.Food_Dough.get(2)); GT6U_Recipes.first(null);
 		}
 		RM.Centrifuge.addRecipe1(T, 16, 64, IL.Food_Coconut.get(1), ZL_FS, FL_GT6U.CoconutOil.make(100), ZL_IS);
+	}
+
+	/** GT6 statements GT6U put a statement of run_run ahead of: what they make gives way to it. */
+	static void later_run_0() {
+		for (OreDictMaterial tMat : ANY.FlourGrains.mToThis) {
+			RM.Mixer .addRecipe2(T, 16, 16, OM.dust(tMat), OM.dust(MT.MeatRaw), OM.ingot(MT.MeatRaw));
+			RM.Mixer .addRecipe2(T, 16, 16, OM.dust(tMat), OM.dust(MT.FishRaw), OM.ingot(MT.FishRaw));
+			RM.Mixer .addRecipe2(T, 16, 16, OM.dust(tMat), OM.dust(MT.MeatRotten), OM.ingot(MT.MeatRotten));
+			RM.Mixer .addRecipe2(T, 16, 16, OM.dust(tMat), OM.dust(MT.FishRotten), OM.ingot(MT.FishRotten));
+		}
 	}
 
 	/** GT6's statements in Loader_Recipes_Food.run that GT6U dropped, as the port has them: their Recipes are taken back. */
