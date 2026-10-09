@@ -2,7 +2,7 @@ package gt6u.tileentity.multiblocks;
 
 import gt6u.GT6U_Main;
 
-import gregapi.util.WD;
+import net.minecraft.core.BlockPos;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.LH;
 import gregapi.tileentity.ITileEntityUnloadable;
@@ -66,7 +66,8 @@ public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11
                     tInY = getOffsetYN(mFacing, mBatteryCoreLength + 3),
                     tInZ = getOffsetZN(mFacing, mBatteryCoreLength + 3);
 
-            if (WD.exists(level, tMinX, tMinY, tMinZ) && WD.exists(level, tMaxX, tMaxY, tMaxZ)) {
+            // GT6U asked for every chunk of the box (checkChunksExist); isAreaLoaded around its middle covers it, as BlockBase does.
+            if (level.isAreaLoaded(new BlockPos((tMinX+tMaxX)>>1, (tMinY+tMaxY)>>1, (tMinZ+tMaxZ)>>1), Math.max(tMaxX-tMinX, Math.max(tMaxY-tMinY, tMaxZ-tMinZ))/2+1)) {
                 mEmitter = null;
                 boolean tSuccess = T;
                 for (int tX = tMinX-1; tX <= tMaxX+1; tX++) for (int tY = tMinY-1; tY <= tMaxY+1; tY++) for (int tZ = tMinZ-1; tZ <= tMaxZ+1; tZ++) {
