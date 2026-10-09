@@ -398,9 +398,11 @@ public class Recipe {
 			return addToItemMap(aRecipe);
 		}
 		
-		/** Inverse of addRecipe, for an addon replacing a GT6 Recipe: out of the List and both Indexes. GT6 itself never removes. */
+		/** Inverse of addRecipe, for an addon replacing a GT6 Recipe: out of the List, both Indexes and the last-found cache, which
+		 *  findRecipeInternal checks first. GT6 itself never removes. */
 		public boolean remove(Recipe aRecipe) {
 			if (aRecipe == null || !mRecipeList.remove(aRecipe)) return F;
+			if (oRecipe == aRecipe) oRecipe = null;
 			mRecipeListSize--;
 			for (FluidStack aFluid : aRecipe.mFluidInputs) if (aFluid != null) {Collection<Recipe> tList = mRecipeFluidMap.get(FL.regName(aFluid.getFluid())); if (tList != null) tList.remove(aRecipe);}
 			for (ItemStack aStack : aRecipe.mInputs) if (aStack != null) {Collection<Recipe> tList = mRecipeItemMap.get(new ItemStackContainer(aStack)); if (tList != null) tList.remove(aRecipe);}
