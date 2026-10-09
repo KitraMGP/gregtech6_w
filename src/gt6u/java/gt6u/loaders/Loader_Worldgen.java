@@ -31,7 +31,7 @@ import static gregapi.data.CS.*;
 /** GT6U adds copper and the tin ores to the stone layer of jaspers and tiger eyes (GT6U Loader_Worldgen.java:129-132). */
 public class Loader_Worldgen {
 	public static void run() {
-		for (StoneLayer tLayer : StoneLayer.LAYERS) if (tLayer.mOres.stream().anyMatch(tOre -> tOre.mMaterial == MT.TigerIron)) {
+		for (StoneLayer tLayer : StoneLayer.LAYERS) if (tLayer.mOresDeclared.stream().anyMatch(tOre -> tOre.mMaterial == MT.TigerIron)) {
 			tLayer.addOres(
 			  new StoneLayerOres(MT.Cu                      , U12, 32, 80, BIOMES_MOUNTAINS)
 			, new StoneLayerOres(MT.OREMATS.Cassiterite     , U16, 40, 80)
