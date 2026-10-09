@@ -73,6 +73,30 @@ public final class RecipeCapture {
 
 	public static boolean open() {return sMachine != null;}
 
+	private static java.util.Set<Recipe> sPrecedence = null;
+	private static List<Map.Entry<RecipeMap, Recipe>> sGaveWay = null;
+
+	/** Runs an addon's statements with the place they had in its sources, before GT6's: a Recipe they add that collides with a
+	 *  Recipe made before them takes its place, as theirs did where they stood first; among their own Recipes the first one stays.
+	 *  Returns the Recipes that gave way. */
+	public static List<Map.Entry<RecipeMap, Recipe>> precede(Runnable aStatements) {
+		java.util.Set<Recipe> tPrecedence = sPrecedence;
+		List<Map.Entry<RecipeMap, Recipe>> tGaveWay = sGaveWay, rGaveWay = new ArrayList<>();
+		sPrecedence = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()); sGaveWay = rGaveWay;
+		try {aStatements.run();} finally {sPrecedence = tPrecedence; sGaveWay = tGaveWay;}
+		return rGaveWay;
+	}
+
+	/** Called by a Recipe Map whose new Recipe collides with aOld: true when aOld gave way to it and is out of the map. */
+	public static boolean yields(RecipeMap aMap, Recipe aOld) {
+		if (sPrecedence == null || sPrecedence.contains(aOld) || !aMap.remove(aOld)) return false;
+		sGaveWay.add(new AbstractMap.SimpleEntry<>(aMap, aOld));
+		return true;
+	}
+
+	/** Called by a Recipe Map that added aRecipe. */
+	public static void added(Recipe aRecipe) {if (sPrecedence != null && aRecipe != null) sPrecedence.add(aRecipe);}
+
 	public static Captured capture(Runnable aRestatement) {
 		Captured rCaptured = new Captured();
 		List<Map.Entry<RecipeMap, Recipe>> tMachine = sMachine;
