@@ -29,6 +29,9 @@ import gregapi.code.HashSetNoNulls;
 import gregapi.code.ItemNBT;
 import gregapi.data.LH;
 import gregapi.item.CreativeTab;
+import gregapi.oredict.OreDictItemData;
+import gregapi.oredict.OreDictManager;
+import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.render.RendererBlockTextured;
 import gregapi.util.CR;
@@ -43,6 +46,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +98,13 @@ public class MultiTileEntityRegistry {
 	/** The registry this one answers from for ids it does not hold: an addon's machines name the parts of the registry they
 	 *  extend by their ids, as they did while they sat in it. GT6's own registries have none. */
 	private String mFallback = null;
+	/** What each entry's own crafting recipe made when it was added: the recipes it put into CR's list and the item data they
+	 *  derived. An override replacing that recipe takes back exactly these, as an edit of the add() line would never have made them. */
+	private final Map<Short, Made> mMade = new HashMap<>();
+	private static final class Made {
+		final List<ICraftingRecipeGT> mCrafting; final OreDictItemData mData;
+		Made(List<ICraftingRecipeGT> aCrafting, OreDictItemData aData) {mCrafting = aCrafting; mData = aData;}
+	}
 
 	private static final MultiTileEntityBlockInternal regblock(String aNameInternal, MultiTileEntityBlockInternal aBlock, Class<? extends BlockItem> aItemClass) {
 		ST.register(aBlock, aNameInternal, aItemClass);
@@ -224,10 +235,22 @@ public class MultiTileEntityRegistry {
 		onRegistered(aCategoricalName, aClassContainer);
 		if (aRecipe != null && aRecipe.length > 1) {
 			if (aRecipe[0] instanceof Object[]) aRecipe = (Object[])aRecipe[0];
-			if (aRecipe.length > 2) CR.shaped(getItem(aClassContainer.mID), CR.DEF_REV_NCC, aRecipe);
+			if (aRecipe.length > 2) shaped(aClassContainer.mID, aRecipe);
 		}
 		addToRecipeMachineLists(aClassContainer);
 		return getItem(aClassContainer.mID);
+	}
+
+	/** An entry's own crafting recipe, remembered with what it made: the recipes CR's list gained and the item data they derived
+	 *  where the item had none. */
+	private void shaped(short aID, Object[] aRecipe) {
+		ItemStack tItem = getItem(aID);
+		OreDictItemData tDataBefore = OreDictManager.INSTANCE.getItemData(tItem);
+		List<ICraftingRecipeGT> tList = CR.list();
+		int tBefore = tList.size();
+		CR.shaped(tItem, CR.DEF_REV_NCC, aRecipe);
+		OreDictItemData tData = OreDictManager.INSTANCE.getItemData(tItem);
+		mMade.put(aID, new Made(new ArrayList<>(tList.subList(Math.min(tBefore, tList.size()), tList.size())), tDataBefore == null ? tData : null));
 	}
 
 	/** Replaces an entry under the same id keeping every index consistent: how an addon changes a GT6 machine; GT6 never calls it.
@@ -243,10 +266,18 @@ public class MultiTileEntityRegistry {
 		mRegistrations.set(mRegistrations.indexOf(tOld), aClassContainer);
 		onRegistered(aCategoricalName, aClassContainer);
 		replaceInRecipeMachineLists(tOld, aClassContainer);
-		// A replacement recipe takes the place of every crafting recipe of this item, then is added as add() adds one.
+		// A replacement recipe takes the place of what the entry's own recipe made, its crafting recipes and the item data they
+		// derived, as an edit of that add() line would; recipes of the item from anywhere else stay.
 		if (aRecipe != null && aRecipe.length > 1) {
 			if (aRecipe[0] instanceof Object[]) aRecipe = (Object[])aRecipe[0];
-			if (aRecipe.length > 2) {CR.remout(getItem(aClassContainer.mID)); CR.shaped(getItem(aClassContainer.mID), CR.DEF_REV_NCC, aRecipe);}
+			if (aRecipe.length > 2) {
+				Made tMade = mMade.remove(aClassContainer.mID);
+				if (tMade != null) {
+					for (ICraftingRecipeGT tRecipe : tMade.mCrafting) CR.removeSame(tRecipe);
+					if (tMade.mData != null) OreDictManager.INSTANCE.removeItemData_(getItem(aClassContainer.mID), tMade.mData);
+				}
+				shaped(aClassContainer.mID, aRecipe);
+			}
 		}
 		return getItem(aClassContainer.mID);
 	}

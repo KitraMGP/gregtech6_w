@@ -35,7 +35,9 @@ import gregapi.oredict.event.IOreDictListenerEvent;
 import gregapi.oredict.event.IOreDictListenerEvent.OreDictRegistrationContainer;
 import gregapi.oredict.event.IOreDictListenerRecyclable;
 import gregapi.oredict.event.IOreDictListenerRecyclable.OreDictRecyclingContainer;
+import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.recipes.Recipe;
+import gregapi.recipes.RecipeCapture;
 import gregapi.util.CR;
 import gregapi.util.OM;
 import gregapi.util.ST;
@@ -703,6 +705,25 @@ public final class OreDictManager {
 			OreDictRecyclingContainer tRegistration = new OreDictRecyclingContainer(aStack, aData);
 			for (IOreDictListenerRecyclable tListener : mRecyclableOreDictListeners) tListener.onRecycleableRegistration(tRegistration);
 			mRecyclableRegistrations.add(tRegistration);
+		}
+		return T;
+	}
+	
+	/** Takes aData off aStack again, with the recycling recipes its listeners made of it: how a replaced machine entry hands
+	 *  the data its own recipe derived over to its replacement's recipe. False, changing nothing, when aStack holds other data. */
+	public boolean removeItemData_(ItemStack aStack, OreDictItemData aData) {
+		ItemStackContainer tKey = new ItemStackContainer(aStack);
+		if (aData == null || sItemStack2DataMap.get(tKey) != aData) return F;
+		sItemStack2DataMap.remove(tKey);
+		for (OreDictRecyclingContainer tRegistration : new ArrayList<>(mRecyclableRegistrations)) {
+			if (tRegistration.mItemData != aData || !ST.equal(tRegistration.mStack, aStack, T)) continue;
+			mRecyclableRegistrations.remove(tRegistration);
+			// What each listener made of the registration, made again under the capture and taken out of its maps.
+			for (IOreDictListenerRecyclable tListener : mRecyclableOreDictListeners) {
+				RecipeCapture.Captured tMade = RecipeCapture.capture(() -> tListener.onRecycleableRegistration(new OreDictRecyclingContainer(tRegistration.mStack, aData)));
+				for (Map.Entry<Recipe.RecipeMap, Recipe> tRecipe : tMade.mMachine) tRecipe.getKey().removeSame(tRecipe.getValue());
+				for (ICraftingRecipeGT tRecipe : tMade.mCrafting) CR.removeSame(tRecipe);
+			}
 		}
 		return T;
 	}
