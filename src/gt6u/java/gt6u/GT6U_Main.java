@@ -68,12 +68,6 @@ public class GT6U_Main extends Abstract_Mod {
 		aEvent.addPackFinders(Identifier.fromNamespaceAndPath(MOD_ID, "gt6u_overrides"), PackType.CLIENT_RESOURCES, Component.literal("GT6U Addon: GT6U's GregTech textures"), PackSource.BUILT_IN, T, Pack.Position.TOP);
 	}
 
-	/** Registry id (MultiTileEntityRegistry.currentID) of a multiblock part GT6U names by its id: GT6U kept one registry, the addon's
-	 *  answers from GT6's for the ids it does not hold (MultiTileEntityRegistry.holder). */
-	public static int partRegistry(int aPartID) {
-		return MultiTileEntityRegistry.getRegistry(REGISTRY).holder(aPartID).currentID();
-	}
-	
 	@Override public String getModID() {return MOD_ID;}
 	@Override public String getModName() {return MOD_NAME;}
 	@Override public String getModNameForLog() {return "GT6U_Addon";}
@@ -88,7 +82,7 @@ public class GT6U_Main extends Abstract_Mod {
 		MT_GT6U.changeGT6();
 		TD_GT6U.addToGT6();
 		// Its own MultiTileEntity registry, built where GT6 builds its own: in the deferred block queue, which runs on RegisterEvent.
-		// GT6U kept one registry: an id the addon's does not hold is GT6's, for items and multiblock parts alike.
+		// GT6U kept one registry: an id one of the two does not hold is the other's, for items, names and multiblock parts alike.
 		GT_API.deferBlockInit(() -> new MultiTileEntityRegistry(REGISTRY).setFallback("gt.multitileentity"));
 		new Compat_Recipes_IndustrialCraft(MD.IC2, this);
 	}

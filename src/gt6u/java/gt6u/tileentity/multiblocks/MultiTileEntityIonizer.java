@@ -22,8 +22,6 @@
 
 package gt6u.tileentity.multiblocks;
 
-import gt6u.GT6U_Main;
-
 import gregapi.util.WD;
 
 import gregapi.data.LH;
@@ -56,7 +54,7 @@ public class MultiTileEntityIonizer extends TileEntityBase10MultiBlockMachine {
                 if (i == 0 && j == 0 && k == 0) {
                     if (getAir(tX+i, tY+j, tZ+k)) WD.set(level, tX+i, tY+j, tZ+k, NB, 0, 3); else tSuccess = F;
                 } else {
-                    if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX+i, tY+j, tZ+k, 18115, GT6U_Main.partRegistry(18115), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID_ENERGY)) tSuccess = F;
+                    if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX+i, tY+j, tZ+k, 18115, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID_ENERGY)) tSuccess = F;
                 }
             }
             return tSuccess;

@@ -24,7 +24,8 @@ import static gregapi.data.CS.*;
  */
 public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11MultiBlockEnergyStorage {
 
-    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
+    // GT6U kept one registry; here it is the addon's, which answers GT6's ids from the registry it extends.
+    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry(GT6U_Main.REGISTRY);
 
     public short mBatteryCasing = 18122;
 
@@ -74,9 +75,7 @@ public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11
                               (tX == tMinX-1 || tX == tMaxX+1 || tY == tMinY-1 || tY == tMaxY+1 || tZ == tMinZ-1 || tZ == tMaxZ+1) ? mBatteryCasing
                             : (SIDES_AXIS_X[mFacing] ? tX == tMinX || tX == tMaxX: SIDES_AXIS_Z[mFacing] ? tZ == tMinZ || tZ == tMaxZ : tY == tMinY || tY == tMaxY) ? mElectrode
                             : mBatteryCore
-                            , GT6U_Main.partRegistry((tX == tMinX-1 || tX == tMaxX+1 || tY == tMinY-1 || tY == tMaxY+1 || tZ == tMinZ-1 || tZ == tMaxZ+1) ? mBatteryCasing
-                            : (SIDES_AXIS_X[mFacing] ? tX == tMinX || tX == tMaxX: SIDES_AXIS_Z[mFacing] ? tZ == tMinZ || tZ == tMaxZ : tY == tMinY || tY == tMaxY) ? mElectrode
-                            : mBatteryCore), 0,
+                            , getMultiTileEntityRegistryID(), 0,
                             (SIDES_AXIS_X[mFacing] ? tX == tInX : SIDES_AXIS_Z[mFacing] ? tZ == tInZ : tY == tInY) ? MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN : MultiTileEntityMultiBlockPart.NOTHING)) tSuccess = F;
                 }
 
