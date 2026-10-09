@@ -117,7 +117,9 @@ public class Loader_Recipes_Handlers {
 	/** GT6's statements in Loader_Recipes_Handlers.run that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_run() {
 		GT6U_Recipes.takeBack("Loader_Recipes_Handlers.run", () -> {
-			RM.RollBender.add(new RecipeMapHandlerPrefix(plate, 1, NF, 16, 0, 256, NF, plateCurved, 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE))); RM.RollBender.add(new RecipeMapHandlerPrefix(plate, 1, NF, 16, 16, 0, NF, plateCurved, 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE)));
+			Or tEasyWorkable = new Or<>(FURNACE, SOFT), tEasyHeatable = new Or<>(FURNACE);
+			RM.RollBender .add(new RecipeMapHandlerPrefix(plate , 1, NF, 16, 0, 256, NF, plateCurved , 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE, tEasyWorkable.NOT)));
+			RM.RollBender .add(new RecipeMapHandlerPrefix(plate , 1, NF, 16, 16 , 0, NF, plateCurved , 1, NI, NI, T, F, F, new And(ANTIMATTER.NOT, SMITHABLE, tEasyWorkable)));
 		});
 	}
 }

@@ -91,9 +91,13 @@ public class MultiItemRandomTools_Recipes {
 		GT6U_Recipes.takeBack("MultiItemRandomTools_Recipes.addItems", () -> {
 			for (OreDictMaterial tWood : ANY.Wood.mToThis) {
 				RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.P , 1), IL.Tool_Matches.get(1));
-				RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(1));
+				for (OreDictMaterial tPhosphorus : ANY.Phosphorus.mToThis) {
+					RM.Assembler.addRecipe2(T, 16, 16, OP.bolt.mat(tWood, 1), OP.dustSmall.mat(tPhosphorus, 1), IL.Tool_Matches.get(1));
+				}
 				RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(MT.P , 1), IL.Tool_Matches.get(4));
-				RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust.mat(MT.Phosphorus, 1), IL.Tool_Matches.get(4));
+				for (OreDictMaterial tPhosphorus : ANY.Phosphorus.mToThis) {
+					RM.Assembler.addRecipe2(T, 16, 64, OP.bolt.mat(tWood, 4), OP.dust .mat(tPhosphorus, 1), IL.Tool_Matches.get(4));
+				}
 			}
 		});
 	}

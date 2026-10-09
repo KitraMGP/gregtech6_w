@@ -32,6 +32,7 @@ import gregapi.data.OP;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.OM;
 import gregapi.util.UT;
+import net.neoforged.neoforge.fluids.FluidStack;
 import gt6u.GT6U_Recipes;
 
 /** GregTech6-Unofficial's edits of gregtech/loaders/b/Loader_Fuels.java, as statements: what GT6U added runs in run(), what it dropped is taken back in
@@ -65,7 +66,9 @@ public class Loader_Fuels {
 	static void takeBack_run() {
 		GT6U_Recipes.takeBack("Loader_Fuels.run", () -> {
 			if (FL.LPG.exists()) {
-				FM.Burn.addRecipe0(T, -64, 42, FL.LPG.make(7), FL.Water.make(7), FL.CarbonDioxide.make(6));
+				for (FluidStack tFuel : FL.LPG.list(7)) {
+					FM.Burn .addRecipe0(T, - 64, 42, tFuel , FL.Water.make(7), FL.CarbonDioxide.make(6));
+				}
 			}
 		});
 	}
