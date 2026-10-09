@@ -237,11 +237,16 @@ public class MultiItemTechnological_Recipes {
 	// The three GT6 item registrations GT6U rewrote are changed in place by change() in run_addItems; its own items are
 	// registered by the addon's MultiItemTechnological.
 
-	// 1 of the statements GT6U dropped from MultiItemTechnological.addItems are gone from GT6 6.17 as well: nothing to take back.
+	// The one statement GT6U dropped that 6.17 runs inside a new loop over every plastic is taken back as that loop.
 
 	/** GT6's statements in MultiItemTechnological.addItems that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_addItems() {
 		GT6U_Recipes.takeBack("MultiItemTechnological_Recipes.addItems", () -> {
+			// GT6 6.17 runs the plate of the Circuit Plate over every plastic, where 6.14.17 named one: its form is the one to take back.
+			for (OreDictMaterial tMat : ANY.SiO2.mToThis) {
+				ItemStack tDust = OP.dust.mat(tMat, 1);
+				if (ST.valid(tDust)) for (OreDictMaterial tMt2 : ANY.Plastic.mToThis) RM.Press.addRecipe2(T, F, F, F, T, 16, 64, OP.plate.mat(tMt2, 1), tDust, IL.Circuit_Plate_Empty.get(1));
+			}
 			CR.shaped(IL.Comp_Laser_Gas_Empty.get(1), CR.DEF_REV_NCC, "CWM", "WGx", "MTd", 'W', MT.DATA.CABLES_01[2], 'C', OD_CIRCUITS[2], 'M', OP.plate.dat(MT.Ag), 'T', OP.screw.dat(MT.StainlessSteel), 'G', OD.blockGlassColorless);
 			RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Copper .get(1), IL.Circuit_Plate_Copper .get(1));
 			RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Gold .get(1), IL.Circuit_Plate_Gold .get(1));
