@@ -95,7 +95,8 @@ public class MultiTileEntityAquaticFarm extends TileEntityBase10MultiBlockMachin
 	private boolean getWater(int aX, int aY, int aZ) {
 		if (level == null) return T;
 		if (mIgnoreUnloadedChunks && crossedChunkBorder(aX, aZ) && !WD.exists(level, aX, aY, aZ)) return T;
-		return WD.water(level, aX, aY, aZ);
+		// GT6U asked the block's material, so GT6's river, ocean and swamp waters fill the farm as well.
+		return WD.getMaterial(WD.block(level, aX, aY, aZ)) == Material.water;
 	}
 
 	
