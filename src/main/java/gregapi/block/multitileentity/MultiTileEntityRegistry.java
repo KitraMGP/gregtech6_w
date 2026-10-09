@@ -43,6 +43,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -309,15 +310,24 @@ public class MultiTileEntityRegistry {
 	/** Names the registry this one answers from for ids it does not hold; resolved by name on use, as it may be built later. */
 	public MultiTileEntityRegistry setFallback(String aRegistryName) {mFallback = aRegistryName; return this;}
 
-	/** The registry holding aID: this one, else the holder in its fallback; an id none holds yet stays this one's, as a
-	 *  loader may name an entry of its own before adding it. Without a fallback always this one. */
+	/** The registry holding aID: this one, else the nearest one it falls back to, else one falling back to it, as an addon's
+	 *  class set into the registry it extends names the addon's parts there. An id none holds yet stays this one's, as a loader
+	 *  may name an entry of its own before adding it; a registry no other one is linked with always answers itself. */
 	public MultiTileEntityRegistry holder(int aID) {
-		if (mFallback == null || mRegistry.containsKey((short)aID)) return this;
-		MultiTileEntityRegistry tFallback = NAMED_REGISTRIES.get(mFallback);
-		if (tFallback == null || tFallback == this) return this;
-		MultiTileEntityRegistry tHolder = tFallback.holder(aID);
-		return tHolder.mRegistry.containsKey((short)aID) ? tHolder : this;
+		if (mRegistry.containsKey((short)aID)) return this;
+		for (MultiTileEntityRegistry tBase : bases()) if (tBase.mRegistry.containsKey((short)aID)) return tBase;
+		for (MultiTileEntityRegistry tExtension : NAMED_REGISTRIES.values()) if (tExtension.mRegistry.containsKey((short)aID) && tExtension.bases().contains(this)) return tExtension;
+		return this;
 	}
+
+	/** The registries this one falls back to, nearest first; a ring of fallbacks ends at the first one met again. */
+	private List<MultiTileEntityRegistry> bases() {
+		List<MultiTileEntityRegistry> rBases = new ArrayList<>();
+		for (MultiTileEntityRegistry tBase = fallback(); tBase != null && tBase != this && !rBases.contains(tBase); tBase = tBase.fallback()) rBases.add(tBase);
+		return rBases;
+	}
+
+	private MultiTileEntityRegistry fallback() {return mFallback == null ? null : NAMED_REGISTRIES.get(mFallback);}
 
 	public ItemStack getItem(int aID, long aAmount, CompoundTag aNBT) {
 		// An id this registry does not hold would make a stack of no machine; its holder makes the real one.
@@ -333,7 +343,8 @@ public class MultiTileEntityRegistry {
 		return rStack;
 	}
 	
-	public String getLocal(int aID) {return LH.get(mNameInternal+"."+aID);}
+	// A name is asked of the registry holding the id, as a stack is (getItem).
+	public String getLocal(int aID) {return LH.get(holder(aID).mNameInternal+"."+aID);}
 	
 	public MultiTileEntityClassContainer getClassContainer(int aID) {return mRegistry.get((short)aID);}
 	public MultiTileEntityClassContainer getClassContainer(ItemStack aStack) {return mRegistry.get(ST.meta_(aStack));}
