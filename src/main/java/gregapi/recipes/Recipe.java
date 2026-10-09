@@ -296,10 +296,8 @@ public class Recipe {
 			if (RecipeCapture.take(this, aRecipe)) return aRecipe;
 			aRecipe.mHidden = aHidden;
 			aRecipe.mFakeRecipe = aFakeRecipe;
-			if (aCheckForCollisions) for (Recipe tOld; (tOld = findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs)) != null; ) if (!RecipeCapture.yields(this, tOld)) return null;
-			Recipe rRecipe = add(aRecipe, aLogErrors && mLogErrors);
-			RecipeCapture.added(rRecipe);
-			return rRecipe;
+			if (aCheckForCollisions && findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs) != null) return null;
+			return add(aRecipe, aLogErrors && mLogErrors);
 		}
 		
 		public Recipe addRecipe(Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden) {

@@ -62,12 +62,6 @@ public class GT6U_Recipes {
 		if (tMissing > 0) ERR.println("GT6U: " + tMissing + " of " + (tCaptured.mMachine.size() + tCaptured.mCrafting.size() + tCaptured.mHandlers.size() + tCaptured.mListeners.size()) + " GT6 Recipes and listeners to take back were not found in " + aSource);
 	}
 	
-	/** Runs GT6U's own statements in GT6's recipe-making code: where GT6U's stood before or instead of GT6's, a GT6 Recipe they
-	 *  collide with gives way, as in GT6U; what gave way is listed in GT6's log. */
-	public static void precede(Runnable aGT6UStatements) {
-		for (Map.Entry<RecipeMap, Recipe> tEntry : RecipeCapture.precede(aGT6UStatements)) ERR.println("GT6U precedence, gave way: " + tEntry.getKey().mNameInternal + " " + describe(tEntry.getValue()));
-	}
-
 	private static String describe(Recipe aRecipe) {
 		return ST.configNames(aRecipe.mInputs) + " + " + java.util.Arrays.toString(aRecipe.mFluidInputs) + " -> " + ST.configNames(aRecipe.mOutputs) + " + " + java.util.Arrays.toString(aRecipe.mFluidOutputs) + " @" + aRecipe.mEUt + "x" + aRecipe.mDuration;
 	}
