@@ -74,7 +74,7 @@ public class Loader_Fluids implements Runnable {
 			MT.Ice.mGas = MT.H2O.mGas;
 			gregapi.fluid.FluidGT tSteam = gregapi.fluid.FluidGT.of(MT.H2O.mGas.getFluid());
 			if (tSteam != null) tSteam.setTemperature((int)(C+100)).setGaseous(T);
-			if (!gregapi.api.GT6Definitions.drops("gt.material.Steam.gas")) MT.Steam.gas(FL.Steam.make(160000));
+			if (!gregapi.api.GT6Definitions.drops(gregapi.api.GT6Definitions.STEAM_GAS)) MT.Steam.gas(FL.Steam.make(160000));
 		});
 		
 		//-----
@@ -99,7 +99,7 @@ public class Loader_Fluids implements Runnable {
 		FL.create("NitroFuel"                , "Nitro Fuel"          , MT.NitroFuel          , 1);
 		FL.create("oil"                      , "Oil"                 , MT.Oil                , 1);
 		FL.create("fuel"                     , "Fuel Oil"            , MT.Fuel               , 1);
-		if (!gregapi.api.GT6Definitions.drops("gt.fluid.kerosene"))
+		if (!gregapi.api.GT6Definitions.drops(gregapi.api.GT6Definitions.FLUID_KEROSENE))
 		FL.create("kerosene"                 , "Kerosene"            , MT.Kerosine           , 1);
 		FL.create("kerosine"                 , "Kerosine"            , MT.Kerosine           , 1);
 		FL.create("diesel"                   , "Diesel"              , MT.Diesel             , 1);

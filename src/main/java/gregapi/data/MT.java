@@ -341,7 +341,7 @@ public class MT {
 	
 	/** Making the Table a little bit more overviewable. DO NOT USE THESE FUNCTIONS YOURSELF!!! Use "OreDictMaterial.createMaterial(YOUR-ID-AS-SPECIFIED-IN-THE-ID-RANGES, OREDICT-NAME, LOCALISED-NAME)" */
 	protected static OreDictMaterial unknown(int aID, long aNeutrons, Object... aRandomData) {
-		if (GT6Definitions.drops("gt.material.unknown")) return null;
+		if (GT6Definitions.drops(GT6Definitions.UNKNOWN_ELEMENTS)) return null;
 		int aProtonsAndElectrons = aID / 10;
 		String aNameOreDict, aSymbol;
 		
@@ -699,7 +699,7 @@ public class MT {
 	Ubb     = unknown( 1220,  184),
 	Ubt     = unknown( 1230,  186),
 	Ubq     = unknown( 1240,  188),
-	Tn      = GT6Definitions.material("gt.material.Tn", () -> element( 1250, "TritaniumElemental"    , "Tn"      , 125, 198, 2000, 3138, 25.0    , SET_DULL    ,  55, 155, 155, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbipentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 2, TC.VITREUS, 1).setLocal("Elemental Tritanium")), Ubp = Tn,
+	Tn      = GT6Definitions.material(GT6Definitions.MATERIAL_TRITANIUM, () -> element( 1250, "TritaniumElemental"    , "Tn"      , 125, 198, 2000, 3138, 25.0    , SET_DULL    ,  55, 155, 155, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbipentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 2, TC.VITREUS, 1).setLocal("Elemental Tritanium")), Ubp = Tn,
 	Ke      = element( 1260, "Trinium"               , "Ke"      , 126, 192, 2645, 4523,  1.06874, SET_COPPER  , 234, 234, 234, 255, G_INGOT_MACHINE_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unbihexium").aspects(TC.METALLUM, 3, TC.TUTAMEN, 1, TC.VITREUS, 1).qual(3, 12.0, 2560, 4), Ubh = Ke,
 	Ubs     = unknown( 1270,  194),
 	Ubo     = unknown( 1280,  196),
@@ -719,7 +719,7 @@ public class MT {
 	Uqb     = unknown( 1420,  236),
 	Uqt     = unknown( 1430,  239),
 	Uqq     = unknown( 1440,  242),
-	Dn      = GT6Definitions.material("gt.material.Dn", () -> element( 1450, "DuraniumElemental"     , "Dn"      , 145, 190,  1200, 2491, 20.0, SET_DULL,  75, 175, 175, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unquadpentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 1).setLocal("Elemental Duranium")), Uqp = Dn, // material refined from dolamide ore
+	Dn      = GT6Definitions.material(GT6Definitions.MATERIAL_DURANIUM, () -> element( 1450, "DuraniumElemental"     , "Dn"      , 145, 190,  1200, 2491, 20.0, SET_DULL,  75, 175, 175, 255, G_DUST_ORES, UUM, METAL, SMITHABLE, MELTING, MOLTEN, EXTRUDER, "Unquadpentium").aspects(TC.METALLUM, 2, TC.TUTAMEN, 1).setLocal("Elemental Duranium")), Uqp = Dn, // material refined from dolamide ore
 	Uqh     = unknown( 1460,  248),
 	Uqs     = unknown( 1470,  251),
 	Uqo     = unknown( 1480,  254),
@@ -977,7 +977,7 @@ public class MT {
 	Teo     = unknown( 3980, 1460),
 	Tee     = unknown( 3990, 1465),
 	
-	Neutronium = GT6Definitions.material("gt.material.Neutronium", () -> unused("Neutronium").qual(3, 6.0, 81920, 6).put(IGNORE_IN_COLOR_LOG).tooltip("Nt")),
+	Neutronium = GT6Definitions.material(GT6Definitions.MATERIAL_NEUTRONIUM, () -> unused("Neutronium").qual(3, 6.0, 81920, 6).put(IGNORE_IN_COLOR_LOG).tooltip("Nt")),
 	
 	
 	
@@ -1622,12 +1622,12 @@ public class MT {
 	
 	
 	
-	Sand                    = GT6Definitions.material("gt.material.Sand", () -> dust          ( 8100, "Sand"                  , SET_SAND              , 250, 250, 200, 255, FURNACE, UNRECYCLABLE)                                                                                                                                                                                                                                                                                .aspects(TC.TERRA       , 1                ).stealStatsElement(SiO2).setSmelting(Glass, U).setForging(Glass, U)),
+	Sand                    = GT6Definitions.material(GT6Definitions.MATERIAL_SAND, () -> dust          ( 8100, "Sand"                  , SET_SAND              , 250, 250, 200, 255, FURNACE, UNRECYCLABLE)                                                                                                                                                                                                                                                                                .aspects(TC.TERRA       , 1                ).stealStatsElement(SiO2).setSmelting(Glass, U).setForging(Glass, U)),
 	RedSand                 = dust          ( 8104, "Red Sand"              , SET_SAND              , 170,  86,  35, 255, FURNACE)                                                                                                                                                                                                                                                                                              .aspects(TC.METALLUM    , 1                ).stealStatsElement(SiO2).setSmelting(Glass, U).setForging(Glass, U),
 	EndSandWhite            = dust          ( 8105, "White End Sand"        , SET_SAND              , 230, 250, 250, 255, FURNACE)                                                                                                                                                                                                                                                                                              .aspects(TC.ALIENIS     , 1                ).stealStatsElement(SiO2).setSmelting(Glass, U).setForging(Glass, U),
 	EndSandBlack            = dust          ( 8106, "Black End Sand"        , SET_SAND              ,  40,  60,  60, 255, FURNACE)                                                                                                                                                                                                                                                                                              .aspects(TC.ALIENIS     , 1                ).stealStatsElement(SiO2).setSmelting(Glass, U).setForging(Glass, U),
 	SoulSand                = oredust       ( 8101, "Soulsand"              , SET_SAND              , 100, 100,  80, 255)                                                                                                                                                                                                                                                                                                       .aspects(TC.SPIRITUS    , 1, TC.VINCULUM, 1).stealStatsElement(SiO2),
-	SluiceSand              = GT6Definitions.material("gt.material.SluiceSand", () -> dust          ( 8102, "Sluice Sand"           , SET_SAND              , 165, 165, 120, 255)                                                                                                                                                                                                                                                                                                       .aspects(TC.TERRA       , 1, TC.LUCRUM  , 1).stealStatsElement(SiO2)),
+	SluiceSand              = GT6Definitions.material(GT6Definitions.MATERIAL_SLUICE_SAND, () -> dust          ( 8102, "Sluice Sand"           , SET_SAND              , 165, 165, 120, 255)                                                                                                                                                                                                                                                                                                       .aspects(TC.TERRA       , 1, TC.LUCRUM  , 1).stealStatsElement(SiO2)),
 	PlatinumGroupSludge     = oredust       ( 8103, "Platinum Group Sludge" , SET_SAND              ,  50,  50,  80, 255)                                                                                                                                                                                                                                                                                                       .aspects(TC.LIMUS       , 2, TC.NEBRISUM, 2).stealStatsElement(Pt  ).addSourceOf(Ru,Rh,Pd,Os,Ir,Pt),
 	RareEarth               = oredust       ( 9100, "Rare Earth"            , SET_FINE              , 128, 128, 100, 255)                                                                                                                                                                                                                                                                                                       .aspects(TC.VITREUS     , 2, TC.NEBRISUM, 1).stealStatsElement(Nd  ).addSourceOf(Nd,Y ,La,Ce,Cd,Cs),
 	Monazite                = elec          ( 8338, "Monazite"              , SET_REDSTONE          ,  50,  70,  50, 255, G_GEM_ORES, CRYSTAL, BRITTLE, CRYSTALLISABLE, BLACKLISTED_SMELTER)                                                                        .setMcfg( 0, RareEarth      , 1*U, PO4              , 1*U)                                                                                                  .aspects(TC.POTENTIA    , 1, TC.NEBRISUM, 1).addSourceOf(He), // Wikipedia: (Ce, La, Nd, Th, Sm, Gd)PO4 Monazite also smelt-extract to Helium, it is brown like the rare earth Item Monazite sand deposits are inevitably of the monazite-(Ce) composition. Typically, the lanthanides in such monazites contain about 45�48% cerium, about 24% lanthanum, about 17% neodymium, about 5% praseodymium, and minor quantities of samarium, gadolinium, and yttrium. Europium concentrations tend to be low, about 0.05% Thorium content of monazite is variable and sometimes can be up to 20�30%

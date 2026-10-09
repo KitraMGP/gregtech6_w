@@ -38,6 +38,19 @@ import static gregapi.data.CS.*;
 public final class GT6Definitions {
 	private GT6Definitions() {}
 	
+	/** The names of what GT6 asks addons about, written here only: GT6 asks and an addon answers by these constants. Recipe Maps go
+	 *  by their own internal name. */
+	public static final String
+	  MATERIAL_SAND                = "definition.material.Sand"
+	, MATERIAL_SLUICE_SAND         = "definition.material.SluiceSand"
+	, MATERIAL_NEUTRONIUM          = "definition.material.Neutronium"
+	, MATERIAL_TRITANIUM           = "definition.material.Tn"
+	, MATERIAL_DURANIUM            = "definition.material.Dn"
+	, UNKNOWN_ELEMENTS             = "definition.material.unknown"
+	, STEAM_GAS                    = "definition.material.Steam.gas"
+	, FLUID_KEROSENE               = "definition.fluid.kerosene"
+	, REPLICATOR_POWER_PER_NUCLEON = "definition.replicator.powerPerNucleon";
+	
 	public static final List<IGT6Definitions> ADDONS = new ArrayList<>();
 	static {
 		for (IGT6Definitions tAddon : ServiceLoader.load(IGT6Definitions.class, GT6Definitions.class.getClassLoader())) {

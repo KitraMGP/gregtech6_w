@@ -24,6 +24,7 @@ package gt6u;
 
 import java.util.function.Supplier;
 
+import gregapi.api.GT6Definitions;
 import gregapi.api.IGT6Definitions;
 import gregapi.data.FL;
 import gregapi.data.RM;
@@ -53,11 +54,11 @@ public class GT6U_Definitions implements IGT6Definitions {
 	@Override
 	public OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {
 		switch (aName) {
-		case "gt.material.Sand"      : return MT_GT6U.InMT.sand();
-		case "gt.material.SluiceSand": return MT_GT6U.InMT.sluiceSand();
-		case "gt.material.Neutronium": return MT_GT6U.InMT.neutronium();
-		case "gt.material.Tn"        : return MT_GT6U.InMT.tritanium();
-		case "gt.material.Dn"        : return MT_GT6U.InMT.duranium();
+		case GT6Definitions.MATERIAL_SAND       : return MT_GT6U.InMT.sand();
+		case GT6Definitions.MATERIAL_SLUICE_SAND: return MT_GT6U.InMT.sluiceSand();
+		case GT6Definitions.MATERIAL_NEUTRONIUM : return MT_GT6U.InMT.neutronium();
+		case GT6Definitions.MATERIAL_TRITANIUM  : return MT_GT6U.InMT.tritanium();
+		case GT6Definitions.MATERIAL_DURANIUM   : return MT_GT6U.InMT.duranium();
 		default: return null;
 		}
 	}
@@ -67,7 +68,7 @@ public class GT6U_Definitions implements IGT6Definitions {
 	@Override
 	public boolean drops(String aName) {
 		switch (aName) {
-		case "gt.material.unknown": case "gt.material.Steam.gas": case "gt.fluid.kerosene": return T;
+		case GT6Definitions.UNKNOWN_ELEMENTS: case GT6Definitions.STEAM_GAS: case GT6Definitions.FLUID_KEROSENE: return T;
 		default: return F;
 		}
 	}
@@ -75,7 +76,7 @@ public class GT6U_Definitions implements IGT6Definitions {
 	@Override
 	public Long number(String aName, long aGT6) {
 		switch (aName) {
-		case "gt.replicator.power_per_nucleon": return 512L; // GT6U RecipeMapReplicator.java:91
+		case GT6Definitions.REPLICATOR_POWER_PER_NUCLEON: return 512L; // GT6U RecipeMapReplicator.java:91
 		default: return null;
 		}
 	}

@@ -91,7 +91,7 @@ public class RecipeMapReplicator extends RecipeMap {
 	}
 	
 	/** EU per proton and neutron of the replicated material. */
-	public static final long POWER_PER_NUCLEON = gregapi.api.GT6Definitions.number("gt.replicator.power_per_nucleon", 256);
+	public static final long POWER_PER_NUCLEON = gregapi.api.GT6Definitions.number(gregapi.api.GT6Definitions.REPLICATOR_POWER_PER_NUCLEON, 256);
 	
 	public static Recipe getReplicatorRecipe(OreDictMaterial aMaterial, ItemStack aUSB) {
 		if (aMaterial.contains(TD.Processing.UUM) && !aMaterial.contains(TD.Atomic.ANTIMATTER)) {
