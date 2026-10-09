@@ -89,14 +89,14 @@ public class MultiItemTechnological_Recipes {
 		RM.Press.addRecipeX(T, F, F, F, T, 64, 256, ST.array(OP.foil.mat(MT_GT6U.Epoxid, 8), OP.foil.mat(MT.Al, 4), OP.wireFine.mat(MT.Graphene, 16)), IL_GT6U.Circuit_plate_Empty_Crystal.get(1));
 		change(ItemsGT.TECH, 30002, "Circuit Plate (Copper)", "Needs Circuit Parts", new OreDictItemData(MT.Cu, U, ANY.SiO2, U));
 		change(ItemsGT.TECH, 30012, "Circuit Plate (Magic)", "Needs Circuit Parts", new OreDictItemData(ANY.SiO2, U));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Phenolic.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Epoxid.get(1), IL.Circuit_Wire_Gold .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Gold .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Multilayer.get(1), IL.Circuit_Wire_Platinum .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Platinum .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Phenolic.get(1), IL.Circuit_Wire_Magic .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Magic .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Magic .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Magic .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Enderium .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Enderium .get(1));
-		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Signalum .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Signalum .get(1));
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_0); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Phenolic.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_1); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_2); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Epoxid.get(1), IL.Circuit_Wire_Gold .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Gold .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_3); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Multilayer.get(1), IL.Circuit_Wire_Platinum .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Platinum .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_4); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Phenolic.get(1), IL.Circuit_Wire_Magic .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Magic .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_5); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Magic .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Magic .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_6); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Enderium .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Enderium .get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_7); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Signalum .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Signalum .get(1)); GT6U_Recipes.first(null);
 		RM.Assembler.addRecipeX(T, F, F, F, T, 32, 16, ST.array(OP.wireFine.mat(MT.Cu, 1), OP.wireFine.mat(MT.Signalum, 1), OP.plateGemTiny.mat(MT.Si, 1)), IL.Circuit_Part_Good.get(1));
 		RM.Assembler.addRecipeX(T, F, F, F, T, 32, 16, ST.array(OP.wireFine.mat(MT.AnnealedCopper, 1), OP.wireFine.mat(MT.Signalum, 1), OP.plateGemTiny.mat(MT.Si, 1)), IL.Circuit_Part_Good.get(1));
 		RM.Assembler.addRecipeX(T, F, F, F, T, 32, 16, ST.array(OP.wireFine.mat(MT.Cu, 1), OP.wireFine.mat(MT.RedAlloy, 1), OP.plateGemTiny.mat(MT.Si, 1)), IL.Circuit_Part_Good.get(1));
@@ -135,8 +135,8 @@ public class MultiItemTechnological_Recipes {
 		RM.Assembler.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Signalum .get(1), IL.Circuit_Part_Signalum .get(4), IL.Circuit_Board_Signalum .get(1));
 		RM.Assembler.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_HSLA .get(1), IL.Circuit_Part_EnderPearl .get(4), IL.Circuit_Board_HSLA_Circuit .get(1));
 		RM.Assembler.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_HSLA .get(1), IL.Circuit_Part_EnderEye .get(4), IL.Circuit_Board_Power_Module .get(1));
-		RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Good.get(1), MT.Sn.liquid(U2, T), NF, IL.Circuit_Good.get(1));
-		RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Good.get(1), MT.SolderingAlloy.liquid(U2, T), NF, IL.Circuit_Good.get(1));
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_8); RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Good.get(1), MT.Sn.liquid(U2, T), NF, IL.Circuit_Good.get(1)); GT6U_Recipes.first(null);
+		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_9); RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Good.get(1), MT.SolderingAlloy.liquid(U2, T), NF, IL.Circuit_Good.get(1)); GT6U_Recipes.first(null);
 		RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Advanced.get(1), MT.Sn.liquid(U2, T), NF, IL.Circuit_Good.get(1));
 		RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Advanced.get(1), MT.SolderingAlloy.liquid(U2, T), NF, IL.Circuit_Advanced.get(1));
 		RM.Bath.addRecipe1(T, F, F, F, T, 0, 120, IL.Circuit_Board_Elite.get(1), MT.Pb.liquid(U2, T), NF, IL.Circuit_Good.get(1));
@@ -168,6 +168,72 @@ public class MultiItemTechnological_Recipes {
 		RM.Assembler.addRecipe2(T, F, F, F, T, 480, 144, IL.Processor_Crystal_Empty.get(1), IL.Circuit_Crystal_Sapphire.get(1), IL.Processor_Crystal_Sapphire.get(1));
 	}
 
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_0() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_1() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_2() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_3() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_4() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_5() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_6() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_7() {
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Copper .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Gold .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+		RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Platinum .get(1), IL.Circuit_Part_Basic .get(4), IL.Circuit_Board_Basic .get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_8() {
+		RM.Bath.addRecipe1(T, F, F, F, T, 0, 64, IL.Circuit_Board_Advanced.get(1), MT.Pb.liquid(U2, T), NF, IL.Circuit_Basic.get(1));
+	}
+
+	/** GT6 statements GT6U put a statement of run_addItems ahead of: what they make gives way to it. */
+	static void later_addItems_9() {
+		RM.Bath.addRecipe1(T, F, F, F, T, 0, 64, IL.Circuit_Board_Advanced.get(1), MT.Pb.liquid(U2, T), NF, IL.Circuit_Basic.get(1));
+	}
+
 	// The three GT6 item registrations GT6U rewrote are changed in place by change() in run_addItems; its own items are
 	// registered by the addon's MultiItemTechnological.
 
@@ -176,11 +242,6 @@ public class MultiItemTechnological_Recipes {
 	/** GT6's statements in MultiItemTechnological.addItems that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_addItems() {
 		GT6U_Recipes.takeBack("MultiItemTechnological_Recipes.addItems", () -> {
-			// GT6 6.17 runs the plate of the Circuit Plate over every plastic, where 6.14.17 named one: its form is the one to take back.
-			for (OreDictMaterial tMat : ANY.SiO2.mToThis) {
-				ItemStack tDust = OP.dust.mat(tMat, 1);
-				if (ST.valid(tDust)) for (OreDictMaterial tMt2 : ANY.Plastic.mToThis) RM.Press.addRecipe2(T, F, F, F, T, 16, 64, OP.plate.mat(tMt2, 1), tDust, IL.Circuit_Plate_Empty.get(1));
-			}
 			CR.shaped(IL.Comp_Laser_Gas_Empty.get(1), CR.DEF_REV_NCC, "CWM", "WGx", "MTd", 'W', MT.DATA.CABLES_01[2], 'C', OD_CIRCUITS[2], 'M', OP.plate.dat(MT.Ag), 'T', OP.screw.dat(MT.StainlessSteel), 'G', OD.blockGlassColorless);
 			RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Copper .get(1), IL.Circuit_Plate_Copper .get(1));
 			RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Gold .get(1), IL.Circuit_Plate_Gold .get(1));
