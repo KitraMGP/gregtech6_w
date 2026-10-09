@@ -22,8 +22,6 @@
 
 package gt6u.tileentity.multiblocks;
 
-import gt6u.GT6U_Main;
-
 import gregapi.util.WD;
 
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
@@ -50,8 +48,7 @@ import static gregapi.data.CS.*;
  */
 
 public class MultiTileEntityCEPC extends TileEntityBase10MultiBlockMachine {
-    // GT6U kept one registry; here it is the addon's, which answers GT6's ids from the registry it extends.
-    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry(GT6U_Main.REGISTRY);
+    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
 
     @Override
     public boolean checkStructure2() {
@@ -305,14 +302,13 @@ public class MultiTileEntityCEPC extends TileEntityBase10MultiBlockMachine {
 
                     if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX+i, tY+3  , tZ+j, 18299, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.NOTHING)) tSuccess = F;
 
-                    // Each id is placed by the block of the registry holding it, as GT6U's one registry placed them all.
-                    tRegistry.holder(18299).mBlock.placeBlock(level, tX+i, tY-3, tZ+j, SIDE_UNKNOWN, (short)18299 , null, F, T);
-                    tRegistry.holder(18202).mBlock.placeBlock(level, tX+i, tY-2, tZ+j, SIDE_UNKNOWN, (short)18202 , null, F, T);
-                    tRegistry.holder(18014).mBlock.placeBlock(level, tX+i, tY-1, tZ+j, SIDE_UNKNOWN, (short)18014 , null, F, T);
-                    tRegistry.holder(18046).mBlock.placeBlock(level, tX+i, tY, tZ+j, SIDE_UNKNOWN, (short)18046 , null, F, T);
-                    tRegistry.holder(18014).mBlock.placeBlock(level, tX+i, tY+1, tZ+j, SIDE_UNKNOWN, (short)18014 , null, F, T);
-                    tRegistry.holder(18202).mBlock.placeBlock(level, tX+i, tY+2, tZ+j, SIDE_UNKNOWN, (short)18202 , null, F, T);
-                    tRegistry.holder(18299).mBlock.placeBlock(level, tX+i, tY+3, tZ+j, SIDE_UNKNOWN, (short)18299 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY-3, tZ+j, SIDE_UNKNOWN, (short)18299 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY-2, tZ+j, SIDE_UNKNOWN, (short)18202 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY-1, tZ+j, SIDE_UNKNOWN, (short)18014 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY, tZ+j, SIDE_UNKNOWN, (short)18046 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY+1, tZ+j, SIDE_UNKNOWN, (short)18014 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY+2, tZ+j, SIDE_UNKNOWN, (short)18202 , null, F, T);
+                    tRegistry.mBlock.placeBlock(level, tX+i, tY+3, tZ+j, SIDE_UNKNOWN, (short)18299 , null, F, T);
 
                 }
                 if (OCTAGONS[6][i][j]) {

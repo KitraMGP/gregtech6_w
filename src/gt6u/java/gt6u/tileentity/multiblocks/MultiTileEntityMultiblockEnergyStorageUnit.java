@@ -1,8 +1,5 @@
 package gt6u.tileentity.multiblocks;
 
-import gt6u.GT6U_Main;
-
-import net.minecraft.core.BlockPos;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.LH;
 import gregapi.tileentity.ITileEntityUnloadable;
@@ -24,8 +21,7 @@ import static gregapi.data.CS.*;
  */
 public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11MultiBlockEnergyStorage {
 
-    // GT6U kept one registry; here it is the addon's, which answers GT6's ids from the registry it extends.
-    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry(GT6U_Main.REGISTRY);
+    MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
 
     public short mBatteryCasing = 18122;
 
@@ -66,8 +62,8 @@ public class MultiTileEntityMultiblockEnergyStorageUnit extends TileEntityBase11
                     tInY = getOffsetYN(mFacing, mBatteryCoreLength + 3),
                     tInZ = getOffsetZN(mFacing, mBatteryCoreLength + 3);
 
-            // GT6U asked for every chunk of the box (checkChunksExist); isAreaLoaded around its middle covers it, as BlockBase does.
-            if (level.isAreaLoaded(new BlockPos((tMinX+tMaxX)>>1, (tMinY+tMaxY)>>1, (tMinZ+tMaxZ)>>1), Math.max(tMaxX-tMinX, Math.max(tMaxY-tMinY, tMaxZ-tMinZ))/2+1)) {
+            // GT6U's checkChunksExist over the box: hasChunksAt checks the same box, as BlockOcean translates it.
+            if (level.hasChunksAt(tMinX, tMinY, tMinZ, tMaxX, tMaxY, tMaxZ)) {
                 mEmitter = null;
                 boolean tSuccess = T;
                 for (int tX = tMinX-1; tX <= tMaxX+1; tX++) for (int tY = tMinY-1; tY <= tMaxY+1; tY++) for (int tZ = tMinZ-1; tZ <= tMaxZ+1; tZ++) {
