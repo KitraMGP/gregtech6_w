@@ -17,7 +17,8 @@ import java.util.List;
 import static gregapi.data.CS.*;
 
 /**
- * @author YueSha *
+ * @author YueSha
+ *
  * Modified in 2026 for the GregTech 6 NeoForge port (https://github.com/wolfram0108/gregtech6_w):
  * ported from GregTech6-Unofficial for Minecraft 1.7.10 / Forge to an addon for Minecraft 26.1.2 / NeoForge.
  */

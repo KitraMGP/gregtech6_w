@@ -1,3 +1,11 @@
+/**
+ * Part of GregTech6-Unofficial by the GT6U-Team, published without a file header; the project's notice (LICENSE) applies:
+ * free software under the GNU Lesser General Public License, version 3 or later, WITHOUT ANY WARRANTY.
+ *
+ * Modified in 2026 for the GregTech 6 NeoForge port (https://github.com/wolfram0108/gregtech6_w):
+ * ported from GregTech6-Unofficial for Minecraft 1.7.10 / Forge to an addon for Minecraft 26.1.2 / NeoForge.
+ */
+
 package gt6u.tileentity.multiblocks;
 
 import gt6u.GT6U_Main;
