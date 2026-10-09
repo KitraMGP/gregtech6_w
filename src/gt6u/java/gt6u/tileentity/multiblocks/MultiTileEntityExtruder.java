@@ -32,9 +32,7 @@ import gregapi.tileentity.multiblocks.ITileEntityMultiBlockController;
 import gregapi.tileentity.multiblocks.MultiTileEntityMultiBlockPart;
 import gregapi.tileentity.multiblocks.TileEntityBase10MultiBlockMachine;
 import gregapi.util.WD;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -49,7 +47,7 @@ public class MultiTileEntityExtruder extends TileEntityBase10MultiBlockMachine {
 	public short mDryerWalls = 18035;
 
 	@Override
-	public boolean checkStructure2(BlockPos aCoordinates, Entity aPlayer, Container aInventory) {
+	public boolean checkStructure2() {
 		int
 		tMinX = getBlockPos().getX()-(SIDE_X_NEG==mFacing?0:SIDE_X_POS==mFacing?3:1),
 		tMinY = getBlockPos().getY()-(SIDE_Y_NEG==mFacing?0:SIDE_Y_POS==mFacing?3:1) + 1,
@@ -60,10 +58,7 @@ public class MultiTileEntityExtruder extends TileEntityBase10MultiBlockMachine {
 
 		if (WD.exists(level, tMinX, tMinY, tMinZ) && WD.exists(level, tMaxX, tMaxY, tMaxZ)) {
 			boolean tSuccess = T;
-			for (int tX = tMinX; tX <= tMaxX; tX++) for (int tY = tMinY; tY <= tMaxY; tY++) for (int tZ = tMinZ; tZ <= tMaxZ; tZ++) {
-				boolean tCoil = SIDES_AXIS_X[mFacing]?tX!=tMinX&&tX!=tMaxX:SIDES_AXIS_Z[mFacing]?tZ!=tMinZ&&tZ!=tMaxZ:tY!=tMinY&&tY!=tMaxY;
-				if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, tCoil ? 18043 : mDryerWalls, GT6U_Main.partRegistry(tCoil ? 18043 : mDryerWalls), 0, tCoil ? MultiTileEntityMultiBlockPart.NOTHING : MultiTileEntityMultiBlockPart.EVERYTHING, aCoordinates, aPlayer, aInventory)) tSuccess = F;
-			}
+			for (int tX = tMinX; tX <= tMaxX; tX++) for (int tY = tMinY; tY <= tMaxY; tY++) for (int tZ = tMinZ; tZ <= tMaxZ; tZ++) if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX, tY, tZ, (SIDES_AXIS_X[mFacing]?tX!=tMinX&&tX!=tMaxX:SIDES_AXIS_Z[mFacing]?tZ!=tMinZ&&tZ!=tMaxZ:tY!=tMinY&&tY!=tMaxY) ? 18043 : mDryerWalls, GT6U_Main.partRegistry((SIDES_AXIS_X[mFacing]?tX!=tMinX&&tX!=tMaxX:SIDES_AXIS_Z[mFacing]?tZ!=tMinZ&&tZ!=tMaxZ:tY!=tMinY&&tY!=tMaxY) ? 18043 : mDryerWalls),0, (SIDES_AXIS_X[mFacing]?tX!=tMinX&&tX!=tMaxX:SIDES_AXIS_Z[mFacing]?tZ!=tMinZ&&tZ!=tMaxZ:tY!=tMinY&&tY!=tMaxY) ? MultiTileEntityMultiBlockPart.NOTHING : MultiTileEntityMultiBlockPart.EVERYTHING)) tSuccess = F;
 			return tSuccess;
 		}
 		return mStructureOkay;
