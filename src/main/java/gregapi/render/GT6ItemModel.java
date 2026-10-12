@@ -132,13 +132,21 @@ public class GT6ItemModel implements ItemModel {
 		int tColorHash = 1; // Player report 'all coins are the same color in creative/JEI': coin color comes from a vertex tint, not the sprite.
 		// Coins of different materials use identical sprites, so identity built from sprites alone merged them into one
 		// GuiItemAtlas cache slot; mixing in the quads' vertex colors into the identity fixes it.
+		// The shape goes in too: a battery's charge bar is a box whose height follows its charge, with the same sprites
+		// (MultiTileEntityBatteryAdvEU*.java:55), so stacks of other charges shared one atlas slot and showed stale bars.
+		int tShapeHash = 1;
 		for (BakedQuad q : tBuilt) try {
 			tIdSpr.add(q.materialInfo().sprite().contents().name().toString());
 			if (q.materialInfo().sprite().contents().isAnimated()) tAnimated = true;
-			for (int v = 0; v < 4; v++) tColorHash = 31 * tColorHash + q.bakedColors().color(v);
+			for (int v = 0; v < 4; v++) {
+				tColorHash = 31 * tColorHash + q.bakedColors().color(v);
+				org.joml.Vector3fc p = q.position(v);
+				tShapeHash = 31 * (31 * (31 * tShapeHash + Float.floatToIntBits(p.x())) + Float.floatToIntBits(p.y())) + Float.floatToIntBits(p.z());
+			}
 		} catch (Throwable e) {}
 		for (String s : tIdSpr) aOutput.appendModelIdentityElement(s);
 		aOutput.appendModelIdentityElement(tColorHash);
+		aOutput.appendModelIdentityElement(tShapeHash);
 		// Per Mojang's canon (CuboidItemModelWrapper.update): an animated face sprite requires setAnimated,
 		// or the GUI atlas caches it as a static frame.
 		if (tAnimated) aOutput.setAnimated();
