@@ -23,6 +23,7 @@
 
 package gregapi.api;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import gregapi.oredict.OreDictItemData;
@@ -33,8 +34,10 @@ import net.minecraft.world.item.ItemStack;
 /** An addon's changes to GT6's static definitions and recipe helpers, asked while GT6 runs them, before any addon code would run
  *  otherwise. Registered as a service in META-INF/services/gregapi.api.IGT6Definitions; a null answer keeps GT6's own. */
 public interface IGT6Definitions {
-	/** The Recipe Map GT6 keeps under this internal name, or null for GT6's own; aGT6 builds GT6's own when called. */
-	default RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {return null;}
+	/** The mod this addon is: GT6 runs its answers as that mod's code, so the texts they write are the addon's. */
+	String modID();
+	/** The Recipe Map GT6 keeps under this internal name, or null for GT6's own; aGT6 builds GT6's own from GT6's English aNameLocal. */
+	default RecipeMap recipeMap(String aNameInternal, String aNameLocal, Function<String, RecipeMap> aGT6) {return null;}
 	/** The material GT6 defines under this name, or null for GT6's own; aGT6 defines GT6's own when called. */
 	default OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {return null;}
 	/** True when the addon drops GT6's definition of this name: GT6 then does not make it at all. */

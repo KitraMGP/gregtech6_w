@@ -140,7 +140,7 @@ public abstract class Abstract_Mod {
 		if (sFinishedAllPreInits) return;
 		sFinishedAllPreInits = T;
 		FMLPreInitializationEvent tEvent = new FMLPreInitializationEvent(FMLPaths.CONFIGDIR.get().toFile());
-		for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalPreInit(tEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
+		for (Abstract_Mod tMod : MODS_USING_GT_API) try {gregapi.GT_API.asMod(tMod.getModID(), () -> tMod.onModFinalPreInit(tEvent));} catch(Throwable e) {e.printStackTrace(ERR);}
 	}
 	/** Called after the Last GT Init Phase happened. */
 	public void onModFinalInit(FMLInitializationEvent aEvent) {/**/}
@@ -202,7 +202,7 @@ public abstract class Abstract_Mod {
 			mStartedPreInit = T;
 			sStartedPreInit++;
 			if (mProxy != null) mProxy.onProxyBeforePreInit(this, aEvent);
-			onModPreInit2(aEvent);
+			gregapi.GT_API.asMod(getModID(), () -> onModPreInit2(aEvent));
 			if (mProxy != null) mProxy.onProxyAfterPreInit(this, aEvent);
 			sFinishedPreInit++;
 			mFinishedPreInit = T;
@@ -249,7 +249,7 @@ public abstract class Abstract_Mod {
 			mStartedInit = T;
 			sStartedInit++;
 			if (mProxy != null) mProxy.onProxyBeforeInit(this, aEvent);
-			onModInit2(aEvent);
+			gregapi.GT_API.asMod(getModID(), () -> onModInit2(aEvent));
 			if (mProxy != null) mProxy.onProxyAfterInit(this, aEvent);
 			sFinishedInit++;
 			mFinishedInit = T;
@@ -271,7 +271,7 @@ public abstract class Abstract_Mod {
 			
 			loadRunnables("Saving Configs", sConfigs);
 			
-			if (sFinishedInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalInit(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
+			if (sFinishedInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {gregapi.GT_API.asMod(tMod.getModID(), () -> tMod.onModFinalInit(aEvent));} catch(Throwable e) {e.printStackTrace(ERR);}
 			
 			OUT.println(getModNameForLog() + ": ====================");
 			ORD.println(getModNameForLog() + ": ====================");
@@ -296,7 +296,7 @@ public abstract class Abstract_Mod {
 			mStartedPostInit = T;
 			sStartedPostInit++;
 			if (mProxy != null) mProxy.onProxyBeforePostInit(this, aEvent);
-			onModPostInit2(aEvent);
+			gregapi.GT_API.asMod(getModID(), () -> onModPostInit2(aEvent));
 			if (mProxy != null) mProxy.onProxyAfterPostInit(this, aEvent);
 			sFinishedPostInit++;
 			mFinishedPostInit = T;
@@ -321,7 +321,7 @@ public abstract class Abstract_Mod {
 			
 			loadRunnables("Finalize", mFinalize); mFinalize.clear(); mFinalize = null;
 			
-			if (sFinishedPostInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalPostInit(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
+			if (sFinishedPostInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {gregapi.GT_API.asMod(tMod.getModID(), () -> tMod.onModFinalPostInit(aEvent));} catch(Throwable e) {e.printStackTrace(ERR);}
 			
 			sFinalized++;
 			mFinalized = T;
@@ -348,7 +348,7 @@ public abstract class Abstract_Mod {
 		loadRunnables(mBeforeServerStarting);
 		mStartedServerStarting++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStarting(this, aEvent);
-		onModServerStarting2(aEvent);
+		gregapi.GT_API.asMod(getModID(), () -> onModServerStarting2(aEvent));
 		for (ICompat tCompat : mCompatClasses) try {tCompat.onServerStarting(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
 		if (mProxy != null) mProxy.onProxyAfterServerStarting(this, aEvent);
 		mFinishedServerStarting++;
@@ -359,7 +359,7 @@ public abstract class Abstract_Mod {
 		loadRunnables(mBeforeServerStarted);
 		mStartedServerStarted++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStarted(this, aEvent);
-		onModServerStarted2(aEvent);
+		gregapi.GT_API.asMod(getModID(), () -> onModServerStarted2(aEvent));
 		for (ICompat tCompat : mCompatClasses) try {tCompat.onServerStarted(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
 		if (mProxy != null) mProxy.onProxyAfterServerStarted(this, aEvent);
 		mFinishedServerStarted++;
@@ -370,7 +370,7 @@ public abstract class Abstract_Mod {
 		loadRunnables(mBeforeServerStopping);
 		mStartedServerStopping++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStopping(this, aEvent);
-		onModServerStopping2(aEvent);
+		gregapi.GT_API.asMod(getModID(), () -> onModServerStopping2(aEvent));
 		for (ICompat tCompat : mCompatClasses) try {tCompat.onServerStopping(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
 		if (mProxy != null) mProxy.onProxyAfterServerStopping(this, aEvent);
 		mFinishedServerStopping++;
@@ -381,7 +381,7 @@ public abstract class Abstract_Mod {
 		loadRunnables(mBeforeServerStopped);
 		mStartedServerStopped++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStopped(this, aEvent);
-		onModServerStopped2(aEvent);
+		gregapi.GT_API.asMod(getModID(), () -> onModServerStopped2(aEvent));
 		for (ICompat tCompat : mCompatClasses) try {tCompat.onServerStopped(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
 		if (mProxy != null) mProxy.onProxyAfterServerStopped(this, aEvent);
 		mFinishedServerStopped++;

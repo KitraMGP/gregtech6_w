@@ -26,8 +26,11 @@ package gregapi.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import gregapi.GT_API;
+import gregapi.data.LH;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
@@ -60,9 +63,12 @@ public final class GT6Definitions {
 		}
 	}
 	
-	public static RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {
-		for (IGT6Definitions tAddon : ADDONS) {RecipeMap rMap = tAddon.recipeMap(aNameInternal, aGT6); if (rMap != null) return rMap;}
-		return aGT6.get();
+	/** GT6's English comes as data and is written as GT6 writes it, so an addon's map, built as the addon's code, rewrites it in sight of
+	 *  LanguageHandler's one rewrite rule; GT6's own map cannot be built beside it, the name is taken (Recipe.java:145). */
+	public static RecipeMap recipeMap(String aNameInternal, String aNameLocal, Function<String, RecipeMap> aGT6) {
+		if (aNameLocal != null && !ADDONS.isEmpty()) GT_API.asMod(ModIDs.GT, () -> LH.add(aNameInternal, aNameLocal));
+		for (IGT6Definitions tAddon : ADDONS) {RecipeMap rMap = GT_API.asMod(tAddon.modID(), () -> tAddon.recipeMap(aNameInternal, aNameLocal, aGT6)); if (rMap != null) return rMap;}
+		return aGT6.apply(aNameLocal);
 	}
 	
 	public static OreDictMaterial material(String aName, Supplier<OreDictMaterial> aGT6) {

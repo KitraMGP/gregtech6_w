@@ -296,7 +296,7 @@ public class GT_API extends Abstract_Mod {
 	 *  @post-freeze (Holder.components are bound later). The constructor registers its stack-init here (a Runnable, no stacks), and
 	 *  {@link #runDeferredItemInit} runs them in setup (post-bind). See decisions/F12-registration-lifecycle.md. */
 	public static final List<Runnable> DEFERRED_ITEM_INIT = new ArrayListNoNulls<>();
-	public static void deferItemInit(Runnable aInit) {if (aInit != null) DEFERRED_ITEM_INIT.add(aInit);}
+	public static void deferItemInit(Runnable aInit) {if (aInit != null) DEFERRED_ITEM_INIT.add(later(aInit, F));}
 	/** F12-followup (oredict-timing): the execution window for the deferred stack-init on server-start. In 1.7.10 GT6's whole content
 	 *  pipeline (make stacks → OreDict registration → recipes) ran @Init/@PreInit; neo only binds Holder.components on server-start
 	 *  (ReloadableServerResources) → the same pipeline is physically shifted here. OreDictManager.registerOre_ has a guard
@@ -427,19 +427,31 @@ public class GT_API extends Abstract_Mod {
 	public static final List<Runnable> DEFERRED_BLOCK_INIT = new ArrayListNoNulls<>();
 	/** A block belongs to the mod that asked for it, as 1.7.10 FML prefixed it with the active container (GameData.addPrefix).
 	 *  The job runs later, on RegisterEvent, under another active mod, so the asking mod travels with the job. */
-	public static void deferBlockInit(Runnable aInit) {
-		if (aInit == null) return;
-		String tAsker = net.neoforged.fml.ModLoadingContext.get().getActiveNamespace();
-		String tOwner = ModIDs.MC.equals(tAsker) ? null : tAsker;
-		DEFERRED_BLOCK_INIT.add(() -> {String tOuter = sBlockOwner; sBlockOwner = tOwner; try {aInit.run();} finally {sBlockOwner = tOuter;}});
+	public static void deferBlockInit(Runnable aInit) {if (aInit != null) DEFERRED_BLOCK_INIT.add(later(aInit, T));}
+	/** A job queued now and run later as the mod asking now: its asker always, and for a block job the namespace FML gives the queuing
+	 *  call, as before; an item job keeps GT's namespace, so what GT6 builds in that window is named as it was. */
+	private static Runnable later(Runnable aJob, boolean aOwnsBlocks) {
+		String tAsker = asker(), tFml = net.neoforged.fml.ModLoadingContext.get().getActiveNamespace(), tBlocks = ModIDs.MC.equals(tFml) ? null : tFml;
+		return () -> as(tAsker, aOwnsBlocks, tBlocks, () -> {aJob.run(); return null;});
 	}
+	/** The mod whose code runs now: set by a queued job, by Abstract_Mod around each mod's callbacks and by a build for an owner, since
+	 *  FML's active container is not it in the final phases (they call every mod inside the last one's event); per thread. */
+	private static final ThreadLocal<String> ASKER = new ThreadLocal<>();
+	public static String asker() {String rAsker = ASKER.get(); return rAsker != null ? rAsker : net.neoforged.fml.ModLoadingContext.get().getActiveNamespace();}
+	/** Runs aCall as the code of aModID. */
+	public static void asMod(String aModID, Runnable aCall) {as(aModID, F, null, () -> {aCall.run(); return null;});}
+	/** Runs aCall as the code of aModID and returns what it made. */
+	public static <R> R asMod(String aModID, java.util.function.Supplier<R> aCall) {return as(aModID, F, null, aCall);}
 	private static String sBlockOwner = null;
 	/** Namespace of the block, item or creative tab being built and registered right now; GT's own when nobody asked for it. */
 	public static String owner() {return sBlockOwner == null ? ModIDs.GT : sBlockOwner;}
-	/** Builds something for aOwner outside its registration: what it names gets aOwner's namespace, as if aOwner were asking now. */
-	public static <T> T asOwner(String aOwner, java.util.function.Supplier<T> aBuild) {
-		String tOuter = sBlockOwner; sBlockOwner = aOwner;
-		try {return aBuild.get();} finally {sBlockOwner = tOuter;}
+	/** Builds something for aOwner outside its registration: what it names gets aOwner's namespace and what it writes is aOwner's text,
+	 *  as if aOwner were asking now. */
+	public static <R> R asOwner(String aOwner, java.util.function.Supplier<R> aBuild) {return as(aOwner, T, aOwner, aBuild);}
+	/** The one place code runs as a mod: the asker of its texts and, for a build, the namespace of what it names; both come back after. */
+	private static <R> R as(String aAsker, boolean aSetsBlocks, String aBlocks, java.util.function.Supplier<R> aCall) {
+		String tOuterAsker = ASKER.get(), tOuterBlocks = sBlockOwner; ASKER.set(aAsker); if (aSetsBlocks) sBlockOwner = aBlocks;
+		try {return aCall.get();} finally {ASKER.set(tOuterAsker); sBlockOwner = tOuterBlocks;}
 	}
 	/** The active RegisterEvent&lt;Block&gt; while DEFERRED_BLOCK_INIT is draining; non-null ⇒ {@link #registerBlock} registers
 	 *  the block directly into this event's registry (this phase's DeferredRegister has already been processed). */

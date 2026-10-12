@@ -22,6 +22,7 @@
 
 package gt6u;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import gregapi.api.GT6Definitions;
@@ -42,8 +43,10 @@ import static gregapi.data.CS.*;
 
 /** GregTech6-Unofficial's changes to GT6's static definitions and recipe helpers, asked by GT6 while it runs them (META-INF/services). */
 public class GT6U_Definitions implements IGT6Definitions {
+	@Override public String modID() {return GT6U_Main.MOD_ID;}
+
 	@Override
-	public RecipeMap recipeMap(String aNameInternal, Supplier<RecipeMap> aGT6) {
+	public RecipeMap recipeMap(String aNameInternal, String aNameLocal, Function<String, RecipeMap> aGT6) {
 		switch (aNameInternal) {
 		case "gt.recipe.heatmixer": return heatMixer();
 		case "gt.recipe.fermenter": return fermenter();
