@@ -428,8 +428,8 @@ public class GT_API extends Abstract_Mod {
 	/** A block belongs to the mod that asked for it, as 1.7.10 FML prefixed it with the active container (GameData.addPrefix).
 	 *  The job runs later, on RegisterEvent, under another active mod, so the asking mod travels with the job. */
 	public static void deferBlockInit(Runnable aInit) {if (aInit != null) DEFERRED_BLOCK_INIT.add(later(aInit, T));}
-	/** A job queued now and run later as the mod asking now: its asker always, and for a block job the namespace FML gives the queuing
-	 *  call, as before; an item job keeps GT's namespace, so what GT6 builds in that window is named as it was. */
+	/** A job queued now and run later as the mod asking now: its asker always; a block job also the namespace FML gives the queuing call,
+	 *  an item job GT's namespace, under which GT6 names the items it builds in that window. */
 	private static Runnable later(Runnable aJob, boolean aOwnsBlocks) {
 		String tAsker = asker(), tFml = net.neoforged.fml.ModLoadingContext.get().getActiveNamespace(), tBlocks = ModIDs.MC.equals(tFml) ? null : tFml;
 		return () -> as(tAsker, aOwnsBlocks, tBlocks, () -> {aJob.run(); return null;});

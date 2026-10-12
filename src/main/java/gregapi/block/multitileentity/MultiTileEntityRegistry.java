@@ -245,6 +245,8 @@ public class MultiTileEntityRegistry {
 	 *  where the item had none. */
 	private void shaped(short aID, Object[] aRecipe) {
 		ItemStack tItem = getItem(aID);
+		// the record serves an addon's override only: without addons on the GT API the seam keeps nothing
+		if (gregapi.api.GT6Definitions.ADDONS.isEmpty()) {CR.shaped(tItem, CR.DEF_REV_NCC, aRecipe); return;}
 		OreDictItemData tDataBefore = OreDictManager.INSTANCE.getItemData(tItem);
 		List<ICraftingRecipeGT> tList = CR.list();
 		int tBefore = tList.size();

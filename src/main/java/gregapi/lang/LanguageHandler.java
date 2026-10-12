@@ -57,9 +57,9 @@ public class LanguageHandler {
 	/** Keys whose GT6 English an addon on the GT API rewrote: a translation of GT6's text no longer says what the key now says, and the
 	 *  addon (GT6U) showed its English in every language; a rewrite by GT6 itself marks nothing. */
 	private static final java.util.Set<String> REWRITTEN = java.util.concurrent.ConcurrentHashMap.newKeySet();
-	public static java.util.Set<String> rewritten() {return java.util.Collections.unmodifiableSet(REWRITTEN);}
 	/** The English of a rewritten key, in either form (key or key.name); null for any other key. */
 	private static String rewrittenEnglish(String aKey) {
+		if (REWRITTEN.isEmpty()) return null;
 		if (REWRITTEN.contains(aKey)) return BACKUPMAP.get(aKey);
 		if (aKey.endsWith(".name") && REWRITTEN.contains(aKey = aKey.substring(0, aKey.length() - 5))) return BACKUPMAP.get(aKey);
 		return null;
