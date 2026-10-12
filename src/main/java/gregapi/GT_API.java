@@ -408,9 +408,13 @@ public class GT_API extends Abstract_Mod {
 		// mods that loaded before GT6 used to arrive first.
 		try {gregapi.oredict.OreDictTags.importFromTags();} catch(Throwable e) {e.printStackTrace(ERR);}
 		// The loaders in this queue judge vanilla recipes as 1.7.10 did (CR.remove/remout/has/get); an empty queue needs no view.
-		if (!DEFERRED_ITEM_INIT.isEmpty()) gregapi.util.CR.openVanillaView(aRegistries);
+		boolean tDrained = !DEFERRED_ITEM_INIT.isEmpty();
+		if (tDrained) gregapi.util.CR.openVanillaView(aRegistries);
 		try {while (!DEFERRED_ITEM_INIT.isEmpty()) {Runnable tInit = DEFERRED_ITEM_INIT.remove(0); try {tInit.run();} catch(Throwable e) {e.printStackTrace(ERR);}}}
 		finally {sDeferredItemInitRunning = false; gregapi.util.CR.closeVanillaView();}
+		// The phase-end save that follows GT6's Init and PostInit loaders in 1.7.10: save on edit is held back in this window
+		// (Config.get), so the config keys these loaders read reach the files only here.
+		if (tDrained && GAPI != null) GAPI.loadRunnables("Saving Configs", sConfigs);
 	}
 
 	/** F12-followup (block-split, MTE): some GT6 subsystems (MultiTileEntityRegistry/MultiTileEntityBlock) BUILD a
