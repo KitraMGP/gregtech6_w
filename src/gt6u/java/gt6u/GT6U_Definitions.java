@@ -28,12 +28,14 @@ import gregapi.api.GT6Definitions;
 import gregapi.api.IGT6Definitions;
 import gregapi.data.FL;
 import gregapi.data.RM;
+import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.recipes.maps.RecipeMapFormingPress;
 import gregapi.util.ST;
 import gt6u.data.FL_GT6U;
 import gt6u.data.MT_GT6U;
+import gt6u.items.MultiItemTechnological_Recipes;
 import net.minecraft.world.item.ItemStack;
 
 import static gregapi.data.CS.*;
@@ -79,6 +81,13 @@ public class GT6U_Definitions implements IGT6Definitions {
 		case GT6Definitions.REPLICATOR_POWER_PER_NUCLEON: return 512L; // GT6U RecipeMapReplicator.java:91
 		default: return null;
 		}
+	}
+	
+	/** GT6U's data of the three Circuit Plates it rewrote in GT6's MultiItem (GT6U MultiItemTechnological.java), registered in their
+	 *  place, as GT6U registered them: the recycling Recipes are made from them. */
+	@Override
+	public OreDictItemData itemData(ItemStack aStack, OreDictItemData aGT6) {
+		return aStack.getItem() == ItemsGT.TECH ? MultiItemTechnological_Recipes.itemData(ST.meta_(aStack)) : null;
 	}
 	
 	/** GT6U's RM.biomass (GT6U RM.java): circuit 5 for the plain Recipes, circuit 6 for those sped up by Biomass Flora, no rotten

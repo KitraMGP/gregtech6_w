@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
+import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
@@ -83,5 +84,11 @@ public final class GT6Definitions {
 	public static Boolean biomass(ItemStack aBiomass, long aSpeed) {
 		for (IGT6Definitions tAddon : ADDONS) {Boolean rResult = tAddon.biomass(aBiomass, aSpeed); if (rResult != null) return rResult;}
 		return null;
+	}
+	
+	/** The data MultiItemRandom.addItem registers for this item: an addon's in place of GT6's, as the listeners read it at once. */
+	public static OreDictItemData itemData(ItemStack aStack, OreDictItemData aGT6) {
+		for (IGT6Definitions tAddon : ADDONS) {OreDictItemData rData = tAddon.itemData(aStack, aGT6); if (rData != null) return rData;}
+		return aGT6;
 	}
 }

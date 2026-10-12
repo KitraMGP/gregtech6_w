@@ -25,6 +25,7 @@ package gregapi.api;
 
 import java.util.function.Supplier;
 
+import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.recipes.Recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
@@ -42,4 +43,6 @@ public interface IGT6Definitions {
 	default Long number(String aName, long aGT6) {return null;}
 	/** Makes the Fermenter's biomass Recipes of this item in place of RM.biomass and returns its result, or null to leave them to GT6. */
 	default Boolean biomass(ItemStack aBiomass, long aSpeed) {return null;}
+	/** The data a MultiItem registers for this item of its addItem, or null for GT6's own aGT6. */
+	default OreDictItemData itemData(ItemStack aStack, OreDictItemData aGT6) {return null;}
 }

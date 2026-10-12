@@ -47,18 +47,26 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import gt6mirror.net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import gregapi.data.LH;
-import gregapi.oredict.OreDictManager;
 import gt6u.GT6U_Recipes;
 
 /** GregTech6-Unofficial's edits of gregtech/items/MultiItemTechnological.java, as statements: what GT6U added runs in run(), what it dropped is taken back in
  *  takeBack(): restated as GT6 makes them, their Recipes are taken out of GT6's maps again. */
 public class MultiItemTechnological_Recipes {
-	/** A GT6 item's name, tooltip and recycling data as GT6U has them: addItem would take the id again, so the centres it fills are set. */
-	private static void change(MultiItemRandom aItem, int aID, String aEnglish, String aToolTip, OreDictItemData aData) {
+	/** A GT6 item's name and tooltip as GT6U has them: addItem would take the id again, so the language entries it makes are set. */
+	private static void change(MultiItemRandom aItem, int aID, String aEnglish, String aToolTip) {
 		ItemStack tStack = ST.make(aItem, 1, aID);
 		LH.add(aItem.getUnlocalizedName(tStack), aEnglish);
 		LH.add(aItem.getUnlocalizedName(tStack) + ".tooltip", aToolTip);
-		OreDictManager.INSTANCE.setItemData(tStack, aData);
+	}
+	
+	/** GT6U's data of the GT6 items it rewrote, which GT6 registers in place of its own (GT6Definitions.itemData); null for the rest. */
+	public static OreDictItemData itemData(int aID) {
+		switch (aID) {
+		case 30000: return new OreDictItemData(ANY.Cu, U100*25, ANY.Plastic, U);
+		case 30002: return new OreDictItemData(MT.Cu, U, ANY.SiO2, U);
+		case 30012: return new OreDictItemData(ANY.SiO2, U);
+		default: return null;
+		}
 	}
 	
 	public static void run() {
@@ -73,7 +81,7 @@ public class MultiItemTechnological_Recipes {
 	static void run_addItems() {
 		int tLastID = 0;
 		CR.shaped(IL.Comp_Laser_Gas_Empty.get(1), CR.DEF_REV_NCC, "CWM", "WGx", "MTd", 'W', MT.DATA.CABLES_01[2], 'C', OD_CIRCUITS[1], 'M', OP.plate.dat(MT.Ag), 'T', OP.screw.dat(MT.StainlessSteel), 'G', Blocks.GLASS);
-		change(ItemsGT.TECH, 30000, "Plastic Circuit Plate", "Needs Circuit Wiring", new OreDictItemData(ANY.Cu, U100*25, ANY.Plastic, U));
+		change(ItemsGT.TECH, 30000, "Plastic Circuit Plate", "Needs Circuit Wiring");
 		CR.shaped(IL_GT6U.Perforated_Bushing.get(1), CR.DEF_NAC , "ShS", "PPP", "SfS", 'P', OP.plateDouble.dat(ANY.Steel), 'S', OP.bolt.dat(ANY.Steel));
 		RM.Bath.addRecipe1(T, 0, 200, IL_GT6U.Perforated_Bushing.get(0), MT.Glass.liquid(U10, T), NF, IL_GT6U.Glass_Fiber.get(10));
 		RM.Mixer.addRecipe1(T, 16, 300, ST.tag(0), FL.array(MT.HCl.fluid(U, T), MT.H2O2.fluid(U*2, T), MT.H2O.fluid(U*3, T)), MT_GT6U.ElectroEtchingSolution.fluid(U*6, T), NI);
@@ -87,8 +95,8 @@ public class MultiItemTechnological_Recipes {
 		RM.Press.addRecipeX(T, F, F, F, T, 16, 160, ST.array(OP.foil.mat(MT_GT6U.Epoxid, 4), OP.wireFine.mat(MT.Graphene, 8), OP.foil.mat(MT.Cu, 8)), IL_GT6U.Circuit_Plate_Empty_Multilayer.get(1));
 		RM.Press.addRecipeX(T, F, F, F, T, 64, 256, ST.array(OP.foil.mat(MT_GT6U.Epoxid, 8), OP.foil.mat(MT.Al, 4), IL_GT6U.Glass_Fiber.get(16)), IL_GT6U.Circuit_plate_Empty_Crystal.get(1));
 		RM.Press.addRecipeX(T, F, F, F, T, 64, 256, ST.array(OP.foil.mat(MT_GT6U.Epoxid, 8), OP.foil.mat(MT.Al, 4), OP.wireFine.mat(MT.Graphene, 16)), IL_GT6U.Circuit_plate_Empty_Crystal.get(1));
-		change(ItemsGT.TECH, 30002, "Circuit Plate (Copper)", "Needs Circuit Parts", new OreDictItemData(MT.Cu, U, ANY.SiO2, U));
-		change(ItemsGT.TECH, 30012, "Circuit Plate (Magic)", "Needs Circuit Parts", new OreDictItemData(ANY.SiO2, U));
+		change(ItemsGT.TECH, 30002, "Circuit Plate (Copper)", "Needs Circuit Parts");
+		change(ItemsGT.TECH, 30012, "Circuit Plate (Magic)", "Needs Circuit Parts");
 		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_0); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Phenolic.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1)); GT6U_Recipes.first(null);
 		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_1); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL.Circuit_Plate_Empty.get(1), IL.Circuit_Wire_Copper .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Copper .get(1)); GT6U_Recipes.first(null);
 		GT6U_Recipes.first(MultiItemTechnological_Recipes::later_addItems_2); RM.Press.addRecipe2(T, F, F, F, T, 16, 64, IL_GT6U.Circuit_Plate_Empty_Epoxid.get(1), IL.Circuit_Wire_Gold .get(1), MT_GT6U.ElectroEtchingSolution.fluid(U10, T), NF, IL.Circuit_Plate_Gold .get(1)); GT6U_Recipes.first(null);
@@ -234,8 +242,8 @@ public class MultiItemTechnological_Recipes {
 		RM.Bath.addRecipe1(T, F, F, F, T, 0, 64, IL.Circuit_Board_Advanced.get(1), MT.Pb.liquid(U2, T), NF, IL.Circuit_Basic.get(1));
 	}
 
-	// The three GT6 item registrations GT6U rewrote are changed in place by change() in run_addItems; its own items are
-	// registered by the addon's MultiItemTechnological.
+	// The three GT6 item registrations GT6U rewrote: their names by change() in run_addItems, their data by itemData;
+	// its own items are registered by the addon's MultiItemTechnological.
 
 	/** GT6's statements in MultiItemTechnological.addItems that GT6U dropped, as the port has them: their Recipes are taken back. */
 	static void takeBack_addItems() {
