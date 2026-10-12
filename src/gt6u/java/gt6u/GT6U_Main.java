@@ -93,18 +93,18 @@ public class GT6U_Main extends Abstract_Mod {
 		Loader_Tools.run();
 	}
 	@Override public void onModInit2(FMLInitializationEvent aEvent) {/**/}
-	// GregTech's Init has queued its MultiTileEntity loader by now, so GT6U's runs after it and finds GT6's entries to change.
-	@Override public void onModFinalInit(FMLInitializationEvent aEvent) {GT_API.deferItemInit(() -> new Loader_MultiTileEntities().run());}
+	// GregTech's Init loaders are queued by now, so GT6U's run after them and find GT6's entries and stone layers to change.
+	// Each loader is its own queue element, as each had its own try in GT6U's Init list: one failing leaves the others.
+	@Override public void onModFinalInit(FMLInitializationEvent aEvent) {
+		GT_API.deferItemInit(() -> new Loader_MultiTileEntities().run());
+		GT_API.deferItemInit(Loader_Worldgen::run);
+	}
 	@Override public void onModPostInit2(FMLPostInitializationEvent aEvent) {/**/}
 	// GregTech's recipe loaders are queued by now; GT6U's run after them. What GT6U dropped is taken back first, so that a GT6U
-	// recipe equal but for its duration to a dropped GT6 one is not taken back with it.
+	// recipe equal but for its duration to a dropped GT6 one is not taken back with it. One queue element per edit, same order.
 	@Override public void onModFinalPostInit(FMLPostInitializationEvent aEvent) {
-		GT_API.deferItemInit(() -> {
-			for (Runnable[] tEdit : EDITS) tEdit[0].run();
-			for (Runnable[] tEdit : EDITS) tEdit[1].run();
-			// GT6's stone layers are made by its Init loaders, queued before this
-			Loader_Worldgen.run();
-		});
+		for (Runnable[] tEdit : EDITS) GT_API.deferItemInit(tEdit[0]);
+		for (Runnable[] tEdit : EDITS) GT_API.deferItemInit(tEdit[1]);
 	}
 
 	/** GT6U's edits of GT6's recipe-making code, one per GT6 class: what GT6U dropped from it, then what GT6U added to it. */
