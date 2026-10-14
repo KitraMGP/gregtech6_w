@@ -2230,43 +2230,34 @@ public class UT {
 		public static int getEnchantmentLevelDestruction   (ItemStack aStack) {return MD.RC.mLoaded ? getEnchantmentLevel(RailcraftEnchantments.destruction, aStack) : 0;}
 		public static int getEnchantmentLevelWrecking      (ItemStack aStack) {return MD.RC.mLoaded ? getEnchantmentLevel(RailcraftEnchantments.wrecking   , aStack) : 0;}
 		public static int getEnchantmentLevelImplosion     (ItemStack aStack) {return MD.RC.mLoaded ? getEnchantmentLevel(RailcraftEnchantments.implosion  , aStack) : 0;}
-		// F8: "fortune"/"looting" in neo — ResourceKey<Enchantment> (Enchantments.FORTUNE/LOOTING,
-		// neo-decompiled …/Enchantments.java:105,110), not ready-made Enchantment instances. RegistryAccess is NOT
-		// needed — same approach as getEnchantmentXP(ItemStack) above: the stack's actual enchantments already sit
-		// in the typed DataComponents.ENCHANTMENTS/STORED_ENCHANTMENTS as Holder<Enchantment>
-		// (resolved by the engine beforehand); we compare Holder WITH ResourceKey via Holder.is(ResourceKey)
-		// (Holder.java:25), not resolving ResourceKey->Holder ourselves. Fully-qualified class name (no import) — the simple
-		// name "Enchantments" in this file is already taken by the nested UT.Enchantments (BULLSHIT dispatcher below),
-		// the member type shadows the top-level import (JLS 6.4.1).
+		// Central null-safe reader for item enchantments.
+		public static ItemEnchantments getEnchantments(ItemStack aStack) {
+			if (ST.invalid(aStack)) return ItemEnchantments.EMPTY;
+			return aStack.getOrDefault(EnchantmentHelper.getComponentType(aStack), ItemEnchantments.EMPTY);
+		}
+
+		// 1:1 with original: delegating to the two getEnchantmentLevel calls (max of Fortune and Looting).
 		public static int getEnchantmentLevelLootingFortune(ItemStack aStack) {
-			ItemEnchantments tEnchantments = aStack.getOrDefault(EnchantmentHelper.getComponentType(aStack), ItemEnchantments.EMPTY);
-			int rLevel = 0;
-			for (Holder<Enchantment> tEnchantment : tEnchantments.keySet()) if (tEnchantment.is(net.minecraft.world.item.enchantment.Enchantments.FORTUNE) || tEnchantment.is(net.minecraft.world.item.enchantment.Enchantments.LOOTING)) rLevel = Math.max(rLevel, tEnchantments.getLevel(tEnchantment));
-			return rLevel;
+			return Math.max(getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.FORTUNE, aStack), getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.LOOTING, aStack));
 		}
 
 		// F8: aEnchantment is passed BY VALUE (not Holder) — 1.7.10 addressed enchantments by numeric
 		// effectId in the static Enchantment.enchantmentsList array; in neo Enchantment is a record without
-		// effectId, stack enchantments are identified by Holder<Enchantment>. Holder.direct(aEnchantment)
-		// wraps the passed value 1:1 (record value equality), then we read THROUGH
-		// ItemStack.getEnchantmentLevel(Holder) — the gameplay equivalent of the old
-		// EnchantmentHelper.getEnchantmentLevel(effectId, stack). The "effectId < 0" check was removed —
-		// the effectId field does not exist in the new model, the null-guard is kept.
+		// effectId, stack enchantments are identified by Holder<Enchantment>. We iterate over the stack's
+		// enchantments from getEnchantments and compare by value (Holder.value() == aEnchantment || equals).
 		public static int getEnchantmentLevel(Enchantment aEnchantment, ItemStack aStack) {
-			if (aEnchantment == null) return 0;
-			return aStack.getEnchantmentLevel(Holder.direct(aEnchantment));
+			if (aEnchantment == null || ST.invalid(aStack)) return 0;
+			ItemEnchantments tEnchantments = getEnchantments(aStack);
+			int rLevel = 0;
+			for (Holder<Enchantment> tEnchantment : tEnchantments.keySet()) if (tEnchantment.value() == aEnchantment || aEnchantment.equals(tEnchantment.value())) rLevel = Math.max(rLevel, tEnchantments.getLevel(tEnchantment));
+			return rLevel;
 		}
 		// F8: vanilla/GT6 enchantments in neo are addressed by ResourceKey<Enchantment> (Enchantments.FLAME/POWER/…,
 		// Enchantment_EnderDamage.KEY), NOT by an Enchantment object — 1.7.10 passed a static
-		// Enchantment.X here, which does not exist in the new registry-driven model. Same approach as
-		// getEnchantmentLevelLootingFortune above: the stack's charms are already resolved by the engine into Holder<Enchantment>
-		// (typed DataComponents.ENCHANTMENTS/STORED_ENCHANTMENTS), we compare Holder WITH ResourceKey
-		// via Holder.is(ResourceKey) (Holder.java:25) — no registry/server needed. The overload does not conflict
-		// with the Enchantment version above: different first-parameter types (custom F10 Enchantment objects still
-		// go there).
+		// Enchantment.X here, which does not exist in the new registry-driven model.
 		public static int getEnchantmentLevel(ResourceKey<Enchantment> aEnchantment, ItemStack aStack) {
-			if (aEnchantment == null) return 0;
-			ItemEnchantments tEnchantments = aStack.getOrDefault(EnchantmentHelper.getComponentType(aStack), ItemEnchantments.EMPTY);
+			if (aEnchantment == null || ST.invalid(aStack)) return 0;
+			ItemEnchantments tEnchantments = getEnchantments(aStack);
 			int rLevel = 0;
 			for (Holder<Enchantment> tEnchantment : tEnchantments.keySet()) if (tEnchantment.is(aEnchantment)) rLevel = Math.max(rLevel, tEnchantments.getLevel(tEnchantment));
 			return rLevel;
@@ -2286,7 +2277,7 @@ public class UT {
 			// STORED_ENCHANTMENTS (not the raw CUSTOM_DATA tag) — read the stack's real enchantments
 			// directly instead of delegating to getEnchantmentXP(CompoundTag) (that one worked on legacy
 			// numeric ids, which never existed and do not exist in this channel).
-			ItemEnchantments tEnchantments = aStack.getOrDefault(EnchantmentHelper.getComponentType(aStack), ItemEnchantments.EMPTY);
+			ItemEnchantments tEnchantments = getEnchantments(aStack);
 			if (tEnchantments.isEmpty()) return 0;
 			int rXP = 0;
 			for (Holder<Enchantment> tEnchantment : tEnchantments.keySet()) {
