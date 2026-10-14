@@ -28,6 +28,20 @@ middle of its own version — `6.0.0-1.20.1-alpha.N` — so the two release seri
 
 ## [Unreleased]
 
+## [6.0.0-alpha.14] — crafting tables, furnace smelting parity and archery crash fix
+
+### Added
+
+- **Preliminary groundwork for the GT6U addon has been included** (currently dormant and inactive).
+
+### Fixed
+
+- **Ore blocks and raw ores can no longer be directly smelted in vanilla furnaces or blast furnaces** ([#19](https://github.com/wolfram0108/gregtech6_w/issues/19)), matching original GregTech 6 1.7.10 behaviour.
+- **The Advanced Crafting Table retains items in its 3x3 crafting grid across world reloads and player reconnects** ([#18](https://github.com/wolfram0108/gregtech6_w/issues/18)).
+- **GT6 arrows hitting entities on dedicated servers no longer crash the game with a NullPointerException** ([#17](https://github.com/wolfram0108/gregtech6_w/issues/17)).
+
+Thanks to [@LixFen](https://github.com/LixFen) and [@TheMrColdGamer](https://github.com/TheMrColdGamer) for the reports.
+
 ## [6.0.0-alpha.13] — BuildCraft, other mods' fluid tanks and world generation
 
 ### Added
