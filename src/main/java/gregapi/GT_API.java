@@ -374,6 +374,84 @@ public class GT_API extends Abstract_Mod {
 		OUT.println("GT_API: client crafting buffer built from " + tAll.size() + " synced recipes incl. " + tOriginals.size() + " suppressed originals: " + tBefore + " -> " + gregapi.util.CR.BUFFER.size());
 	}
 
+	// Central suppression of recipes in vanilla datapack according to GT6 rules (crafting + ore smelting).
+	public static void applyDatapackRecipeSuppression(net.minecraft.server.MinecraftServer aServer) {
+		if (aServer == null) return;
+		try {
+			java.util.Set<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>> tRemove = new java.util.HashSet<>();
+			for (net.minecraft.world.item.ItemStack[] tGrid : gregapi.util.CR.DATAPACK_REMOVALS) {
+				net.minecraft.world.item.crafting.CraftingInput tInput = gregapi.util.CR.crafting(tGrid);
+				for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : aServer.getRecipeManager().recipeMap().values()) {
+					if (!(tHolder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe tCraft)) continue;
+					if (tHolder.value() instanceof gregapi.recipes.GT6CraftingDispatcher) continue;
+					if (gregapi.util.CR.VANILLA_VIEW_IDS.contains(tHolder.id())) continue;
+					try {if (tCraft.matches(tInput, aServer.overworld())) tRemove.add(tHolder.id());} catch(Throwable e) {}
+				}
+			}
+			for (net.minecraft.world.item.ItemStack tOut : gregapi.util.CR.DATAPACK_REMOVALS_OUT) {
+				for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : aServer.getRecipeManager().recipeMap().values()) {
+					if (!(tHolder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe tCraft)) continue;
+					if (tHolder.value() instanceof gregapi.recipes.GT6CraftingDispatcher) continue;
+					if (gregapi.util.CR.VANILLA_VIEW_IDS.contains(tHolder.id())) continue;
+					try {
+						net.minecraft.world.item.ItemStack tResult = tCraft.assemble(net.minecraft.world.item.crafting.CraftingInput.EMPTY);
+						if (gregapi.util.ST.valid(tResult) && gregapi.util.ST.equal(tResult, tOut, T)) tRemove.add(tHolder.id());
+					} catch(Throwable e) {}
+				}
+			}
+			if (!gregapi.util.CR.DATAPACK_REMOVALS_TYPE.isEmpty()) {
+				for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : aServer.getRecipeManager().recipeMap().values()) {
+					net.minecraft.resources.Identifier tType = net.minecraft.core.registries.BuiltInRegistries.RECIPE_TYPE.getKey(tHolder.value().getType());
+					if (tType != null && gregapi.util.CR.DATAPACK_REMOVALS_TYPE.contains(tType.toString())) tRemove.add(tHolder.id());
+				}
+			}
+			// Suppression of ore smelting/blasting recipes in vanilla datapack (Issue #19).
+			// 1:1 with Loader_Recipes_Furnace.java:103-112: furnace recipes turning ore blocks into ingots are removed.
+			for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : aServer.getRecipeManager().recipeMap().values()) {
+				if (tHolder.value() instanceof gregapi.recipes.GT6SmeltingDispatcher) continue;
+				if (!(tHolder.value() instanceof net.minecraft.world.item.crafting.AbstractCookingRecipe tCooking)) continue;
+				net.minecraft.world.item.ItemStack tOut = tCooking.assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(net.minecraft.world.item.ItemStack.EMPTY));
+				if (gregapi.util.ST.invalid(tOut)) continue;
+				gregapi.oredict.OreDictItemData tData2 = gregapi.util.OM.anydata(tOut);
+				if (tData2 == null || !tData2.nonemptyData()) continue;
+				for (net.minecraft.core.Holder<net.minecraft.world.item.Item> tItemHolder : tCooking.input().items().toList()) {
+					net.minecraft.world.item.ItemStack tIn = new net.minecraft.world.item.ItemStack(tItemHolder);
+					if (gregapi.util.ST.invalid(tIn)) continue;
+					gregapi.oredict.OreDictItemData tData1 = gregapi.util.OM.anydata(tIn);
+					if (tData1 != null && tData1.nonemptyData()) {
+						if (tData1.mPrefix == gregapi.data.OP.ore || tData1.mPrefix == gregapi.data.OP.oreDeepslate
+							|| tData1.mPrefix == gregapi.data.OP.oreNetherrack || tData1.mPrefix == gregapi.data.OP.oreEndstone
+							|| tData1.mPrefix == gregapi.data.OP.oreBlackgranite || tData1.mPrefix == gregapi.data.OP.oreRedgranite
+							|| tData1.mPrefix == gregapi.data.OP.oreMarble || tData1.mPrefix == gregapi.data.OP.oreBasalt) {
+							tRemove.add(tHolder.id());
+							break;
+						}
+						if (tData1.mPrefix == gregapi.data.OP.oreRaw && (tData1.mMaterial == null || !tData1.mMaterial.mMaterial.contains(gregapi.data.TD.Processing.FURNACE))) {
+							tRemove.add(tHolder.id());
+							break;
+						}
+						if (tData2.mPrefix == gregapi.data.OP.ingot || tData2.mPrefix == gregapi.data.OP.gem) {
+							if (tData1.mPrefix != gregapi.data.OP.dust && tData1.mPrefix != gregapi.data.OP.dustSmall
+								&& tData1.mPrefix != gregapi.data.OP.dustTiny && tData1.mPrefix != gregapi.data.OP.crushed
+								&& tData1.mPrefix != gregapi.data.OP.crushedPurified && tData1.mPrefix != gregapi.data.OP.crushedCentrifuged
+								&& tData1.mPrefix != gregapi.data.OP.nugget && tData1.mPrefix != gregapi.data.OP.rockGt) {
+								tRemove.add(tHolder.id());
+								break;
+							}
+						}
+					}
+				}
+			}
+			tRemove.addAll(gregapi.util.CR.DATAPACK_REMOVALS_KEY);
+			gregapi.util.CR.DATAPACK_REMOVALS_KEY.clear();
+			gregapi.util.CR.DATAPACK_REMOVALS_OUT.clear();
+			gregapi.util.CR.DATAPACK_REMOVALS.clear();
+			tRemove.addAll(SUPPRESSED_DATAPACK_RECIPES);
+			dropOreVersionsOf(tRemove);
+			removeDatapackRecipes(aServer, tRemove);
+		} catch(Throwable e) {e.printStackTrace(ERR);}
+	}
+
 	public static void removeDatapackRecipes(net.minecraft.server.MinecraftServer aServer, java.util.Set<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>> aRemove) {
 		// Kept even without a server: an integrated server started later in this JVM reapplies the set, and the scans that fill it run once.
 		if (aRemove != null) SUPPRESSED_DATAPACK_RECIPES.addAll(aRemove);
@@ -840,69 +918,12 @@ public class GT_API extends Abstract_Mod {
 			// are suppressed here by the SAME judge as 1.7.10 — matches() against the accumulated grid — via the same
 			// center removeDatapackRecipes as Replace. GT6's own GT6CraftingDispatcher is excluded (it matches on
 			// the same grids — it would suppress itself).
-			if (tServer != null) try {
-				java.util.Set<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>> tRemove = new java.util.HashSet<>();
-				for (net.minecraft.world.item.ItemStack[] tGrid : gregapi.util.CR.DATAPACK_REMOVALS) {
-					net.minecraft.world.item.crafting.CraftingInput tInput = gregapi.util.CR.crafting(tGrid);
-					for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : tServer.getRecipeManager().recipeMap().values()) {
-						if (!(tHolder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe tCraft)) continue;
-						if (tHolder.value() instanceof gregapi.recipes.GT6CraftingDispatcher) continue;
-						if (gregapi.util.CR.VANILLA_VIEW_IDS.contains(tHolder.id())) continue; // judged by the live list itself (fourth arm), with 1.7.10's metadata rule
-						try {if (tCraft.matches(tInput, tServer.overworld())) tRemove.add(tHolder.id());} catch(Throwable e) {/*a foreign recipe threw in matches — not our call*/}
-					}
-				}
-				// The second arm of the SAME class — suppression by OUTPUT (CR.delate/CR.remout, see CR.DATAPACK_REMOVALS_OUT).
-				// The judge is exactly the one 1.7.10's remout had: comparing the recipe's output against the accumulated set, NBT ignored.
-				// The output is taken via assemble(EMPTY) — the same approach as role-C (OreDictionary.initVanillaRecipeReplacements).
-				for (net.minecraft.world.item.ItemStack tOut : gregapi.util.CR.DATAPACK_REMOVALS_OUT) {
-					for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : tServer.getRecipeManager().recipeMap().values()) {
-						if (!(tHolder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe tCraft)) continue;
-						if (tHolder.value() instanceof gregapi.recipes.GT6CraftingDispatcher) continue;
-						if (gregapi.util.CR.VANILLA_VIEW_IDS.contains(tHolder.id())) continue; // judged by the live list itself (fourth arm), with remout's own filters
-						try {
-							net.minecraft.world.item.ItemStack tResult = tCraft.assemble(net.minecraft.world.item.crafting.CraftingInput.EMPTY);
-							if (gregapi.util.ST.valid(tResult) && gregapi.util.ST.equal(tResult, tOut, T)) tRemove.add(tHolder.id());
-						} catch(Throwable e) {/*a foreign recipe threw in assemble — not our call*/}
-					}
-				}
-				// The third arm of the SAME class — suppression by recipe TYPE (CR.remoutType). The set isn't drained:
-				// it describes a machine, not a one-off request, and is reapplied on every world load.
-				if (!gregapi.util.CR.DATAPACK_REMOVALS_TYPE.isEmpty()) {
-					for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : tServer.getRecipeManager().recipeMap().values()) {
-						net.minecraft.resources.Identifier tType = net.minecraft.core.registries.BuiltInRegistries.RECIPE_TYPE.getKey(tHolder.value().getType());
-						if (tType != null && gregapi.util.CR.DATAPACK_REMOVALS_TYPE.contains(tType.toString())) tRemove.add(tHolder.id());
-					}
-				}
-				// The fourth arm of the SAME class — suppression by KEY (CR.DATAPACK_REMOVALS_KEY): whatever a reader removed from
-				// CR.live()'s vanilla half, as 1.7.10's scans removed the recipe they saw from the CraftingManager.
-				tRemove.addAll(gregapi.util.CR.DATAPACK_REMOVALS_KEY);
-				gregapi.util.CR.DATAPACK_REMOVALS_KEY.clear();
-				gregapi.util.CR.DATAPACK_REMOVALS_OUT.clear();
-				gregapi.util.CR.DATAPACK_REMOVALS.clear();
-				// Re-entering a singleplayer world = a NEW MinecraftServer with a fresh (full) datapack, while the scan
-				// queues and DATAPACK_REMOVALS were already drained by the first start — the accumulated key set is reapplied
-				// HERE on every LevelEvent.Load (idempotent; /reload is covered separately by OnDatapackSyncEvent).
-				// Before this line, the suppression only lived in the session's first server — relogging returned vanilla
-				// (player symptom: "log by hand gives 4 planks again"; this also affected 21 tool-recipe Replace suppressions).
-				tRemove.addAll(SUPPRESSED_DATAPACK_RECIPES);
-				// BUG-095 recurrence: GT6's suppression must also reach the ore VERSION of a recipe, not just its
-				// datapack original. In 1.7.10 Forge's replacements (ShapedOreRecipe) and vanilla recipes lived in ONE
-				// CraftingManager, and remout(output)/remove(grid) cut both in a single pass. The port split them into two
-				// lists — the datapack (RecipeManager) and GT6's own buffer (CR.BUFFER) — and role-C
-				// (OreDictionary.initVanillaRecipeReplacements, called above in this same method) BUILDS the ore version
-				// of a vanilla recipe AFTER the loaders have already run their own suppressions: a copy of the recipe
-				// GT6 just suppressed lands back in the buffer. Player symptom: the furnace crafted from a single cobblestone even though
-				// the 1.7.10 original only gives it via OD.craftingFirestarter (Loader_Recipes_Vanilla:59-61,67). Both suppression
-				// loops above cannot reach it BY CONSTRUCTION — they skip GT6CraftingDispatcher, which is the one
-				// feeding this ore version into the crafting bench.
-				// The judgment is by SOURCE, not by output: the ore version remembers the key of its datapack original
-				// (mSourceId, OreDictionary:418,433). Original suppressed → ore version suppressed too; original alive →
-				// the ore version remains a superset of the live recipe, exactly as role-C intends. It relies on tRemove, into which
-				// the persistent SUPPRESSED_DATAPACK_RECIPES has already been merged: the suppression registries themselves are drained above, and iterating
-				// over them would only be correct on the FIRST world load (the same error class the line above fixes).
-				dropOreVersionsOf(tRemove);
-				removeDatapackRecipes(tServer, tRemove);
-			} catch(Throwable e) {e.printStackTrace(ERR);}
+			if (tServer != null) {
+				applyDatapackRecipeSuppression(tServer);
+				// BUG-054: rebuilds propertySets AFTER FurnaceRecipes is filled (the drain above) — and after the datapack-recipe
+				// suppression scan (the same rebuild will collect displays without the suppressed ones). Idempotent.
+				tServer.getRecipeManager().finalizeRecipeLoading(tLevel.enabledFeatures());
+			}
 			// BUG-054: rebuilds propertySets AFTER FurnaceRecipes is filled (the drain above) — and after the datapack-recipe
 			// suppression scan (the same rebuild will collect displays without the suppressed ones). Idempotent.
 			if (tServer != null) tServer.getRecipeManager().finalizeRecipeLoading(tLevel.enabledFeatures());
