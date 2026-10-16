@@ -328,7 +328,7 @@ public class GT_API extends Abstract_Mod {
 		// a player joining — the map wasn't recreated; reapplication is only needed on /reload
 		if (aEvent.getPlayer() == null) removeDatapackRecipes(aEvent.getPlayerList().getServer(), new java.util.HashSet<>(SUPPRESSED_DATAPACK_RECIPES));
 		// The client arms of the crafting buffer and the furnace showcase need these whether or not a recipe viewer asks for them.
-		aEvent.sendRecipes(net.minecraft.world.item.crafting.RecipeType.CRAFTING, net.minecraft.world.item.crafting.RecipeType.SMELTING);
+		aEvent.sendRecipes(net.minecraft.world.item.crafting.RecipeType.CRAFTING, net.minecraft.world.item.crafting.RecipeType.SMELTING, net.minecraft.world.item.crafting.RecipeType.SMOKING, net.minecraft.world.item.crafting.RecipeType.BLASTING);
 		// Sent here, before the engine's own recipe sync (PlayerList.placeNewPlayer, reloadResources), so it arrives first.
 		gregapi.network.NetworkHandler.SuppressedRecipes tPayload = new gregapi.network.NetworkHandler.SuppressedRecipes(new java.util.ArrayList<>(SUPPRESSED_DATAPACK_ORIGINALS.values()));
 		aEvent.getRelevantPlayers().forEach(tPlayer -> net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(tPlayer, tPayload));
@@ -452,15 +452,53 @@ public class GT_API extends Abstract_Mod {
 		} catch(Throwable e) {e.printStackTrace(ERR);}
 	}
 
+	/** Single item Cu mass using the same material passport read by the crucible. */
+	private static long copperMass(net.minecraft.world.item.ItemStack aStack) {
+		gregapi.oredict.OreDictItemData tData = gregapi.util.OM.anydata(aStack);
+		if (tData == null) return 0;
+		long rMass = 0;
+		for (gregapi.oredict.OreDictMaterialStack tPart : tData.getAllMaterialStacks())
+			if (tPart.mMaterial == gregapi.data.MT.Cu || tPart.mMaterial == gregapi.data.MT.AnnealedCopper || tPart.mMaterial == gregapi.data.ANY.Cu) rMass += tPart.mAmount;
+		return rMass;
+	}
+
+	/** Stonecutter preserves vanilla recipes while preventing metal duping from GT6 quantities. */
+	private static net.minecraft.world.item.crafting.RecipeHolder<?> balanceCopperCut(net.minecraft.world.item.crafting.RecipeHolder<?> aHolder, net.minecraft.server.level.ServerLevel aLevel) {
+		if (!(aHolder.value() instanceof net.minecraft.world.item.crafting.StonecutterRecipe tRecipe) || !"minecraft".equals(aHolder.id().identifier().getNamespace())) return aHolder;
+		net.minecraft.world.item.ItemStack tOut = tRecipe.assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(net.minecraft.world.item.ItemStack.EMPTY));
+		long tMass = copperMass(tOut);
+		if (tMass <= 0) return aHolder;
+		int tCount = tOut.getCount();
+		for (net.minecraft.core.Holder<net.minecraft.world.item.Item> tIn : tRecipe.input().items().toList()) {
+			long tInputMass = copperMass(new net.minecraft.world.item.ItemStack(tIn));
+			if (tInputMass <= 0) return aHolder;
+			tCount = Math.min(tCount, (int)(tInputMass / tMass));
+		}
+		if (tCount <= 0 || tCount == tOut.getCount()) return aHolder;
+		OUT.println("GT_API: stonecutter copper balance " + aHolder.id().identifier() + " " + tOut.getCount() + " -> " + tCount);
+		return new net.minecraft.world.item.crafting.RecipeHolder<>(aHolder.id(), new net.minecraft.world.item.crafting.StonecutterRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(tRecipe.showNotification()), tRecipe.input(), net.minecraft.world.item.ItemStackTemplate.fromNonEmptyStack(tOut.copyWithCount(tCount))));
+	}
+
 	public static void removeDatapackRecipes(net.minecraft.server.MinecraftServer aServer, java.util.Set<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>> aRemove) {
 		// Kept even without a server: an integrated server started later in this JVM reapplies the set, and the scans that fill it run once.
 		if (aRemove != null) SUPPRESSED_DATAPACK_RECIPES.addAll(aRemove);
 		if (aServer == null) return;
-		if (aRemove != null && !aRemove.isEmpty()) try {
+		if (aRemove != null) try {
 			net.minecraft.world.item.crafting.RecipeManager tRM = aServer.getRecipeManager();
 			java.util.List<net.minecraft.world.item.crafting.RecipeHolder<?>> tKeep = new java.util.ArrayList<>();
 			int tBefore = 0;
-			for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : tRM.recipeMap().values()) {tBefore++; if (!aRemove.contains(tHolder.id())) tKeep.add(tHolder); else SUPPRESSED_DATAPACK_ORIGINALS.put(tHolder.id(), tHolder);}
+			net.minecraft.server.level.ServerLevel tLevel = aServer.overworld();
+			if (tLevel != null) gregapi.recipes.FurnaceRecipes.smelting().importVanilla(tRM.recipeMap().byType(net.minecraft.world.item.crafting.RecipeType.SMELTING), tLevel);
+			gregapi.recipes.FurnaceRecipes.NativeFilter tCooking = tLevel != null ? new gregapi.recipes.FurnaceRecipes.NativeFilter(tLevel) : null;
+			for (net.minecraft.world.item.crafting.RecipeHolder<?> tHolder : tRM.recipeMap().values()) {
+				tBefore++;
+				if (!aRemove.contains(tHolder.id())) {
+					net.minecraft.world.item.crafting.RecipeHolder<?> tBalanced = balanceCopperCut(tHolder, tLevel);
+					tKeep.add(tCooking != null ? tCooking.filter(tBalanced) : tBalanced);
+				} else {
+					SUPPRESSED_DATAPACK_ORIGINALS.put(tHolder.id(), tHolder);
+				}
+			}
 			java.lang.reflect.Field tField = net.minecraft.world.item.crafting.RecipeManager.class.getDeclaredField("recipes");
 			tField.setAccessible(true);
 			tField.set(tRM, net.minecraft.world.item.crafting.RecipeMap.create(tKeep));
@@ -943,6 +981,7 @@ public class GT_API extends Abstract_Mod {
 			// The server-only tails (role-C, recipe-scan, propertySets, loot) stay ONLY in the server branch — a
 			// remote client gets recipes/loot synced from the server.
 			runDeferredItemInit(tClientLevel.registryAccess());
+			gregapi.recipes.FurnaceRecipes.smelting().resumeVanilla(tClientLevel);
 		}
 	}
 

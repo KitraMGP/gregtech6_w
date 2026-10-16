@@ -255,7 +255,9 @@ public final class GT6_JEI_Plugin implements IModPlugin {
 			java.util.Set<Object> tIds = new java.util.HashSet<>();
 			// The client's synced smelting recipes, as JEI holds them (no handled-filter in this JEI version).
 			aManager.createRecipeLookup(mezz.jei.api.constants.RecipeTypes.SMELTING).includeHidden().get()
-				.filter(r -> r.value() instanceof gregapi.recipes.GT6SmeltingDispatcher).forEach(r -> tIds.add(r.id().identifier()));
+				.filter(r -> cookingArtifact(r.value())).forEach(r -> tIds.add(r.id().identifier()));
+			aManager.createRecipeLookup(mezz.jei.api.constants.RecipeTypes.SMOKING).includeHidden().get().filter(r -> cookingArtifact(r.value())).forEach(r -> tIds.add(r.id().identifier()));
+			aManager.createRecipeLookup(mezz.jei.api.constants.RecipeTypes.BLASTING).includeHidden().get().filter(r -> cookingArtifact(r.value())).forEach(r -> tIds.add(r.id().identifier()));
 			long tStart = System.nanoTime();
 			int tHidden = 0;
 			// GT6's own tabs never hold a vanilla recipe, and listing them all would run their on-demand generation.
@@ -298,6 +300,9 @@ public final class GT6_JEI_Plugin implements IModPlugin {
 				e.printStackTrace(ERR);
 			}
 		}
+		aRegistration.addSimpleRecipeManagerPlugin(mezz.jei.api.constants.RecipeTypes.SMOKING, new CookingLookup<>(gregapi.recipes.FurnaceRecipes.smoking(), (aIn, aOut) -> cookingView(aIn, aOut, true)));
+		aRegistration.addSimpleRecipeManagerPlugin(mezz.jei.api.constants.RecipeTypes.BLASTING, new CookingLookup<>(gregapi.recipes.FurnaceRecipes.blasting(), (aIn, aOut) -> blastingView(aIn, aOut)));
+
 		if (!mCraftingRecipes.isEmpty()) {
 			try {
 				aRegistration.addSimpleRecipeManagerPlugin(GT6_JEI_CraftingCategory.TYPE, new CraftingLookup(mCraftingRecipes, () -> mIngredients));
@@ -366,6 +371,63 @@ public final class GT6_JEI_Plugin implements IModPlugin {
 		@Override public List<ICraftingRecipeGT> getRecipesForInput (mezz.jei.api.ingredients.ITypedIngredient<?> aInput ) {return find(T, aInput );}
 		@Override public List<ICraftingRecipeGT> getRecipesForOutput(mezz.jei.api.ingredients.ITypedIngredient<?> aOutput) {return find(F, aOutput);}
 		@Override public List<ICraftingRecipeGT> getAllRecipes() {return mRecipes;}
+	}
+
+	/** Procedural furnace pairs queried on demand from the same reader servicing the machine. */
+	private static final class CookingLookup<R> implements mezz.jei.api.recipe.advanced.ISimpleRecipeManagerPlugin<R> {
+		private final gregapi.recipes.FurnaceRecipes mChannel;
+		private final java.util.function.BiFunction<ItemStack, ItemStack, R> mFactory;
+		CookingLookup(gregapi.recipes.FurnaceRecipes aChannel, java.util.function.BiFunction<ItemStack, ItemStack, R> aFactory) {mChannel = aChannel; mFactory = aFactory;}
+		private List<R> find(ItemStack aFocus, boolean aInput) {
+			gregapi.recipes.FurnaceRecipes.Answers tAnswers = mChannel.snapshot();
+			List<R> rRecipes = new ArrayList<>();
+			java.util.Set<net.minecraft.world.item.ItemStack> tSeen = net.minecraft.world.item.ItemStackLinkedSet.createTypeAndComponentsSet();
+			for (ItemStack tKey : tAnswers.candidates()) {
+				ItemStack tIn = gregapi.util.ST.amount(1, tKey), tOut = tAnswers.result(tIn);
+				if (gregapi.util.ST.invalid(tIn) || gregapi.util.ST.invalid(tOut) || !tSeen.add(tIn)) continue;
+				if (aFocus != null && !gregapi.util.ST.equal(aFocus, aInput ? tIn : tOut, true)) continue;
+				rRecipes.add(mFactory.apply(tIn, tOut));
+			}
+			return rRecipes;
+		}
+		@Override public boolean isHandledInput(mezz.jei.api.ingredients.ITypedIngredient<?> aFocus) {return focusStack(aFocus) != null;}
+		@Override public boolean isHandledOutput(mezz.jei.api.ingredients.ITypedIngredient<?> aFocus) {return focusStack(aFocus) != null;}
+		@Override public List<R> getRecipesForInput(mezz.jei.api.ingredients.ITypedIngredient<?> aFocus) {return find(focusStack(aFocus), true);}
+		@Override public List<R> getRecipesForOutput(mezz.jei.api.ingredients.ITypedIngredient<?> aFocus) {return find(focusStack(aFocus), false);}
+		@Override public List<R> getAllRecipes() {return find(null, true);}
+	}
+	private static String cookingViewPath(ItemStack aInput, boolean aSmoking) {
+		var tJSON = ItemStack.CODEC.encodeStart(net.minecraft.resources.RegistryOps.create(com.mojang.serialization.JsonOps.INSTANCE, net.minecraft.client.Minecraft.getInstance().level.registryAccess()), gregapi.util.ST.amount(1, aInput)).result().orElseThrow(() -> new IllegalStateException("Codec failed to serialize furnace showcase input"));
+		return "cooking_view/" + (aSmoking ? "smoking/" : "blasting/") + java.util.UUID.nameUUIDFromBytes(canonicalCookingJSON(tJSON).toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+	}
+	/** Codec stores components; only object keys are sorted, array order is preserved. */
+	private static com.google.gson.JsonElement canonicalCookingJSON(com.google.gson.JsonElement aJSON) {
+		if (aJSON.isJsonObject()) {
+			var rObject = new com.google.gson.JsonObject();
+			aJSON.getAsJsonObject().keySet().stream().sorted().forEach(tKey -> rObject.add(tKey, canonicalCookingJSON(aJSON.getAsJsonObject().get(tKey))));
+			return rObject;
+		}
+		if (aJSON.isJsonArray()) {
+			var rArray = new com.google.gson.JsonArray();
+			for (var tElement : aJSON.getAsJsonArray()) rArray.add(canonicalCookingJSON(tElement));
+			return rArray;
+		}
+		return aJSON;
+	}
+
+	private static net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.SmokingRecipe> cookingView(ItemStack aIn, ItemStack aOut, boolean aSmoking) {
+		net.minecraft.world.item.crafting.Ingredient tInput = new gregapi.recipes.FurnaceRecipes.RuntimeIngredient(java.util.List.of(aIn)).toVanilla();
+		var tRecipe = new net.minecraft.world.item.crafting.SmokingRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(false), new net.minecraft.world.item.crafting.AbstractCookingRecipe.CookingBookInfo(net.minecraft.world.item.crafting.CookingBookCategory.FOOD, ""), tInput, net.minecraft.world.item.ItemStackTemplate.fromNonEmptyStack(aOut), gregapi.recipes.FurnaceRecipes.smoking().engineExperience(aOut), 100);
+		return new net.minecraft.world.item.crafting.RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, net.minecraft.resources.Identifier.fromNamespaceAndPath("gregapi", cookingViewPath(aIn, true))), tRecipe);
+	}
+	private static net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> blastingView(ItemStack aIn, ItemStack aOut) {
+		net.minecraft.world.item.crafting.Ingredient tInput = new gregapi.recipes.FurnaceRecipes.RuntimeIngredient(java.util.List.of(aIn)).toVanilla();
+		var tRecipe = new net.minecraft.world.item.crafting.BlastingRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(false), new net.minecraft.world.item.crafting.AbstractCookingRecipe.CookingBookInfo(net.minecraft.world.item.crafting.CookingBookCategory.MISC, ""), tInput, net.minecraft.world.item.ItemStackTemplate.fromNonEmptyStack(aOut), gregapi.recipes.FurnaceRecipes.blasting().engineExperience(aOut), 100);
+		return new net.minecraft.world.item.crafting.RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, net.minecraft.resources.Identifier.fromNamespaceAndPath("gregapi", cookingViewPath(aIn, false))), tRecipe);
+	}
+	private static boolean cookingArtifact(Object aRecipe) {
+		if (gregapi.recipes.FurnaceRecipes.dispatcher(aRecipe)) return true;
+		return aRecipe instanceof net.minecraft.world.item.crafting.AbstractCookingRecipe tCooking && tCooking.input().getCustomIngredient() instanceof gregapi.recipes.FurnaceRecipes.RuntimeIngredient tInput && !tInput.hasVisibleInputs();
 	}
 
 	/** One map's lookup. Errors are swallowed like the NEI handler did: JEI permanently disables a plugin that throws,

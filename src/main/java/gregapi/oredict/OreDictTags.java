@@ -297,25 +297,12 @@ public class OreDictTags {
 	 * items arrive through their own channel ({@code PrefixItem.runDeferred}). Filtering uses the GT6 criterion
 	 * {@code ST.isGT} ({@code ST.java:143}).
 	 *
-	 * <p><b>VANILLA items from tags are not fed in either — and that is the same role split, just seen from the
-	 * other side.</b> Vanilla content is carried by role B of this very same adapter
-	 * ({@link OreDictionary#initVanillaEntries}): there it is listed by name, using GREGORIUS'S names and with
-	 * deliberate omissions. The tag bridge exists FOR FOREIGN mods — exactly the stream that used to reach GT6
-	 * through the Forge dictionary in 1.7.10. Two mechanisms registering the same thing is not "more reliable", it
-	 * is a race, and the bridge wins it: it runs at the start of the window, so its entry claims both the
-	 * unification target ({@code setTarget_(..., aOverwrite=F)}, {@code OreDictManager.java:471}) and the item's
-	 * passport ({@code addItemData_} — first-wins, {@code OreDictManager.java:667-670}) ahead of the side that
-	 * decided deliberately: ADAPT-014 keeps GREGORIUS'S own ingot as the copper material's target and hands the
-	 * vanilla copper ore the passport {@code oreVanillastone}/{@code oreDeepslate}
-	 * ({@code Loader_Recipes_Vanilla.java:1100-1106,1181-1183}). On top of that the bridge speaks in TAG names, not
-	 * Gregorius's names, which shows immediately on vanilla: {@code c:ores/netherite_scrap} would give
-	 * "oreNetheriteScrap" where Gregorius calls it {@code oreAncientDebris}, {@code c:rods/breeze} would give
-	 * "stickBreeze" for a material that does not exist, and {@code c:gems/prismarine} would give "gemPrismarine" for
-	 * exactly the item role B REFUSED to list. Vanilla content is recognized the same way Gregorius himself
-	 * distinguishes it everywhere — {@link gregapi.data.MD#MC}{@code .owns} (cf. {@code OreDictPrefix.java:491}) —
-	 * not by a separate exception list: the rule here is semantic ("vanilla is not the tag bridge's territory"), the
-	 * named list is role B's job.
+	 * <p>Vanilla items registered by {@link OreDictionary#initVanillaEntries}, and tag bridge only accepts
+	 * foreign mods. Names and rock prefixes of vanilla declared by dictionary prior to tag import: repeat
+	 * registration via tags could capture material association before proper prefix under first-wins rule.
+	 * Vanilla membership resolved via {@link gregapi.data.MD#MC} without extra exception lists.
 	 *
+
 	 * <p>Idempotent: a repeat call is absorbed by {@link OreDictionary#registerOre}'s dedup (the same hash bucket
 	 * Forge used), so re-entering a world does not duplicate entries.
 	 */

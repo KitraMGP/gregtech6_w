@@ -543,6 +543,8 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		RM.smash(ST.make(Blocks.CRACKED_STONE_BRICKS, 1, 0), ST.make(Blocks.COBBLESTONE, 1, 0));
 		RM.smash(ST.make(Blocks.CHISELED_STONE_BRICKS, 1, 0), ST.make(Blocks.COBBLESTONE, 1, 0));
 		RM.smash(ST.make(Blocks.STONE, 1, 0), ST.make(Blocks.COBBLESTONE, 1, 0));
+		
+
 		RM.smash(IL.Module_Stone_Generator.get(           0), ST.make(Blocks.COBBLESTONE, 1, 0));
 		RM.smash(IL.Module_Basalt_Generator.get(          0), IL.NeLi_Basalt.get(1, IL.NePl_Basalt.get(1, ST.make(BlocksGT.Basalt, 1, BlockStones.COBBL))));
 		RM.smash(IL.Module_Blackstone_Generator.get(      0), IL.NeLi_Blackstone.get(1, IL.NePl_Blackstone.get(1, ST.make(BlocksGT.Basalt, 1, BlockStones.COBBL))));
@@ -1001,40 +1003,9 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		new Loader_Recipes_OreDict();
 	}
 
-	/**
-	 * ADAPT-014 — THE 26.1.2 COPPER AGE RUNS ON GREGORIUS'S COPPER.
-	 *
-	 * <p><b>What 1.7.10 did not have.</b> Copper did not exist in 1.7.10 vanilla at all (it is absent from
-	 * {@code net/minecraft/init/Items.java}). In 26.1.2 it is 93 blocks: oxidation, wax, cut, grate,
-	 * lamp, chest, the copper golem statue, plus tools and armor.
-	 *
-	 * <p><b>The technique is the author's own.</b> When copper arrived for Gregorius via a mod backport, he kept
-	 * the FOREIGN block, stripped its vanilla recipe, and gave out his own from "any copper":
-	 * {@code Compat_Recipes_Ganys.java:118} {@code CR.remove(IL.EtFu_Block_Copper.get(1))},
-	 * {@code :121-122} {@code CR.shaped(..., 'X', OP.ingot.dat(ANY.Cu))}. Here the same thing is
-	 * applied to 26.1.2 vanilla, where these blocks became vanilla themselves.
-	 *
-	 * <p><b>The canon is preserved.</b> Vanilla ore generation is removed by a biome modifier
-	 * ({@code remove_vanilla_ores_overworld.json}, including {@code ore_copper}); GT6 copper is mined
-	 * only by processing minerals with a fractional yield ({@code MT.java:3806} Chalcopyrite {@code 2*U9},
-	 * {@code :3811} Tetrahedrite {@code U4}, {@code :3847} Malachite {@code U6}). The vanilla copper ingot is
-	 * NEVER put into circulation: the unification target {@code OP.ingot + MT.Cu} is never set onto
-	 * {@code minecraft:copper_ingot}, and every recipe that required it is switched to {@code ANY.Cu} —
-	 * "any copper" ({@code ANY.java:125}: {@code MT.Cu} + {@code MT.AnnealedCopper}).
-	 *
-	 * <p><b>Why by recipe and not by tag.</b> {@code #minecraft:copper_tool_materials} selects by
-	 * {@code Item}, while GT6's material subtype lives in a component ({@code ST.meta_}: {@code GT_API.SUBTYPE}),
-	 * i.e. {@code gt.meta.ingot} is ONE item for all materials. A tag would turn ANY GT6 ingot into a "copper
-	 * material", so the six tool recipes are rewritten by name instead.
-	 *
-	 * <p><b>What is NOT touched:</b> 184 of the 204 vanilla copper recipes — the internal machinery of the
-	 * copper age (the 64-cutter, oxidation, wax, cuts). They all work from {@code copper_block}, which the
-	 * player gets from Gregorius's copper via the very first recipe below.
-	 *
-	 * <p>{@code DEF_REM} strips the vanilla recipe with the same output — including the datapack arm
-	 * ({@code CR.remout:665} -> {@code CR.DATAPACK_REMOVALS_OUT} -> {@code GT_API.removeDatapackRecipes}).
-	 */
+	/** Original EFR copper and modern items; metal inputs retain ANY.Cu. */
 	private static void copperAge() {
+		gregtech.compat.Compat_Recipes_Ganys.addCopperRecipes();
 		final Object tIngot = ingot.dat(ANY.Cu), tNugget = nugget.dat(ANY.Cu);
 
 		// Entry into the copper age: nine GT ingots craft the vanilla copper block; the rest
@@ -1044,7 +1015,7 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		// Items that vanilla recipes craft from a copper ingot.
 		CR.shaped(ST.make(Items.COPPER_BARS.unaffected(),16,0), DEF_REM    , "XXX", "XXX"       , 'X', tIngot);
 		CR.shaped(ST.make(Items.COPPER_DOOR           , 3, 0), DEF_REM    , "XX" , "XX" , "XX" , 'X', tIngot);
-		CR.shaped(ST.make(Items.COPPER_TRAPDOOR       , 1, 0), DEF_REM    , "XX" , "XX"        , 'X', tIngot);
+		CR.shaped(ST.make(Items.COPPER_TRAPDOOR       , 1, 0), DEF_REM    , "XX" , "XX"        , 'X', plate.dat(ANY.Cu));
 		CR.shaped(ST.make(Items.COPPER_CHEST          , 1, 0), DEF_REM    , "XXX", "XCX", "XXX", 'X', tIngot, 'C', ST.make(Blocks.CHEST, 1, 0));
 		CR.shaped(ST.make(Items.COPPER_HELMET         , 1, 0), DEF_REM    , "XXX", "X X"       , 'X', tIngot);
 		CR.shaped(ST.make(Items.COPPER_CHESTPLATE     , 1, 0), DEF_REM    , "X X", "XXX", "XXX", 'X', tIngot);
@@ -1070,80 +1041,18 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		CR.shaped(ST.make(Items.COPPER_HOE            , 1, 0), DEF_REM|MIR, "XX" , " S" , " S" , 'X', tIngot, 'S', ST.make(Items.STICK, 1, 0));
 		CR.shaped(ST.make(Items.COPPER_SPEAR          , 1, 0), DEF_REM|MIR, "  X", " S ", "S  ", 'X', tIngot, 'S', ST.make(Items.STICK, 1, 0));
 
-		// The vanilla copper ingot and its companions are never put into circulation: no recipe still produces them.
-		// (Ore/raw smelting is out of scope here — that's a datapack smelting recipe, see "Not done" in ADAPT-014.)
-		CR.delate(ST.make(Items.COPPER_INGOT     , 1, 0));
-		CR.delate(ST.make(Items.COPPER_NUGGET    , 1, 0));
-		CR.delate(ST.make(Items.RAW_COPPER_BLOCK , 1, 0));
-
-		// Material leak: vanilla copper is reachable outside these recipes.
-		// Can't be crafted (removed above), but it still reaches players: loot tables entities/drowned
-		// and entities/copper_golem drop minecraft:copper_ingot; vanilla smelting/blasting of copper gear
-		// (a datapack recipe our removal shim doesn't catch — GT_API.java:659,668 only judges
-		// CraftingRecipe) drops minecraft:copper_nugget, and ore blocks in the old world or creative drop
-		// raw_copper. Left unrecognized, these are junk that already-mined GT copper leaks into
-		// (craft armor from GT copper -> smelt it -> the vanilla nuggets go nowhere).
-		//
-		// Same approach GT6 uses to recognize any foreign item: register it under its own material name
-		// (cf. OreDictionary.java:196-199 for vanilla ingotIron/ingotGold). Recipe ingredients match by
-		// OreDict name (CR.java:401-411), so recognition = entry into the recipes above.
-		//
-		// ⛔ RISK the safeguard below exists for: registering the name arms
-		// setTarget_(prefix, material, stack, aOverwrite=F, ...) (OreDictManager.java:471). The target is
-		// only set on an empty slot, but phase order can't be relied on — a hijacked target would mean ALL
-		// GT copper starts being dispensed as the vanilla ingot. So the GT stack is captured BEFORE
-		// registration and restored as the target AFTER, with aOverwrite=T. Verified by stand gt6copperprobe §6.
-		// ⚠ ORDER: the material passport is issued BEFORE name registration. addItemData_ (OreDictManager:667)
-		// doesn't overwrite an existing association, and registering the name creates one — with the order
-		// reversed, raw ore got an oreRawCopper association with no mass and stayed passport-less (measured:
-		// 130 items with no data, and raw_copper wasn't fixed by re-issuing the passport).
 		copperItemData();
-
-		ItemStack tGTIngot  = ingot .mat(MT.Cu, 1);
-		ItemStack tGTNugget = nugget.mat(MT.Cu, 1);
-		gregapi.oredict.OreDictManager.INSTANCE.registerOre(ingot , MT.Cu, ST.make(Items.COPPER_INGOT , 1, 0));
-		gregapi.oredict.OreDictManager.INSTANCE.registerOre(nugget, MT.Cu, ST.make(Items.COPPER_NUGGET, 1, 0));
-		gregapi.oredict.OreDictManager.INSTANCE.registerOre(oreRaw, MT.Cu, ST.make(Items.RAW_COPPER   , 1, 0));
-		if (ST.valid(tGTIngot )) gregapi.oredict.OreDictManager.INSTANCE.setTarget(ingot , MT.Cu, tGTIngot , T, T);
-		if (ST.valid(tGTNugget)) gregapi.oredict.OreDictManager.INSTANCE.setTarget(nugget, MT.Cu, tGTNugget, T, T);
 
 	}
 
-	/**
-	 * ADAPT-014, part II — MATERIAL PASSPORT for the whole 26.1.2 copper family.
-	 *
-	 * <p><b>Why.</b> The crucible and shredder have no static recipes for foreign items: they build a recipe
-	 * DYNAMICALLY from the input's {@link gregapi.oredict.OreDictItemData} ({@code RecipeMapCrucible:119},
-	 * {@code RecipeMapShredder:52} — {@code OM.anydata(aInput)}). An item with no data never enters them at all:
-	 * a copper chest, door, pickaxe, or lamp would be unmeltable junk, despite being made of Gregorius's copper.
-	 * Measurement before this fix: 2 items with a passport, 130 without.
-	 *
-	 * <p><b>The mass is derived from vanilla recipes, not eyeballed</b> (a walk over
-	 * {@code data/minecraft/recipe} via iterative closure: an ingot = U, a block = 9 ingots, stairs = 3/2
-	 * a block, etc.). Tools are counted by the number of material cells in the pattern.
-	 *
-	 * <p><b>Oxidation and wax do not change copper's mass</b> — it is the same item in a different state, so
-	 * the {@code waxed_}/{@code exposed_}/{@code weathered_}/{@code oxidized_} prefixes are stripped, and all 8
-	 * states of every form get the base form's passport. The walk goes over the REGISTRY, not a hand-written
-	 * list: a new copper block in a future engine version gets its passport on its own, with no code change —
-	 * preserving GT6's property of generating content procedurally.
-	 *
-	 * <p>Secondary materials are listed wherever the recipe has them: wood for tools (sticks,
-	 * {@code OP.stick} = U2 each) and for the chest, blaze and redstone for the lamp. The shredder will then return those too.
-	 */
+	/** Material passports for modern vanilla items; classic forms get original composition via IL. */
 	private static void copperItemData() {
 		// base form name -> how much copper it contains (U = one ingot)
 		java.util.Map<String, Long> tForms = new java.util.LinkedHashMap<>();
-		tForms.put("copper"              , U*9  ); // oxidized variants of the block are named exposed_copper etc.
-		tForms.put("copper_block"        , U*9  );
-		tForms.put("raw_copper_block"    , U*9  );
-		tForms.put("cut_copper"          , U*9  );
-		tForms.put("chiseled_copper"     , U*9  );
+		tForms.put("chiseled_copper"     , U*4  );
 		tForms.put("copper_grate"        , U*9  );
 		tForms.put("copper_golem_statue" , U*9  ); // no recipe (structures/creative only), same look as the copper block
-		tForms.put("cut_copper_stairs"   , U*27/2);
 		tForms.put("copper_bulb"         , U*27/4);
-		tForms.put("cut_copper_slab"     , U*9/2);
 		tForms.put("copper_chest"        , U*8  );
 		tForms.put("copper_chestplate"   , U*8  );
 		tForms.put("copper_leggings"     , U*7  );
@@ -1158,13 +1067,10 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		tForms.put("copper_hoe"          , U*2  );
 		tForms.put("copper_sword"        , U*2  );
 		tForms.put("copper_chain"        , U*11/9);
-		tForms.put("copper_ingot"        , U    );
 		tForms.put("copper_shovel"       , U    );
 		tForms.put("copper_spear"        , U    );
-		tForms.put("raw_copper"          , U    );
 		tForms.put("copper_lantern"      , U*11/12);
 		tForms.put("copper_bars"         , U*3/8);
-		tForms.put("copper_nugget"       , U/9  );
 		tForms.put("copper_torch"        , U/36 );
 		// secondary material of the form (stick/plank wood), U2 = half a unit per stick
 		java.util.Map<String, Long> tWood = new java.util.LinkedHashMap<>();
@@ -1176,13 +1082,6 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		tWood.put("copper_spear"   , U    );
 		tWood.put("copper_torch"   , U2/4 ); // one stick per 4 torches
 		tWood.put("copper_chest"   , U*8  ); // vanilla chest — 8 planks
-
-		// Ore forms are described by PREFIX, not mass: oreVanillastone/oreDeepslate/oreRaw already carry
-		// setOreStats(2*U) (OP.java:63,67,137), and their path is ore processing — crushing, washing,
-		// roasting — not "melt into two ingots." So they get a prefix passport instead of a number.
-		OM.data(ST.make(Items.COPPER_ORE          , 1, 0), oreVanillastone.dat(MT.Cu));
-		OM.data(ST.make(Items.DEEPSLATE_COPPER_ORE, 1, 0), oreDeepslate   .dat(MT.Cu));
-		OM.data(ST.make(Items.RAW_COPPER          , 1, 0), oreRaw         .dat(MT.Cu));
 
 		int tSet = 0, tSkip = 0;
 		for (net.minecraft.world.item.Item tItem : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
