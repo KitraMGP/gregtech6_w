@@ -201,6 +201,8 @@ public class MultiTileEntityBlock extends Block implements IBlock, IItemGT, IBlo
 		// both the drop and the /30 speed. neo equivalent of the 1.7.10 semantics: requiresCorrectToolForDrops ⟺ the material
 		// requires a tool (and a tool is assigned).
 		if (aTool != null && !aTool.isEmpty() && aVanillaMaterial != null && !aVanillaMaterial.isToolNotRequired()) p = p.requiresCorrectToolForDrops();
+		// Neo spawn channel: keep the 1.7.10 MTE rule TE-driven (only IMTE_CanCreatureSpawn), plus the vanilla light guard.
+		p = p.isValidSpawn((state, level, pos, type) -> state.getLightEmission(level, pos) < 14 && state.getBlock() instanceof MultiTileEntityBlock mb && mb.canCreatureSpawn(type.getCategory(), level, pos.getX(), pos.getY(), pos.getZ()));
 		return p;
 	}
 	protected MultiTileEntityBlock(String aModID, String aNameOfVanillaMaterialField, Material aVanillaMaterial, SoundType aSoundType, String aTool, int aHarvestLevelOffset, int aHarvestLevelMinimum, int aHarvestLevelMaximum, boolean aOpaque, boolean aNormalCube) {
