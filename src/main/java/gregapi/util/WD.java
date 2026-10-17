@@ -600,14 +600,9 @@ public class WD {
 		if (aBlock instanceof gregapi.block.IBlock tBlock) return tBlock.getHarvestTool(aMeta);
 		VanillaPassport tPassport = vanillaPassport(aBlock);
 		if (tPassport != null) return tPassport.mTool() != null ? tPassport.mTool() : "";
-		// Query modern mineable tags for non-passport blocks (1.14+ content and mods).
-		net.minecraft.world.level.block.state.BlockState tState = aBlock.defaultBlockState();
-		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE)) return TOOL_axe;
-		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE)) return TOOL_pickaxe;
-		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)) return TOOL_shovel;
-		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_HOE)) return TOOL_hoe;
-		if (tState.is(net.minecraft.tags.BlockTags.SWORD_EFFICIENT)) return TOOL_sword;
-		return "";
+		// Modern mineable tags for non-passport blocks (1.14+ content and mods); the table lives in GT6HarvestTags.
+		String tTool = gregapi.data.GT6HarvestTags.mineableTool(aBlock.defaultBlockState());
+		return tTool == null ? "" : tTool;
 	}
 	/** F-motion: 1.7.10 WD.motionX(Entity)/Y/Z (public fields) -> neo Vec3 getDeltaMovement()/setDeltaMovement (Entity.java).
 	 *  Component-wise writes must preserve the other two axes -> centralize here ONCE (philosophy §2). */
