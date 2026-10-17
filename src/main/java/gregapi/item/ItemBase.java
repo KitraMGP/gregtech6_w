@@ -175,6 +175,9 @@ public class ItemBase extends Item implements IItemProjectile, IItemUpdatable, I
 	// lazily on first request using the same "modid:name" path.
 	public Identifier getIconFromDamage(int aMeta) {if (mIcon == null) registerIcons(null); return mIcon;}
 	public void onCreated(ItemStack aStack, Level aWorld, Player aPlayer) {isItemStackUsable(aStack);}
+	// neo calls Item.onCraftedBy(ItemStack,Player) where 1.7.10 called Item.onCreated(ItemStack,World,EntityPlayer):
+	// without this bridge in the base, crafting never ran isItemStackUsable (tool enchants, NBT refresh) for GT6 items.
+	@Override public void onCraftedBy(ItemStack aStack, Player aPlayer) {onCreated(aStack, aPlayer.level(), aPlayer);}
 	public ItemStack getContainerItem(ItemStack aStack) {return null;}
 	public boolean hasContainerItem(ItemStack aStack) {return getContainerItem(aStack) != null;}
 	public boolean doesContainerItemLeaveCraftingGrid(ItemStack aStack) {return F;}
