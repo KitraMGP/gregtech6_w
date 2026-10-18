@@ -268,6 +268,7 @@ public final class OreDictManager {
 	 */
 	public boolean setAutomaticItemData(Object aOreDictName, OreDictItemData aData) {
 		addKnownName(aOreDictName);
+		if (aData != null) aData.mAutomatic = T;
 		mStringToItemDataMappings.put(aOreDictName.toString(), aData);
 		for (ItemStack tStack : getOres(aOreDictName.toString(), F)) {
 			addItemData_(tStack, OreDictItemData.copy(aData));
@@ -434,7 +435,8 @@ public final class OreDictManager {
 		
 		if (mAutoBlackListedNames.contains(aEvent.Name) || mAutoBlackListedMods.contains(aModID)) addToBlacklist_(aEvent.Ore);
 		
-		addItemData_(aEvent.Ore, OreDictItemData.copy(mStringToItemDataMappings.get(aEvent.Name)));
+		OreDictItemData tHit = mStringToItemDataMappings.get(aEvent.Name);
+		addItemData_(aEvent.Ore, OreDictItemData.copy(tHit));
 		
 		boolean aNotAlreadyRegisteredName = mAlreadyRegisteredNames.add(aEvent.Name);
 		
@@ -631,8 +633,8 @@ public final class OreDictManager {
 	public ItemStack setStack_(boolean aUseBlackList, ItemStack aStack) {
 		ItemStack tStack = getStack_(aUseBlackList, aStack);
 		if (tStack == null || ST.equal(aStack, tStack)) return aStack;
-		// Swapping an item type in place is impossible since neo's ItemStack.item is final (centralized in ST.set);
-		// the meta of the oredict-canonical stack is kept since the item itself cannot be changed.
+		// 1:1 with original: mutate item type while preserving reference, amount, and stack data.
+		ST.setItem(aStack, ST.item_(tStack));
 		return ST.meta_(aStack, ST.meta_(tStack));
 	}
 	
@@ -672,11 +674,13 @@ public final class OreDictManager {
 	
 	public boolean addItemData (ItemStack aStack, OreDictItemData aData) {
 		if (ST.invalid(aStack)) return F;
-		if (getItemData_(aStack) == null) return setItemData_(aStack, aData);
+		OreDictItemData tExisting = getItemData_(aStack);
+		if (tExisting == null || tExisting.mAutomatic) return setItemData_(aStack, aData);
 		return F;
 	}
 	public boolean addItemData_(ItemStack aStack, OreDictItemData aData) {
-		if (getItemData_(aStack) == null && aData != null) return setItemData_(aStack, aData);
+		OreDictItemData tExisting = getItemData_(aStack);
+		if ((tExisting == null || tExisting.mAutomatic) && aData != null) return setItemData_(aStack, aData);
 		return F;
 	}
 	
@@ -686,7 +690,7 @@ public final class OreDictManager {
 	}
 	public boolean setItemData_(ItemStack aStack, OreDictItemData aData) {
 		OreDictItemData tData = getAssociation_(aStack, F);
-		if (tData != null && tData.mMaterial.mMaterial != MT.Wood && tData.mMaterial.mMaterial != ANY.Wood) return F;
+		if (tData != null && !tData.mAutomatic && tData.mMaterial.mMaterial != MT.Wood && tData.mMaterial.mMaterial != ANY.Wood) return F;
 		if (aStack.getCount() > 1) {
 			if (aData.mMaterial != null) aData.mMaterial.mAmount /= aStack.getCount();
 			for (OreDictMaterialStack tMaterial : aData.mByProducts) tMaterial.mAmount /= aStack.getCount();

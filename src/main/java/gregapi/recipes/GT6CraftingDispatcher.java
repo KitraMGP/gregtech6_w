@@ -59,14 +59,20 @@ public final class GT6CraftingDispatcher extends CustomRecipe {
 	public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
 		DeferredRegister.create(Registries.RECIPE_SERIALIZER, MD.GAPI.mID);
 
+	public static final DeferredRegister<net.neoforged.neoforge.common.crafting.IngredientType<?>> INGREDIENT_TYPES = DeferredRegister.create(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.INGREDIENT_TYPES, MD.GAPI.mID);
+	static {INGREDIENT_TYPES.register("cooking_runtime_keys", () -> FurnaceRecipes.RUNTIME_INGREDIENT_TYPE);}
+
 	static {
 		SERIALIZERS.register("gt6_crafting_dispatcher", () -> SERIALIZER);
+		SERIALIZERS.register("gt6_smoking_dispatcher", () -> GT6SmokingDispatcher.SERIALIZER);
+		SERIALIZERS.register("gt6_blasting_dispatcher", () -> GT6BlastingDispatcher.SERIALIZER);
 		SERIALIZERS.register("gt6_smelting_dispatcher", () -> GT6SmeltingDispatcher.SERIALIZER); // The furnace shares this same central registry point.
 	}
 
 	/** Mod-bus subscription point, mirroring GT6WorldgenFeature's own registration call from the GT_API constructor. */
 	public static void register(IEventBus aModBus) {
 		SERIALIZERS.register(aModBus);
+		INGREDIENT_TYPES.register(aModBus);
 	}
 
 	// The workbench answers as every other path (CR.matching); where that is a live vanilla recipe the dispatcher stands

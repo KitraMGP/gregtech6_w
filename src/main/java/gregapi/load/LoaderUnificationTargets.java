@@ -42,6 +42,7 @@ public class LoaderUnificationTargets implements Runnable {
 	public void run() {
 		// Because most Mods (and vanilla MC) are not OreDict Compatible and need to be set as Target manually.
 		OreDictManager.INSTANCE.setTarget(OP.dust           , MT.Au_198                 , MD.HBM, "item.powder_au198"               , 0);
+		OreDictManager.INSTANCE.setTarget(OP.nugget         , MT.Cu                     , ST.make(Items.COPPER_NUGGET, 1, 0));
 		OreDictManager.INSTANCE.setTarget(OP.nugget         , MT.Au_198                 , MD.HBM, "item.nugget_au198"               , 0);
 		OreDictManager.INSTANCE.setTarget(OP.ingot          , MT.Au_198                 , MD.HBM, "item.ingot_au198"                , 0);
 		OreDictManager.INSTANCE.setTarget(OP.billet         , MT.Au_198                 , MD.HBM, "item.billet_au198"               , 0);

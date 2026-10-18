@@ -47,6 +47,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
@@ -56,11 +57,11 @@ import java.util.List;
 
 import static gregapi.data.CS.*;
 
-/** The 1.7.10 static Enchantments.FORTUNE/LOOTING instances are gone: enchantments are data-driven now and
- *  a Holder<Enchantment> needs a live RegistryAccess unavailable in a static context, so this degrades to an empty array. */
+/* The 1.7.10 static Enchantment objects map onto ResourceKeys in neo: a key needs no registry access,
+ *  while UT.NBT.addEnchantment resolves the holder against the CURRENT server (see MultiItemTool.isItemStackUsable). */
 public abstract class ToolStats implements IToolStats {
-	public static final Enchantment[] FORTUNE_ENCHANTMENT = new Enchantment[0];
-	public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment>[] LOOTING_ENCHANTMENT = new net.minecraft.resources.ResourceKey[0];
+	public static final ResourceKey<Enchantment>[] FORTUNE_ENCHANTMENT = new ResourceKey[] {net.minecraft.world.item.enchantment.Enchantments.FORTUNE};
+	public static final ResourceKey<Enchantment>[] LOOTING_ENCHANTMENT = new ResourceKey[] {net.minecraft.world.item.enchantment.Enchantments.LOOTING};
 
 	@Override public int getToolDamagePerBlockBreak()                                       {return 100;}
 	@Override public int getToolDamagePerDropConversion()                                   {return 100;}

@@ -551,23 +551,22 @@ public class ST {
 	public static ItemStack set(ItemStack aSetStack, ItemStack aToStack, boolean aCheckStacksize, boolean aCheckNBT) {
 		if (aSetStack == aToStack) return aSetStack;
 		if (invalid(aSetStack) || invalid(aToStack)) return null;
-		// F-item-final CENTER: 1.7.10 aSetStack.func_150996_a(Item) — an in-place Item swap on an existing stack. neo's
-		// ItemStack.item = private final Holder<Item> (ItemStack.java:156) — there is no direct setter, and transmuteCopy
-		// gives a COPY (not 1:1: the whole of GT6 relies on in-place mutation by reference). The only 1:1 path is
-		// reflection on the final field through the UT.Reflection.setField center (a safe try/catch fallback: on
-		// failure the item just stays unchanged = the old behavior). The new item's Holder = Item.builtInRegistryHolder()
-		// (Item.java:153). NeoForge runtime = official mappings -> the field is named "item".
-		UT.Reflection.setField(aSetStack, "item", item_(aToStack).builtInRegistryHolder());
+		setItem(aSetStack, item_(aToStack));
 		if (aCheckStacksize) aSetStack.setCount(aToStack.getCount());
 		meta_(aSetStack, meta_(aToStack));
 		if (aCheckNBT) ItemNBT.set(aSetStack, ItemNBT.get(aToStack));
 		return aSetStack;
 	}
-	/** F-item-final CENTER: 1.7.10 {@code ItemStack.func_150996_a(Item)} — in-place swap of ONLY Item (count/meta/NBT preserved).
-	 *  neo's {@code ItemStack.item} = private final Holder<Item> — reflection on the final field through the {@link UT.Reflection#setField}
-	 *  center (a safe try/catch fallback). The item's Holder = {@code Item.builtInRegistryHolder()}. Differs from {@link #set}: that one copies everything. */
+	/** In-place Item mutation: new prototype and existing patch, matching engine transmuteCopy. */
 	public static ItemStack setItem(ItemStack aStack, Item aItem) {
-		if (valid(aStack) && aItem != null) UT.Reflection.setField(aStack, "item", aItem.builtInRegistryHolder());
+		if (valid(aStack) && aItem != null) {
+			net.minecraft.core.component.DataComponentMap tPrevious = aStack.getComponents();
+			var tComponents = net.minecraft.core.component.PatchedDataComponentMap.fromPatch(aItem.components(), aStack.getComponentsPatch());
+			if (UT.Reflection.setField(aStack, "components", tComponents) != null) {
+				if (UT.Reflection.setField(aStack, "item", aItem.builtInRegistryHolder()) == null)
+					UT.Reflection.setField(aStack, "components", tPrevious);
+			}
+		}
 		return aStack;
 	}
 	/** F12-vanilla-durability CENTER: 1.7.10 {@code Item.setMaxDamage(int)} mutated durability (the GT config
@@ -731,6 +730,8 @@ public class ST {
 	}
 	public static ItemStack make_(Block aBlock, long aSize, long aMeta) {Block tFlat = CS.Flattened.block(aBlock, aMeta); if (tFlat != null) return new ItemStack(tFlat, UT.Code.bindInt(aSize)); ItemStack rStack = new ItemStack(aBlock, UT.Code.bindInt(aSize)); meta_(rStack, UT.Code.bindShort(aMeta)); return rStack;}
 	public static ItemStack make(ModData aModID, String aItem, long aSize) {
+		gregapi.compat.ForeignNames tTable = gregapi.compat.ForeignNames.table(aModID, aItem);
+		if (tTable != null) return tTable.make(aModID, aItem, aSize, 0);
 		if (!aModID.mLoaded || UT.Code.stringInvalid(aItem) || !GAPI_POST.mStartedPreInit) return null;
 		ItemStack
 		rStack = findItemStack(aModID.mID, aItem, (int)aSize);
@@ -758,7 +759,7 @@ public class ST {
 	// The single point where a foreign 1.7.10 item name becomes a stack; mods that renamed their items since (AE2, BuildCraft)
 	// answer through their table in gregapi.compat.ForeignNames, every other name keeps the plain path.
 	public static ItemStack make(ModData aModID, String aItem, long aSize, long aMeta                                   ) {gregapi.compat.ForeignNames tTable = gregapi.compat.ForeignNames.table(aModID, aItem); if (tTable != null) return tTable.make(aModID, aItem, aSize, aMeta); return     meta(make(aModID, aItem, aSize), aMeta);}
-	public static ItemStack make(ModData aModID, String aItem, long aSize, long aMeta, Object    aReplacement           ) {return get(meta(make(aModID, aItem, aSize), aMeta), aReplacement);}
+	public static ItemStack make(ModData aModID, String aItem, long aSize, long aMeta, Object    aReplacement           ) {return get(make(aModID, aItem, aSize, aMeta), aReplacement);}
 	public static ItemStack make(long   aItemID              , long aSize, long aMeta                                   ) {return make(item(aItemID), aSize, aMeta);}
 	public static ItemStack make(long   aItemID              , long aSize, long aMeta              , CompoundTag aNBT) {return make(item(aItemID), aSize, aMeta, aNBT);}
 	public static ItemStack make(long   aItemID              , long aSize, long aMeta, String aName                     ) {return make(item(aItemID), aSize, aMeta, aName);}

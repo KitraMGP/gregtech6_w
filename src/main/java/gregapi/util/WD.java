@@ -586,18 +586,23 @@ public class WD {
 		return rTier;
 	}
 
-	/** F-tool CENTER (continued): for vanilla blocks the 1.7.10 tool class is DATA-DEFINED, not derived —
-	 *  no neo tag is equivalent to it ({@code MINEABLE_WITH_*} is broader: it covers doors, fences, barrels, foliage, and
-	 *  a {@code hoe} class did not exist for 1.7.10 vanilla at all). Taken from the passport; outside the table — {@code ""}, which for
-	 *  the harvest rule is equivalent to the 1.7.10 default {@code null} ("ask the vanilla rule", {@code ForgeHooks:104}),
-	 *  since all consumers compare the class via {@code equalsIgnoreCase} and an empty string matches nothing. */
+	/** F-tool CENTER (continued): for 1.7.10 vanilla blocks the tool class is DATA-DEFINED, not derived — no neo tag is
+	 *  equivalent to it ({@code MINEABLE_WITH_*} is broader: it covers doors, fences, barrels, foliage, and a {@code hoe}
+	 *  class did not exist for 1.7.10 vanilla at all), so the passport stays the exact source. Blocks that did not exist
+	 *  in 1.7.10 (1.14+ content and mods) have no passport and are answered by the modern mineable tags instead — an
+	 *  approximation by design (Issue #21). No tag covered — {@code ""}, which for the harvest rule is equivalent to the
+	 *  1.7.10 default {@code null} ("ask the vanilla rule", {@code ForgeHooks:104}), since all consumers compare the class
+	 *  via {@code equalsIgnoreCase} and an empty string matches nothing. */
 	public static String harvestTool(Block aBlock, int aMeta) {
 		// dispatch by the IBlock CONTRACT (see harvestLevel above: instanceof BlockBase was blind to MTE/Prefix/Rail —
 		// the key did not "see" the machine as its own block → canHarvestBlock=false → the machine was NOT harvestable at all after
 		// requiresCorrectToolForDrops; caught by the gt6seamprobe judge)
 		if (aBlock instanceof gregapi.block.IBlock tBlock) return tBlock.getHarvestTool(aMeta);
 		VanillaPassport tPassport = vanillaPassport(aBlock);
-		return tPassport != null && tPassport.mTool() != null ? tPassport.mTool() : "";
+		if (tPassport != null) return tPassport.mTool() != null ? tPassport.mTool() : "";
+		// Modern mineable tags for non-passport blocks (1.14+ content and mods); the table lives in GT6HarvestTags.
+		String tTool = gregapi.data.GT6HarvestTags.mineableTool(aBlock.defaultBlockState());
+		return tTool == null ? "" : tTool;
 	}
 	/** F-motion: 1.7.10 WD.motionX(Entity)/Y/Z (public fields) -> neo Vec3 getDeltaMovement()/setDeltaMovement (Entity.java).
 	 *  Component-wise writes must preserve the other two axes -> centralize here ONCE (philosophy §2). */
@@ -1098,6 +1103,10 @@ public class WD {
 		 || aBlock == Blocks.SUGAR_CANE || aBlock == Blocks.SUNFLOWER || aBlock == Blocks.LILAC || aBlock == Blocks.ROSE_BUSH || aBlock == Blocks.PEONY
 		 // ADAPT-007: Blocks.TALL_DRY_GRASS (new content, two-block) — into the same group as TALL_GRASS/LARGE_FERN.
 		 || aBlock == Blocks.TALL_GRASS || aBlock == Blocks.LARGE_FERN || aBlock == Blocks.LILY_PAD || aBlock == Blocks.TALL_DRY_GRASS) return gregapi.block.Material.plants;
+		// Derive fallback material from modern tool tags for non-passport blocks.
+		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE))    return gregapi.block.Material.wood;
+		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)) return gregapi.block.Material.ground;
+		if (tState.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_HOE))    return gregapi.block.Material.plants;
 		return gregapi.block.Material.rock;
 	}
 
